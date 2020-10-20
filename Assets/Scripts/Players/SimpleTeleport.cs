@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SimpleTeleport : MonoBehaviour
+using Photon.Pun;
+using Photon.Realtime;
+public class SimpleTeleport : MonoBehaviourPunCallbacks
 {
     public float smoothTime = 0.05F;
     public float distanceThreshold = 0.01F;
@@ -18,26 +20,30 @@ public class SimpleTeleport : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (photonView.IsMine)
         {
-            // Debug.Log("sending out ray");
-            RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
-            GameObject target = hit.collider.gameObject;
-
-            if (hit.collider != null)
+            if (Input.GetMouseButtonDown(0))
             {
-                
-                if(!inTransition) {
-                    transitionTarget = target.transform.position;
-                    inTransition = true;
-                    target.GetComponent<ObjectController>().TransitionToPosition(transform.position);
-                }
+                // Debug.Log("sending out ray");
+                RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+                GameObject target = hit.collider.gameObject;
 
-                // pseudocode
-                // if(target == someObjectType) {
-                // }
+                if (hit.collider != null)
+                {
+                    
+                    if(!inTransition) {
+                        transitionTarget = target.transform.position;
+                        inTransition = true;
+                        target.GetComponent<ObjectController>().TransitionToPosition(transform.position);
+                    }
+
+                    // pseudocode
+                    // if(target == someObjectType) {
+                    // }
+                }
             }
         }
+        
 
         Vector2 current2DPosition = new Vector2(transform.position.x, transform.position.y);
 

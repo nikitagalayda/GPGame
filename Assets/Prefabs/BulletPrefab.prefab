@@ -98,6 +98,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectileSpeed: 10
+  parentObject: {fileID: 0}
 --- !u!58 &7416148660109913781
 CircleCollider2D:
   m_ObjectHideFlags: 0

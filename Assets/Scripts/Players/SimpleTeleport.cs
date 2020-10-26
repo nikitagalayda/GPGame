@@ -22,7 +22,7 @@ public class SimpleTeleport : MonoBehaviourPunCallbacks
 
     void Update()
     {
-        if (photonView.IsMine)
+        if (true)
         {
             // Debug.Log("sending out ray");
             // RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);

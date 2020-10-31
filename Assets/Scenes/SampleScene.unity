@@ -741,6 +741,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   smoothTime: 0.05
   distanceThreshold: 0.01
+  shootCooldown: 2
   bulletPrefab: {fileID: 7428196229701916301, guid: 1141227f8bdc5ec4e9f0802673b12b96, type: 3}
 --- !u!1 &1641473791
 GameObject:

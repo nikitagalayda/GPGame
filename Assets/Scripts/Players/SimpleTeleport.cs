@@ -8,12 +8,15 @@ public class SimpleTeleport : MonoBehaviourPunCallbacks
 {
     public float smoothTime = 0.05F;
     public float distanceThreshold = 0.01F;
+    public float shootCooldown = 2.0f;
     // public float bulletSpeed;
     public GameObject bulletPrefab;
 
     private bool inTransition = false;
     private Vector2 velocity = Vector2.zero;
     private Vector2 transitionTarget = Vector2.zero;
+    private float nextShotTimestamp = 0.0f;
+    private bool canShoot = true;
 
     void Start()
     {
@@ -27,15 +30,25 @@ public class SimpleTeleport : MonoBehaviourPunCallbacks
             // Debug.Log("sending out ray");
             // RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
             // GameObject target = hit.collider.gameObject;
-            if (Input.GetMouseButton(0))
+            if (Input.GetMouseButton(0) && canShoot)
             {
-                Vector2 currentMouseVector = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
-                Vector2 shootDirection = (Vector2)Vector3.Normalize(currentMouseVector - (Vector2)transform.position);
-                Debug.Log(shootDirection);
-                bullet.GetComponent<ProjectileController>().moveToTarget(shootDirection);
-                bullet.GetComponent<ProjectileController>().parentObject = this.gameObject;
+                canShoot = false;
+                nextShotTimestamp = Time.time + shootCooldown;
+                // if (Time.time >= shootTimeStamp + shootCooldown)
+                // {
+                    // shootTimeStamp = Time.time;
+                    Vector2 currentMouseVector = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                    GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+                    Vector2 shootDirection = (Vector2)Vector3.Normalize(currentMouseVector - (Vector2)transform.position);
+                    Debug.Log(shootDirection);
+                    bullet.GetComponent<ProjectileController>().moveToTarget(shootDirection);
+                    bullet.GetComponent<ProjectileController>().parentObject = this.gameObject;
+                // }
             }
+            if(Time.time >= nextShotTimestamp) {
+                canShoot = true;
+            }
+
             // bullet.transform.Translate(shootDirection * bulletSpeed * Time.deltaTime);
             // bullet.GetComponent<Rigidbody2D>().velocity = shootDirection * bulletSpeed * Time.deltaTime;
             // Debug.Log(bullet.GetComponent<Rigidbody2D>().velocity);

@@ -86,7 +86,7 @@ public class Launcher : MonoBehaviourPunCallbacks
 
                 // #Critical
                 // Load the Room Level.
-                PhotonNetwork.LoadLevel("RoomTest");
+                PhotonNetwork.LoadLevel("RoomForNetwork");
                 //PhotonNetwork.LoadLevel("ItemRoom");
             }
         }

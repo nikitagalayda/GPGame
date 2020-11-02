@@ -5,7 +5,12 @@ using UnityEngine.SceneManagement;
 
 using Photon.Pun;
 using Photon.Realtime;
+using System.Collections;
+
 public class GameManager : MonoBehaviourPunCallbacks
+
+
+
 {
     #region Public Fields
     [Tooltip("The prefab to use for representing the player")]
@@ -15,6 +20,11 @@ public class GameManager : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     void Start()
     {
+
+
+        StartGenerator();
+
+
         if (playerPrefab == null)
         {
             Debug.LogError("<Color=Red><a>Missing</a></Color> playerPrefab Reference. Please set it up in GameObject 'Game Manager'",this);
@@ -42,6 +52,23 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         
     }
+
+    private IEnumerator EnemyGenerator()
+    {
+        while (true)
+        {
+            Vector2 randPosition = new Vector2(Random.Range(-8.0f, 8.0f), 6.0f);
+            PhotonNetwork.Instantiate("Drop", randPosition, Quaternion.identity);
+            yield return new WaitForSeconds(Mathf.Lerp(0.1f, 1.0f, Random.value));
+        }
+    }
+
+    public void StartGenerator()
+    {
+        StartCoroutine(EnemyGenerator());
+    }
+
+
     #region Photon Callbacks
 
 

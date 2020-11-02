@@ -33,6 +33,7 @@ public class ProjectileController : MonoBehaviour
         Debug.Log("COLLISION WITH " + other.gameObject.name);
         other.gameObject.GetComponent<ObjectController>().TransitionToPosition(parentObject.transform.position);
         parentObject.GetComponent<SimpleTeleport>().TransitionToPosition(other.transform.position);
+        Debug.Log("collision happend");
     }
 
     // private void OnTriggerEnter2D(Collider2D other) {

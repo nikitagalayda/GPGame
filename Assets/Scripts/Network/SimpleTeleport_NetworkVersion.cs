@@ -10,7 +10,7 @@ public class SimpleTeleport_NetworkVersion : MonoBehaviourPunCallbacks
     [Tooltip("The local player instance. Use this to know if the local player is represented in the Scene")]
     public static GameObject LocalPlayerInstance;
     public float smoothTime = 0.05F;
-    public float distanceThreshold = 0.01F;
+    public float distanceThreshold = 1F;
     public float shootCooldown = 2.0f;
     // public float bulletSpeed;
     public GameObject bulletPrefab;
@@ -23,6 +23,7 @@ public class SimpleTeleport_NetworkVersion : MonoBehaviourPunCallbacks
 
     void Start()
     {
+        //GameObject.Find("Main Camera").GetComponent<Camera_Network>().setPlayer(this.gameObject.transform);
         // Debug.Log("Starting Player Script");
     }
     void Awake()
@@ -32,6 +33,7 @@ public class SimpleTeleport_NetworkVersion : MonoBehaviourPunCallbacks
         if (photonView.IsMine)
         {
             SimpleTeleport_NetworkVersion.LocalPlayerInstance = this.gameObject;
+            
         }
         // #Critical
         // we flag as don't destroy on load so that instance survives level synchronization, thus giving a seamless experience when levels load.
@@ -54,7 +56,7 @@ public class SimpleTeleport_NetworkVersion : MonoBehaviourPunCallbacks
                     Vector2 currentMouseVector = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                     GameObject bullet = PhotonNetwork.Instantiate("BulletPrefab_Network", transform.position, Quaternion.identity);
                     Vector2 shootDirection = (Vector2)Vector3.Normalize(currentMouseVector - (Vector2)transform.position);
-                    Debug.Log(shootDirection);
+                    //Debug.Log(shootDirection);
                     bullet.GetComponent<ProjectileController_Network>().moveToTarget(shootDirection);
                     bullet.GetComponent<ProjectileController_Network>().parentObject = this.gameObject;
                 // }
@@ -85,29 +87,32 @@ public class SimpleTeleport_NetworkVersion : MonoBehaviourPunCallbacks
         }
         Vector2 current2DPosition = new Vector2(transform.position.x, transform.position.y);
 
-        if (Vector2.Distance(current2DPosition, transitionTarget) <= distanceThreshold)
+        /**if (Vector2.Distance(current2DPosition, transitionTarget) <= distanceThreshold)
         {
             inTransition = false;
         }
+        **/
         
 
     }
 
     void FixedUpdate()
     {
-        if (inTransition )
+        /**if (inTransition )
         {
             transform.position = Vector2.SmoothDamp(transform.position, transitionTarget, ref velocity, smoothTime);
-        }
+        }**/
     }
-
+    
     public void TransitionToPosition(Vector2 targetPosition)
     {
-        if (!inTransition)
+        /**if (!inTransition)
         {
             transitionTarget = targetPosition;
             // Debug.Log(transitionTarget);
             inTransition = true;
-        }
+        }**/
+        transform.position = targetPosition;
     }
+    
 }

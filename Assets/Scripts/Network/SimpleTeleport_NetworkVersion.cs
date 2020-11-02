@@ -23,7 +23,7 @@ public class SimpleTeleport_NetworkVersion : MonoBehaviourPunCallbacks
 
     void Start()
     {
-        //GameObject.Find("Main Camera").GetComponent<Camera_Network>().setPlayer(this.gameObject.transform);
+        GameObject.Find("Main Camera").GetComponent<Camera_Network>().setPlayer(this.gameObject.transform);
         // Debug.Log("Starting Player Script");
     }
     void Awake()

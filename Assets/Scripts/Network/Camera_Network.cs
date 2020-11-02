@@ -6,7 +6,7 @@ public class Camera_Network : MonoBehaviour
 {
 
     public Transform player = null;
-    public Vector3 offset = new Vector3(0, -20, -8);
+    public Vector2 offset = new Vector2(0, 0 );
     // Start is called before the first frame update
     void Start()
     {
@@ -18,7 +18,8 @@ public class Camera_Network : MonoBehaviour
     {
         if(player != null)
         {
-            transform.position = new Vector3(player.position.x + offset.x, player.position.y + offset.y, offset.z);
+            // transform.position = new Vector2(player.position.x + offset.x, player.position.y + offset.y);
+            transform.position = new Vector3(player.position.x, player.position.y, -8);
         }
             
     }

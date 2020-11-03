@@ -10,10 +10,11 @@ public class ObjectController : MonoBehaviour
     private bool inTransition = false;
     private Vector2 velocity = Vector2.zero;
     private Vector2 transitionTarget = Vector2.zero;
+    private float speedModifier;
 
     void Start()
     {
-
+        speedModifier = Random.Range(1f, 2f);
     }
 
     // Update is called once per frame
@@ -21,7 +22,7 @@ public class ObjectController : MonoBehaviour
     {
         if (!inTransition)
         {
-            transform.Translate(new Vector3(0, -1, 0) * Time.deltaTime);
+            transform.Translate(new Vector3(0, -1*speedModifier, 0) * Time.deltaTime);
         }
     }
 

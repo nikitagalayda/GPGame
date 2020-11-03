@@ -22,7 +22,7 @@ public class MainCameraController : MonoBehaviour
 
     void Update()
     {
-        ZoomCamera();
+        // ZoomCamera();
     }
 
     private void ZoomCamera()

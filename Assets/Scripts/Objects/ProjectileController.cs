@@ -9,10 +9,11 @@ public class ProjectileController : MonoBehaviour
 
     private Vector2 target;
     private bool movingToTarget = false;
+    private float[] spawnLocations;
 
     void Start()
     {
-
+        
     }
 
     void FixedUpdate()
@@ -29,10 +30,16 @@ public class ProjectileController : MonoBehaviour
         movingToTarget = true;
     }
 
-    void OnCollisionEnter2D(Collision2D other) {
-        Debug.Log("COLLISION WITH " + other.gameObject.name);
-        other.gameObject.GetComponent<ObjectController>().TransitionToPosition(parentObject.transform.position);
-        parentObject.GetComponent<SimpleTeleport>().TransitionToPosition(other.transform.position);
+    void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.tag == "Item")
+        {
+            Debug.Log("COLLISION WITH " + other.gameObject.name);
+            other.gameObject.GetComponent<ObjectController>().TransitionToPosition(parentObject.transform.position);
+            parentObject.GetComponent<SimpleTeleport>().TransitionToPosition(other.transform.position);
+
+            Destroy(gameObject);
+        }
     }
 
     // private void OnTriggerEnter2D(Collider2D other) {

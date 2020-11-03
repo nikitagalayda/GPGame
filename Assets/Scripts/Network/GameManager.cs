@@ -16,13 +16,17 @@ public class GameManager : MonoBehaviourPunCallbacks
     [Tooltip("The prefab to use for representing the player")]
     public GameObject playerPrefab;
     #endregion
-
+    public bool gameStart = false;
+    private bool dropping = false;
+    [Tooltip("start Button for the UI")]
+    [SerializeField]
+    private GameObject startButton;
     // Start is called before the first frame update
     void Start()
     {
 
 
-        StartGenerator();
+        
 
 
         if (playerPrefab == null)
@@ -37,7 +41,9 @@ public class GameManager : MonoBehaviourPunCallbacks
             {
                 Debug.LogFormat("We are Instantiating LocalPlayer from {0}", SceneManagerHelper.ActiveSceneName);
                 // we're in a room. spawn a character for the local player. it gets synced by using PhotonNetwork.Instantiate
-                PhotonNetwork.Instantiate(this.playerPrefab.name, new Vector2(-5f,-3f), Quaternion.identity, 0);
+                PhotonNetwork.Instantiate(this.playerPrefab.name, new Vector2(Random.Range(-6.0f, 6.0f), -3f), Quaternion.identity, 0);
+                
+
             }
             else
             {
@@ -50,7 +56,12 @@ public class GameManager : MonoBehaviourPunCallbacks
     // Update is called once per frame
     void Update()
     {
-        
+        if(gameStart && dropping == false)
+        {
+            dropping = true;
+            StartGenerator();
+            startButton.SetActive(false);
+        }    
     }
 
     private IEnumerator EnemyGenerator()
@@ -68,7 +79,10 @@ public class GameManager : MonoBehaviourPunCallbacks
         StartCoroutine(EnemyGenerator());
     }
 
-
+    public void StartGame()
+    {
+        gameStart = true;
+    }
     #region Photon Callbacks
 
 

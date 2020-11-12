@@ -27,6 +27,10 @@ public class SimpleTeleport : MonoBehaviourPunCallbacks
     {
         if (true)
         {
+            if (!inTransition)
+            {
+                transform.Translate(new Vector3(0, -1, 0) * Time.deltaTime);
+            }
             // Debug.Log("sending out ray");
             // RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
             // GameObject target = hit.collider.gameObject;
@@ -36,16 +40,17 @@ public class SimpleTeleport : MonoBehaviourPunCallbacks
                 nextShotTimestamp = Time.time + shootCooldown;
                 // if (Time.time >= shootTimeStamp + shootCooldown)
                 // {
-                    // shootTimeStamp = Time.time;
-                    Vector2 currentMouseVector = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                    GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
-                    Vector2 shootDirection = (Vector2)Vector3.Normalize(currentMouseVector - (Vector2)transform.position);
-                    Debug.Log(shootDirection);
-                    bullet.GetComponent<ProjectileController>().moveToTarget(shootDirection);
-                    bullet.GetComponent<ProjectileController>().parentObject = this.gameObject;
+                // shootTimeStamp = Time.time;
+                Vector2 currentMouseVector = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+                Vector2 shootDirection = (Vector2)Vector3.Normalize(currentMouseVector - (Vector2)transform.position);
+                Debug.Log(shootDirection);
+                bullet.GetComponent<ProjectileController>().moveToTarget(shootDirection);
+                bullet.GetComponent<ProjectileController>().parentObject = this.gameObject;
                 // }
             }
-            if(Time.time >= nextShotTimestamp) {
+            if (Time.time >= nextShotTimestamp)
+            {
                 canShoot = true;
             }
 

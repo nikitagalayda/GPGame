@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     [Tooltip("The prefab to use for representing the player")]
     public GameObject playerPrefab;
     #endregion
+    public static GameManager Instance;
     public bool gameStart = false;
     private bool dropping = false;
     [Tooltip("start Button for the UI")]
@@ -26,7 +27,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
 
 
-        
+        Instance = this;
 
 
         if (playerPrefab == null)

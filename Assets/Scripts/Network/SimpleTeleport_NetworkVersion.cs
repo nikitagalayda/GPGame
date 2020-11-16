@@ -20,6 +20,7 @@ public class SimpleTeleport_NetworkVersion : MonoBehaviourPunCallbacks
     private Vector2 transitionTarget = Vector2.zero;
     private float nextShotTimestamp = 0.0f;
     private bool canShoot = true;
+    private bool leaving = false;
 
     void Start()
     {
@@ -97,6 +98,7 @@ public class SimpleTeleport_NetworkVersion : MonoBehaviourPunCallbacks
 
         }
         Vector2 current2DPosition = new Vector2(transform.position.x, transform.position.y);
+        Die(transform.position.y);
 
         /**if (Vector2.Distance(current2DPosition, transitionTarget) <= distanceThreshold)
         {
@@ -126,7 +128,14 @@ public class SimpleTeleport_NetworkVersion : MonoBehaviourPunCallbacks
         transform.position = targetPosition;
     }
 
-   
+   private void Die(float currentY)
+    {
+        if (currentY <= -10f && photonView.IsMine && leaving==false)
+        {
+            GameManager.Instance.LeaveRoom();
+            leaving = true;
+        }
+    }
 
 
 }

@@ -2,18 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ProjectileController : MonoBehaviour
+public class ProjectileController_Network : MonoBehaviour
 {
     public float projectileSpeed = 100.0f;
     public GameObject parentObject = null;
 
     private Vector2 target;
     private bool movingToTarget = false;
-    private float[] spawnLocations;
 
     void Start()
     {
-        
+
     }
 
     void FixedUpdate()
@@ -30,16 +29,13 @@ public class ProjectileController : MonoBehaviour
         movingToTarget = true;
     }
 
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.gameObject.tag == "Item")
-        {
-            Debug.Log("COLLISION WITH " + other.gameObject.name);
-            other.gameObject.GetComponent<ObjectController>().TransitionToPosition(parentObject.transform.position);
-            parentObject.GetComponent<SimpleTeleport>().TransitionToPosition(other.transform.position);
-
-            Destroy(gameObject);
-        }
+    void OnCollisionEnter2D(Collision2D other) {
+        Debug.Log("COLLISION WITH " + other.gameObject.name);
+        Vector2 temp = other.transform.position;
+        other.gameObject.GetComponent<ObjectController_Network>().TransitionToPosition(parentObject.transform.position);
+        
+        parentObject.GetComponent<SimpleTeleport_NetworkVersion>().TransitionToPosition(temp);
+        Destroy(this.gameObject);
     }
 
     // private void OnTriggerEnter2D(Collider2D other) {

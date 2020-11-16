@@ -5,16 +5,31 @@ using UnityEngine.SceneManagement;
 
 using Photon.Pun;
 using Photon.Realtime;
+using System.Collections;
+
 public class GameManager : MonoBehaviourPunCallbacks
+
+
+
 {
     #region Public Fields
     [Tooltip("The prefab to use for representing the player")]
     public GameObject playerPrefab;
     #endregion
-
+    public static GameManager Instance;
+    public bool gameStart = false;
+    private bool dropping = false;
+    [Tooltip("start Button for the UI")]
+    [SerializeField]
+    private GameObject startButton;
     // Start is called before the first frame update
     void Start()
     {
+
+
+        Instance = this;
+
+
         if (playerPrefab == null)
         {
             Debug.LogError("<Color=Red><a>Missing</a></Color> playerPrefab Reference. Please set it up in GameObject 'Game Manager'",this);
@@ -23,14 +38,51 @@ public class GameManager : MonoBehaviourPunCallbacks
         {
             Debug.LogFormat("We are Instantiating LocalPlayer from {0}", Application.loadedLevelName);
             // we're in a room. spawn a character for the local player. it gets synced by using PhotonNetwork.Instantiate
-            PhotonNetwork.Instantiate(this.playerPrefab.name, new Vector2(-5f,-3f), Quaternion.identity, 0);
+            if (SimpleTeleport_NetworkVersion.LocalPlayerInstance == null)
+            {
+                Debug.LogFormat("We are Instantiating LocalPlayer from {0}", SceneManagerHelper.ActiveSceneName);
+                // we're in a room. spawn a character for the local player. it gets synced by using PhotonNetwork.Instantiate
+                PhotonNetwork.Instantiate(this.playerPrefab.name, new Vector2(Random.Range(-6.0f, 6.0f), -3f), Quaternion.identity, 0);
+                
+
+            }
+            else
+            {
+                Debug.LogFormat("Ignoring scene load for {0}", SceneManagerHelper.ActiveSceneName);
+            }
+            
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if(gameStart && dropping == false)
+        {
+            dropping = true;
+            StartGenerator();
+            startButton.SetActive(false);
+        }    
+    }
+
+    private IEnumerator EnemyGenerator()
+    {
+        while (true)
+        {
+            Vector2 randPosition = new Vector2(Random.Range(-8.0f, 8.0f), 6.0f);
+            PhotonNetwork.Instantiate("Drop", randPosition, Quaternion.identity);
+            yield return new WaitForSeconds(Mathf.Lerp(0.1f, 1.0f, Random.value));
+        }
+    }
+
+    public void StartGenerator()
+    {
+        StartCoroutine(EnemyGenerator());
+    }
+
+    public void StartGame()
+    {
+        gameStart = true;
     }
     #region Photon Callbacks
 
@@ -96,7 +148,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             Debug.LogError("PhotonNetwork : Trying to Load a level but we are not the master Client");
         }
         Debug.LogFormat("PhotonNetwork : Loading Level : {0}", PhotonNetwork.CurrentRoom.PlayerCount);
-        //PhotonNetwork.LoadLevel("RoomTest");
+        //PhotonNetwork.LoadLevel("RoomForNetwork");
     }
 
 

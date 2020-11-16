@@ -9,9 +9,12 @@ EditorBuildSettings:
     path: Assets/Scenes/Launcher.unity
     guid: ab571995c2640a847ac8338f6735f155
   - enabled: 1
-    path: Assets/Scenes/RoomTest.unity
-    guid: 1f4641b3a7052074494ef4b96ebd1e71
-  - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
+    path: Assets/Scenes/RoomForNetwork.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/SampleScene 1.unity
+    guid: 83ed9a96f2e5ba44980e45e53ea956ad
+  - enabled: 1
+    path: Assets/Scenes/ItemRoom.unity
+    guid: b4a1adf48b7fc0947af0366e66312f5d
   m_configObjects: {}

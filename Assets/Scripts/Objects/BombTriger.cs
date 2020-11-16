@@ -15,10 +15,12 @@ public class BombTriger : MonoBehaviour
     public float passTime = 0; 
     public GameObject target = null;
 
+    private GameObject collisionObject = null;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -37,12 +39,22 @@ public class BombTriger : MonoBehaviour
                     }
                     break;
                 case types.onCollision:
-                    Debug.Log("onCollision");
+                    //Debug.Log("onCollision");
+                    if(collisionObject != null){
+                        //Debug.Log("collision:" + collisionObject.name);
+                        Triger();
+                        trigerType = types.stop;
+                    }
                     break;
             }
         }
     }
-    
+
+    void OnTriggerEnter2D(Collider2D Coll)
+    {
+        collisionObject = Coll.gameObject;
+    }
+
     void CountDown(){
         passTime = passTime + Time.deltaTime;
     }

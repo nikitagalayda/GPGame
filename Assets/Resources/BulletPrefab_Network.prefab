@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4050875085104875266}
   - component: {fileID: 7734685845312096330}
   - component: {fileID: 4056716815023056658}
-  - component: {fileID: -9048466508574276868}
+  - component: {fileID: 977279605111871201}
   m_Layer: 0
   m_Name: BulletPrefab_Network
   m_TagString: Untagged
@@ -160,7 +160,7 @@ MonoBehaviour:
   m_SynchronizePosition: 1
   m_SynchronizeRotation: 0
   m_SynchronizeScale: 0
---- !u!58 &-9048466508574276868
+--- !u!58 &977279605111871201
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

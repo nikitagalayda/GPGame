@@ -10,8 +10,7 @@
 
 using UnityEngine;
 
-namespace Photon.Pun.Demo.PunBasics
-{
+
 	/// <summary>
 	/// Camera work. Follow a target
 	/// </summary>
@@ -109,9 +108,8 @@ namespace Photon.Pun.Demo.PunBasics
 			cameraOffset.z = -distance;
 			cameraOffset.y = height;
 			
-		    cameraTransform.position = Vector3.Lerp(cameraTransform.position, this.transform.position +this.transform.TransformVector(cameraOffset), smoothSpeed*Time.deltaTime);
+			cameraTransform.position = this.transform.position+new Vector3(0.0f, 0.0f, -distance);
 
-		    cameraTransform.LookAt(this.transform.position + centerOffset);
 		    
 	    }
 
@@ -121,10 +119,9 @@ namespace Photon.Pun.Demo.PunBasics
 			cameraOffset.z = -distance;
 			cameraOffset.y = height;
 
-			cameraTransform.position = this.transform.position + this.transform.TransformVector(cameraOffset);
+			cameraTransform.position = this.transform.position+new Vector3(0.0f, 0.0f, -distance);
 
-			cameraTransform.LookAt(this.transform.position + centerOffset);
+			
 		}
 		#endregion
 	}
-}

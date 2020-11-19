@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class ProjectileController_Network : MonoBehaviour
+using Photon.Pun;
+using Photon.Realtime;
+public class ProjectileController_Network : MonoBehaviourPunCallbacks
 {
     public float projectileSpeed = 100.0f;
     public GameObject parentObject = null;
@@ -29,13 +30,16 @@ public class ProjectileController_Network : MonoBehaviour
         movingToTarget = true;
     }
 
-    void OnCollisionEnter2D(Collision2D other) {
+    void OnTriggerEnter2D(Collider2D other) {
         Debug.Log("COLLISION WITH " + other.gameObject.name);
-        Vector2 temp = other.transform.position;
-        other.gameObject.GetComponent<ObjectController_Network>().TransitionToPosition(parentObject.transform.position);
+        if(photonView.IsMine && other.gameObject.name == "Drop(Clone)"){
+            Vector2 temp = other.transform.position;
+            other.gameObject.GetComponent<ObjectController_Network>().TransitionToPosition(parentObject.transform.position);
         
-        parentObject.GetComponent<SimpleTeleport_NetworkVersion>().TransitionToPosition(temp);
-        Destroy(this.gameObject);
+            parentObject.GetComponent<SimpleTeleport_NetworkVersion>().TransitionToPosition(temp);
+            Destroy(this.gameObject);
+        }
+        
     }
 
     // private void OnTriggerEnter2D(Collider2D other) {

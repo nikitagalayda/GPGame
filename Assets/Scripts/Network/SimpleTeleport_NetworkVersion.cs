@@ -20,17 +20,32 @@ public class SimpleTeleport_NetworkVersion : MonoBehaviourPunCallbacks
     private Vector2 transitionTarget = Vector2.zero;
     private float nextShotTimestamp = 0.0f;
     private bool canShoot = true;
-
+    private Color characterColor = Color.blue;
     void Start()
     {
      
-        GameObject.Find("Main Camera").GetComponent<Camera_Network>().setPlayer(this.gameObject.transform);
+       // GameObject.Find("Main Camera").GetComponent<Camera_Network>().setPlayer(this.gameObject.transform);
+
+        CameraWork _cameraWork = this.gameObject.GetComponent<CameraWork>();
+
+
+        if (_cameraWork != null)
+        {
+            if (photonView.IsMine)
+            {
+                _cameraWork.OnStartFollowing();
+            }
+        }
+        else
+        {
+            Debug.LogError("<Color=Red><a>Missing</a></Color> CameraWork Component on playerPrefab.", this);
+        }
         // Debug.Log("Starting Player Script");
     }
     void Awake()
     {
-  
-        GetComponent<SpriteRenderer>().color = Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f); 
+        characterColor = Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f);
+        GetComponent<SpriteRenderer>().color = characterColor; 
         // #Important
         // used in GameManager.cs: we keep track of the localPlayer instance to prevent instantiation when levels are synchronized
         if (photonView.IsMine)
@@ -69,7 +84,7 @@ public class SimpleTeleport_NetworkVersion : MonoBehaviourPunCallbacks
             bool start = manager.GetComponent<GameManager>().gameStart;
             if (start == true && falling == false){
 
-                GetComponent<Rigidbody2D>().gravityScale = 0.05f;
+                GetComponent<Rigidbody2D>().gravityScale = 0.5f;
                 falling = true;
             }
             if(Time.time >= nextShotTimestamp) {
@@ -126,7 +141,19 @@ public class SimpleTeleport_NetworkVersion : MonoBehaviourPunCallbacks
         transform.position = targetPosition;
     }
 
-   
+   void OnCollisionEnter2D(Collision2D Collider)
+    {
+        print("A:" + Collider.gameObject.name); //印出A:碰撞對象的名字
+        if(Collider.gameObject.name == "Lava")
+            GameManager.Instance.LeaveRoom();
 
+    }
+    #region IPunObservable implementation
+
+
+
+
+
+    #endregion
 
 }

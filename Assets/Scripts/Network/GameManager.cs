@@ -8,19 +8,18 @@ using Photon.Realtime;
 using System.Collections;
 
 public class GameManager : MonoBehaviourPunCallbacks
-
-
-
 {
     #region Public Fields
     [Tooltip("The prefab to use for representing the player")]
     public GameObject playerPrefab;
+    public static GameManager Instance;
     #endregion
     public bool gameStart = false;
     private bool dropping = false;
     [Tooltip("start Button for the UI")]
     [SerializeField]
     private GameObject startButton;
+    private List<GameObject> playerList = new List<GameObject>();
     // Start is called before the first frame update
     void Start()
     {
@@ -28,6 +27,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
         
 
+        Instance = this;
 
         if (playerPrefab == null)
         {
@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             {
                 Debug.LogFormat("We are Instantiating LocalPlayer from {0}", SceneManagerHelper.ActiveSceneName);
                 // we're in a room. spawn a character for the local player. it gets synced by using PhotonNetwork.Instantiate
-                PhotonNetwork.Instantiate(this.playerPrefab.name, new Vector2(Random.Range(-6.0f, 6.0f), -3f), Quaternion.identity, 0);
+                playerList.Add(PhotonNetwork.Instantiate(this.playerPrefab.name, new Vector2(Random.Range(-6.0f, 6.0f), -3f), Quaternion.identity, 0));
                 
 
             }
@@ -58,6 +58,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         if(gameStart && dropping == false)
         {
+            StartGame();
             dropping = true;
             StartGenerator();
             startButton.SetActive(false);
@@ -152,5 +153,9 @@ public class GameManager : MonoBehaviourPunCallbacks
 
 
     #endregion
+
+
+
+
 
 }

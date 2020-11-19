@@ -20,12 +20,8 @@ public class SimpleTeleport_NetworkVersion : MonoBehaviourPunCallbacks
     private Vector2 transitionTarget = Vector2.zero;
     private float nextShotTimestamp = 0.0f;
     private bool canShoot = true;
-<<<<<<< HEAD
     private Color characterColor = Color.blue;
-=======
-    private bool leaving = false;
 
->>>>>>> fa657211de659e948609d740822a142085da508b
     void Start()
     {
      
@@ -116,8 +112,7 @@ public class SimpleTeleport_NetworkVersion : MonoBehaviourPunCallbacks
         
 
         }
-        Vector2 current2DPosition = new Vector2(transform.position.x, transform.position.y);
-        Die(transform.position.y);
+
 
         /**if (Vector2.Distance(current2DPosition, transitionTarget) <= distanceThreshold)
         {

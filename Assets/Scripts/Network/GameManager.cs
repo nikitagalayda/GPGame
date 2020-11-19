@@ -14,7 +14,6 @@ public class GameManager : MonoBehaviourPunCallbacks
     public GameObject playerPrefab;
     public static GameManager Instance;
     #endregion
-    public static GameManager Instance;
     public bool gameStart = false;
     private bool dropping = false;
     [Tooltip("start Button for the UI")]
@@ -25,8 +24,6 @@ public class GameManager : MonoBehaviourPunCallbacks
     void Start()
     {
 
-
-        Instance = this;
 
         Instance = this;
 

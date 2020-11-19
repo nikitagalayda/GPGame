@@ -140,7 +140,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   smoothTime: 0.05
   distanceThreshold: 0.01
-  shootCooldown: 0.5
+  shootCooldown: 2
   bulletPrefab: {fileID: 7428196229701916301, guid: 0e7cc17725192d340aeb6fdca651aaaa, type: 3}
 --- !u!50 &-17806746042696793
 Rigidbody2D:

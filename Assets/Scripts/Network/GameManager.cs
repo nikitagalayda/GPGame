@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     [Tooltip("start Button for the UI")]
     [SerializeField]
     private GameObject startButton;
+    public float gravity = 0.5F;
     private List<GameObject> playerList = new List<GameObject>();
     // Start is called before the first frame update
     void Start()
@@ -56,10 +57,11 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         if(gameStart && dropping == false)
         {
-            StartGame();
+
             dropping = true;
             StartGenerator();
             startButton.SetActive(false);
+
         }    
     }
 
@@ -81,6 +83,16 @@ public class GameManager : MonoBehaviourPunCallbacks
     public void StartGame()
     {
         gameStart = true;
+        GameObject[] Players = GameObject.FindGameObjectsWithTag("player");
+        // now all your game objects are in GOs,
+        // all that remains is to getComponent of each and every script and you are good to go.
+        // to disable a components
+        for (int i = 0; i < Players.Length; i++)
+        {
+            // to access component - GOs[i].GetComponent.<BoxCollider>()
+            // but I do it everything in 1 line.
+            Players[i].GetComponent<Rigidbody2D>().gravityScale = gravity;
+        }
     }
     #region Photon Callbacks
 

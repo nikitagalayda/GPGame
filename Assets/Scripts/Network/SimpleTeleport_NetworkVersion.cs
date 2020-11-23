@@ -8,27 +8,30 @@ public class SimpleTeleport_NetworkVersion : MonoBehaviourPunCallbacks
 {
 
     [Tooltip("The local player instance. Use this to know if the local player is represented in the Scene")]
-    public List<GameObject> balloonSet = new List<GameObject>();
     public static GameObject LocalPlayerInstance;
     public float smoothTime = 0.05F;
     public float distanceThreshold = 1F;
     public float shootCooldown = 2.0f;
     // public float bulletSpeed;
     public GameObject bulletPrefab;
-
+    private bool falling = false;
     private bool inTransition = false;
     private Vector2 velocity = Vector2.zero;
     private Vector2 transitionTarget = Vector2.zero;
     private float nextShotTimestamp = 0.0f;
     private bool canShoot = true;
+    private bool leaving = false;
 
     void Start()
     {
+     
         GameObject.Find("Main Camera").GetComponent<Camera_Network>().setPlayer(this.gameObject.transform);
         // Debug.Log("Starting Player Script");
     }
     void Awake()
     {
+  
+        GetComponent<SpriteRenderer>().color = Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f); 
         // #Important
         // used in GameManager.cs: we keep track of the localPlayer instance to prevent instantiation when levels are synchronized
         if (photonView.IsMine)
@@ -62,6 +65,14 @@ public class SimpleTeleport_NetworkVersion : MonoBehaviourPunCallbacks
                     bullet.GetComponent<ProjectileController_Network>().parentObject = this.gameObject;
                 // }
             }
+            GameObject manager = GameObject.Find("Game Manager");
+            
+            bool start = manager.GetComponent<GameManager>().gameStart;
+            if (start == true && falling == false){
+
+                GetComponent<Rigidbody2D>().gravityScale = 0.05f;
+                falling = true;
+            }
             if(Time.time >= nextShotTimestamp) {
                 canShoot = true;
             }
@@ -87,6 +98,7 @@ public class SimpleTeleport_NetworkVersion : MonoBehaviourPunCallbacks
 
         }
         Vector2 current2DPosition = new Vector2(transform.position.x, transform.position.y);
+        Die(transform.position.y);
 
         /**if (Vector2.Distance(current2DPosition, transitionTarget) <= distanceThreshold)
         {
@@ -115,5 +127,15 @@ public class SimpleTeleport_NetworkVersion : MonoBehaviourPunCallbacks
         }**/
         transform.position = targetPosition;
     }
-    
+
+   private void Die(float currentY)
+    {
+        if (currentY <= -10f && photonView.IsMine && leaving==false)
+        {
+            GameManager.Instance.LeaveRoom();
+            leaving = true;
+        }
+    }
+
+
 }

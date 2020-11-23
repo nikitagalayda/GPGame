@@ -18,10 +18,8 @@ public class ProjectileController_Network : MonoBehaviour
     void FixedUpdate()
     {
         if (movingToTarget)
-        {   
-            transform.Translate((target * projectileSpeed + parentObject.GetComponent<Rigidbody2D>().velocity ) * Time.deltaTime);
-            //Debug.Log(target);
-            //Debug.Log(parentObject.GetComponent<Rigidbody2D>().velocity);
+        {
+            transform.Translate(target * projectileSpeed * Time.deltaTime);
         }
     }
 
@@ -35,14 +33,7 @@ public class ProjectileController_Network : MonoBehaviour
         Debug.Log("COLLISION WITH " + other.gameObject.name);
         Vector2 temp = other.transform.position;
         other.gameObject.GetComponent<ObjectController_Network>().TransitionToPosition(parentObject.transform.position);
-        List<GameObject> balloonSet = parentObject.GetComponents<SimpleTeleport_NetworkVersion> ()[0].balloonSet;
-        foreach (GameObject item in balloonSet)
-        {
-            item.transform.position = temp + new Vector2 (0,2);
-        }
         
-        //GameObject balloon = parentObject.GetComponents<Chaining> ()[0].target;
-        //balloon.transform.position = temp;
         parentObject.GetComponent<SimpleTeleport_NetworkVersion>().TransitionToPosition(temp);
         Destroy(this.gameObject);
     }

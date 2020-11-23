@@ -17,13 +17,18 @@ public class GameManager : MonoBehaviourPunCallbacks
     public GameObject playerPrefab;
     //public GameObject player;
     #endregion
-
+    public static GameManager Instance;
+    public bool gameStart = false;
+    private bool dropping = false;
+    [Tooltip("start Button for the UI")]
+    [SerializeField]
+    private GameObject startButton;
     // Start is called before the first frame update
     void Start()
     {
 
 
-        StartGenerator();
+        Instance = this;
 
 
         if (playerPrefab == null)
@@ -39,27 +44,15 @@ public class GameManager : MonoBehaviourPunCallbacks
             {
                 Debug.LogFormat("We are Instantiating LocalPlayer from {0}", SceneManagerHelper.ActiveSceneName);
                 // we're in a room. spawn a character for the local player. it gets synced by using PhotonNetwork.Instantiate
-                player = PhotonNetwork.Instantiate(this.playerPrefab.name, new Vector2(-5f,-3f), Quaternion.identity, 0);
-                GameObject BalloonSet_Network = PhotonNetwork.Instantiate("BalloonSet_Network", new Vector2(-5f,2f), Quaternion.identity, 0);
-                //player.AddComponent<Chaining>();
-                GameObject chain = BalloonSet_Network.transform.GetChild(1).gameObject;
-                GameObject c4 = chain.transform.GetChild(0).gameObject;
-                Chaining[] c4_component = c4.GetComponents<Chaining> ();
-                c4_component[1].target = player;
-                //Chaining[] player_component = player.GetComponents<Chaining> ();
-                //player_component[0].target = c4;
-                player.GetComponents<SimpleTeleport_NetworkVersion> ()[0].balloonSet.Add(BalloonSet_Network);
-                GameObject camera = GameObject.FindGameObjectsWithTag("MainCamera")[0];
-                camera.GetComponents<Camera_Network>()[0].myPlayer = player;
+                PhotonNetwork.Instantiate(this.playerPrefab.name, new Vector2(Random.Range(-6.0f, 6.0f), -3f), Quaternion.identity, 0);
+                
 
-                //player.AddComponent<CameraWork>();
-                //player.GetComponents<CameraWork>()[0].OnStartFollowing();
-                //GameObject.Find("Main Camera").GetComponent<Camera_Network>().myPlayer = player;
             }
             else
             {
                 Debug.LogFormat("Ignoring scene load for {0}", SceneManagerHelper.ActiveSceneName);
             }
+            
         }
         
     }
@@ -67,7 +60,12 @@ public class GameManager : MonoBehaviourPunCallbacks
     // Update is called once per frame
     void Update()
     {
-        
+        if(gameStart && dropping == false)
+        {
+            dropping = true;
+            StartGenerator();
+            startButton.SetActive(false);
+        }    
     }
 
     private IEnumerator EnemyGenerator()
@@ -83,6 +81,11 @@ public class GameManager : MonoBehaviourPunCallbacks
     public void StartGenerator()
     {
         StartCoroutine(EnemyGenerator());
+    }
+
+    public void StartGame()
+    {
+        gameStart = true;
     }
 
     #region Photon Callbacks

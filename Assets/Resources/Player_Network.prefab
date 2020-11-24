@@ -141,6 +141,7 @@ MonoBehaviour:
   smoothTime: 0.05
   distanceThreshold: 0.01
   shootCooldown: 0.3
+  PlayerUiPrefab: {fileID: 5932812169316714979, guid: d02a902e74c174d44b6b4f7617d47e3e, type: 3}
   bulletPrefab: {fileID: 7428196229701916301, guid: 0e7cc17725192d340aeb6fdca651aaaa, type: 3}
 --- !u!50 &-17806746042696793
 Rigidbody2D:

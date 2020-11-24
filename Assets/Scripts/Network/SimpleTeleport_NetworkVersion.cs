@@ -12,6 +12,7 @@ public class SimpleTeleport_NetworkVersion : MonoBehaviourPunCallbacks
     public float smoothTime = 0.05F;
     public float distanceThreshold = 1F;
     public float shootCooldown = 2.0f;
+    public GameObject PlayerUiPrefab;
     // public float bulletSpeed;
     public GameObject bulletPrefab;
 
@@ -26,8 +27,18 @@ public class SimpleTeleport_NetworkVersion : MonoBehaviourPunCallbacks
 
     void Start()
     {
-     
-       // GameObject.Find("Main Camera").GetComponent<Camera_Network>().setPlayer(this.gameObject.transform);
+        //initial player UI
+        if (PlayerUiPrefab != null)
+        {
+            GameObject _uiGo = Instantiate(PlayerUiPrefab);
+            _uiGo.SendMessage("SetTarget", this, SendMessageOptions.RequireReceiver);
+        }
+        else
+        {
+            Debug.LogWarning("<Color=Red><a>Missing</a></Color> PlayerUiPrefab reference on player Prefab.", this);
+        }
+
+        // GameObject.Find("Main Camera").GetComponent<Camera_Network>().setPlayer(this.gameObject.transform);
 
         CameraWork _cameraWork = this.gameObject.GetComponent<CameraWork>();
 

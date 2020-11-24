@@ -7,6 +7,8 @@ using Photon.Pun;
 using Photon.Realtime;
 using System.Collections;
 
+using UnityEngine.UI;
+
 public class GameManager : MonoBehaviourPunCallbacks
 {
     #region Public Fields
@@ -16,10 +18,15 @@ public class GameManager : MonoBehaviourPunCallbacks
     #endregion
     public bool gameStart = false;
     private bool dropping = false;
+    [Tooltip("UI Text to display Player's ranking")]
+    [SerializeField]
+    private Text rankingText;
     [Tooltip("start Button for the UI")]
     [SerializeField]
     private GameObject startButton;
     public float gravity = 0.5F;
+    private GameObject[] Players;
+    private List<Text> Rankings = new List<Text>();
     private List<GameObject> playerList = new List<GameObject>();
     // Start is called before the first frame update
     void Start()
@@ -83,7 +90,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     public void StartGame()
     {
         gameStart = true;
-        GameObject[] Players = GameObject.FindGameObjectsWithTag("player");
+        Players = GameObject.FindGameObjectsWithTag("player");
         // now all your game objects are in GOs,
         // all that remains is to getComponent of each and every script and you are good to go.
         // to disable a components
@@ -92,6 +99,8 @@ public class GameManager : MonoBehaviourPunCallbacks
             // to access component - GOs[i].GetComponent.<BoxCollider>()
             // but I do it everything in 1 line.
             Players[i].GetComponent<Rigidbody2D>().gravityScale = gravity;
+            Rankings.Add(Instantiate(rankingText));
+            Rankings[i].transform.SetParent(GameObject.Find("Canvas").GetComponent<Transform>(), false);
         }
     }
     #region Photon Callbacks

@@ -33,8 +33,10 @@ public class ProjectileController_Network : MonoBehaviour
         Debug.Log("COLLISION WITH " + other.gameObject.name);
         Vector2 temp = other.transform.position;
         other.gameObject.GetComponent<ObjectController_Network>().TransitionToPosition(parentObject.transform.position);
-        
         parentObject.GetComponent<SimpleTeleport_NetworkVersion>().TransitionToPosition(temp);
+
+        
+
         Destroy(this.gameObject);
     }
 

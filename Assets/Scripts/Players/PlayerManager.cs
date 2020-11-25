@@ -54,11 +54,12 @@ public class PlayerManager : MonoBehaviourPun
         Run();
     }
     private void OnTriggerEnter2D(Collider2D other) {
-            anim.SetBool("isJumping",false);
+        isInAir = false;
+        anim.SetBool("isJumping",false); 
     }
 
     private void OnTriggerStay2D(Collider2D other) {
-        isInAir = false;
+
     }
 
     private void OnTriggerExit2D(Collider2D other) {

@@ -36,6 +36,7 @@ public class Launcher : MonoBehaviourPunCallbacks
         {
             // #Critical
             // this makes sure we can use PhotonNetwork.LoadLevel() on the master client and all clients in the same room sync their level automatically
+            // 確保所有連線的玩家均載入相同的遊戲場景
             PhotonNetwork.AutomaticallySyncScene = true;
         }
 
@@ -83,10 +84,11 @@ public class Launcher : MonoBehaviourPunCallbacks
             {
                 Debug.Log("We initial the room for the game ");
 
-
+                //這邊是第一個載入的場景
                 // #Critical
                 // Load the Room Level.
-                PhotonNetwork.LoadLevel("RoomForNetwork");
+                //PhotonNetwork.LoadLevel("RoomForNetwork");
+                PhotonNetwork.LoadLevel("Room1");
                 //PhotonNetwork.LoadLevel("ItemRoom");
             }
         }

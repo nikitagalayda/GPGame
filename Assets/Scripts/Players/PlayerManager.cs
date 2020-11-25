@@ -4,7 +4,7 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Pun.Demo.PunBasics;
 
-public class DemoWizard : MonoBehaviourPun
+public class PlayerManager : MonoBehaviourPun
 {
     public float movePower = 10f;
     public float jumpPower = 15f; //Set Gravity Scale in Rigidbody2D Component to 5
@@ -20,24 +20,26 @@ public class DemoWizard : MonoBehaviourPun
     // Start is called before the first frame update
     void Start()
     {
-        if (photonView.IsMine == false && PhotonNetwork.IsConnected == true)
-        {
-            return;
-        }
-        CameraWork2D _cameraWork = this.gameObject.GetComponent<CameraWork2D>();
- 
-        if (_cameraWork != null)
+        CameraWork2D _cameraWork2d = this.gameObject.GetComponent<CameraWork2D>();
+    
+        if (_cameraWork2d != null)
         {
             if (photonView.IsMine)
             {
-                _cameraWork.OnStartFollowing();
+                _cameraWork2d.OnStartFollowing();
             }
         }
         else 
         {
             Debug.LogError("playerPrefab- CameraWork component 遺失", 
                 this); 
-        }        
+        }
+        
+        if (photonView.IsMine == false && PhotonNetwork.IsConnected == true)
+        {
+            return;
+        }
+        
         rb=GetComponent<Rigidbody2D>();
         anim=GetComponent<Animator>();
 

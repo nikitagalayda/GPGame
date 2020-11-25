@@ -8,9 +8,6 @@ using Photon.Realtime;
 using System.Collections;
 
 public class GameManager : MonoBehaviourPunCallbacks
-
-
-
 {
     #region Public Fields
     [Tooltip("The prefab to use for representing the player")]

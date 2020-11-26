@@ -8,10 +8,10 @@ public class Chaining : MonoBehaviour
 {
     float kp=10f;
     float ki=0f;
-    float kd=2f; 
+    float kd=1f; 
     public GameObject target;
     public Vector3 targetOffset;
-    public float stableDistance;
+    float stableDistance=0.1f;
     public Vector3 selftOffset;
     
     Rigidbody2D playerRigidbody2D;

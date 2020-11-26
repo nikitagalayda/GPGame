@@ -8,13 +8,12 @@ using Photon.Realtime;
 using System.Collections;
 
 public class GameManager : MonoBehaviourPunCallbacks
-
-
-
 {
     #region Public Fields
     [Tooltip("The prefab to use for representing the player")]
     public GameObject playerPrefab;
+    public GameObject playerSpawnLocation;
+    //public GameObject player;
     #endregion
     public static GameManager Instance;
     public bool gameStart = false;
@@ -28,14 +27,15 @@ public class GameManager : MonoBehaviourPunCallbacks
 
 
         Instance = this;
-
-
+        PhotonNetwork.Instantiate(this.playerPrefab.name, new Vector2(playerSpawnLocation.transform.position[0],playerSpawnLocation.transform.position[1]), Quaternion.identity, 0);
+        /*
         if (playerPrefab == null)
         {
             Debug.LogError("<Color=Red><a>Missing</a></Color> playerPrefab Reference. Please set it up in GameObject 'Game Manager'",this);
         }
         else
         {
+            GameObject player;
             Debug.LogFormat("We are Instantiating LocalPlayer from {0}", Application.loadedLevelName);
             // we're in a room. spawn a character for the local player. it gets synced by using PhotonNetwork.Instantiate
             if (SimpleTeleport_NetworkVersion.LocalPlayerInstance == null)
@@ -52,6 +52,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             }
             
         }
+        */
     }
 
     // Update is called once per frame
@@ -84,6 +85,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         gameStart = true;
     }
+
     #region Photon Callbacks
 
 

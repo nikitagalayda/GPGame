@@ -1,10 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Photon.Pun;
-using Photon.Pun.Demo.PunBasics;
 
-public class DemoWizard : MonoBehaviourPun
+public class DemoWizard : MonoBehaviour
 {
     public float movePower = 10f;
     public float jumpPower = 15f; //Set Gravity Scale in Rigidbody2D Component to 5
@@ -14,53 +12,22 @@ public class DemoWizard : MonoBehaviourPun
     Vector3 movement;
     private int direction=1;
     bool isJumping = false;
-    bool isInAir = false;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        if (photonView.IsMine == false && PhotonNetwork.IsConnected == true)
-        {
-            return;
-        }
-        CameraWork2D _cameraWork = this.gameObject.GetComponent<CameraWork2D>();
- 
-        if (_cameraWork != null)
-        {
-            if (photonView.IsMine)
-            {
-                _cameraWork.OnStartFollowing();
-            }
-        }
-        else 
-        {
-            Debug.LogError("playerPrefab- CameraWork component 遺失", 
-                this); 
-        }        
         rb=GetComponent<Rigidbody2D>();
         anim=GetComponent<Animator>();
 
     }
 
     private void FixedUpdate() {
-        if (photonView.IsMine == false && PhotonNetwork.IsConnected == true)
-        {
-            return;
-        }
         Jump();
         Run();
     }
     private void OnTriggerEnter2D(Collider2D other) {
             anim.SetBool("isJumping",false);
-    }
-
-    private void OnTriggerStay2D(Collider2D other) {
-        isInAir = false;
-    }
-
-    private void OnTriggerExit2D(Collider2D other) {
-        isInAir = true;
     }
 
 
@@ -95,10 +62,6 @@ public class DemoWizard : MonoBehaviourPun
             anim.SetBool("isJumping",true);
         }
         if(!isJumping){
-            return;
-        }
-
-        if(isInAir){
             return;
         }
 

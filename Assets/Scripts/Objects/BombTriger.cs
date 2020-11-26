@@ -6,6 +6,7 @@ public enum types
 {
     countDown,
     onCollision,
+    onCollisionAndCountDown,
     stop
 };
 public class BombTriger : MonoBehaviour
@@ -16,6 +17,7 @@ public class BombTriger : MonoBehaviour
     public GameObject target = null;
 
     private GameObject collisionObject = null;
+    private bool startCountDown = false;
 
     // Start is called before the first frame update
     void Start()
@@ -31,7 +33,9 @@ public class BombTriger : MonoBehaviour
             switch (trigerType)
             {
                 case types.countDown:
-                    //Debug.Log("CountDown");
+                    if(!startCountDown){
+                        startCountDown = true;
+                    }
                     CountDown();
                     if(passTime >= countDownTime){
                         Triger();
@@ -39,11 +43,21 @@ public class BombTriger : MonoBehaviour
                     }
                     break;
                 case types.onCollision:
-                    //Debug.Log("onCollision");
                     if(collisionObject != null){
-                        //Debug.Log("collision:" + collisionObject.name);
                         Triger();
                         trigerType = types.stop;
+                    }
+                    break;
+                case types.onCollisionAndCountDown:
+                    if(collisionObject != null && !startCountDown){
+                        startCountDown = true;
+                    }
+                    if(startCountDown){
+                        CountDown();
+                        if(passTime >= countDownTime){
+                            Triger();
+                            trigerType = types.stop;
+                        }
                     }
                     break;
             }

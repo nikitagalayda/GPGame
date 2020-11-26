@@ -45,7 +45,7 @@ public class Bomb : MonoBehaviour
                 Vector3 forceDirection = -(gameObject.transform.position - item.transform.position);
                 forceDirection[2] = 0;
                 Debug.Log("bomb effect: other " + item.name + ":" +  forceDirection.normalized);
-                item.GetComponent<Rigidbody2D>().AddForce(forceDirection * bombForce);
+                item.GetComponent<Rigidbody2D>().AddForce(forceDirection * bombForce,ForceMode2D.Impulse);
             }
         }
 

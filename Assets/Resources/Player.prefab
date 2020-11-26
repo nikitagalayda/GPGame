@@ -79,7 +79,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!61 &8519996042480187339
 BoxCollider2D:
@@ -139,11 +139,12 @@ MonoBehaviour:
   Group: 0
   prefixField: -1
   observableSearch: 2
-  Synchronization: 3
+  Synchronization: 1
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 2519018532784705452}
   - {fileID: 2519018532784705453}
+  - {fileID: 2519018532784705442}
   - {fileID: 2519018532784705445}
   viewIdField: 0
   InstantiationId: 0

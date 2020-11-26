@@ -4,7 +4,7 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Pun.Demo.PunBasics;
 
-public class PlayerManager : MonoBehaviourPun
+public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
 {
     public float movePower = 10f;
     public float jumpPower = 15f; //Set Gravity Scale in Rigidbody2D Component to 5
@@ -16,6 +16,19 @@ public class PlayerManager : MonoBehaviourPun
     bool isJumping = false;
     bool isInAir = false;
 
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            // 為玩家本人的狀態, 將 IsFiring 的狀態更新給其他玩家
+            //stream.SendNext(IsFiring);
+        }
+        else
+        {
+            // 非為玩家本人的狀態, 單純接收更新的資料
+            //this.IsFiring = (bool)stream.ReceiveNext();
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -54,12 +67,12 @@ public class PlayerManager : MonoBehaviourPun
         Run();
     }
     private void OnTriggerEnter2D(Collider2D other) {
-        isInAir = false;
         anim.SetBool("isJumping",false); 
+        isJumping = false;
     }
 
     private void OnTriggerStay2D(Collider2D other) {
-
+        isInAir = false;
     }
 
     private void OnTriggerExit2D(Collider2D other) {
@@ -112,5 +125,5 @@ public class PlayerManager : MonoBehaviourPun
 
         isJumping=false;
     }
-    
+
 }

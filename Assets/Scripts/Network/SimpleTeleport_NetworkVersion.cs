@@ -90,78 +90,65 @@ public class SimpleTeleport_NetworkVersion : MonoBehaviourPunCallbacks
                     GameObject bullet = PhotonNetwork.Instantiate("BulletPrefab_Network", transform.position, Quaternion.identity);
                     Vector2 shootDirection = (Vector2)Vector3.Normalize(currentMouseVector - (Vector2)transform.position);
                     //Debug.Log(shootDirection);
-                    bullet.GetComponent<ProjectileController_Network>().moveToTarget(shootDirection);
+                    
                     bullet.GetComponent<ProjectileController_Network>().parentObject = this.gameObject;
+                    bullet.GetComponent<ProjectileController_Network>().moveToTarget(shootDirection);
                 // }
             }
-            GameObject manager = GameObject.Find("Game Manager");
+            //GameObject manager = GameObject.Find("Game Manager");
             
 
             if(Time.time >= nextShotTimestamp) {
                 canShoot = true;
             }
 
-            // bullet.transform.Translate(shootDirection * bulletSpeed * Time.deltaTime);
-            // bullet.GetComponent<Rigidbody2D>().velocity = shootDirection * bulletSpeed * Time.deltaTime;
-            // Debug.Log(bullet.GetComponent<Rigidbody2D>().velocity);
-
-            // if (hit.collider != null)
-            // {
-
-            // if(!inTransition) {
-            //     transitionTarget = target.transform.position;
-            //     inTransition = true;
-            //     target.GetComponent<ObjectController>().TransitionToPosition(transform.position);
-            // }
-
-            //     // pseudocode
-            //     // if(target == someObjectType) {
-            //     // }
-            // }
-        
 
         }
 
 
-        /**if (Vector2.Distance(current2DPosition, transitionTarget) <= distanceThreshold)
-        {
-            inTransition = false;
-        }
-        **/
+
         
 
     }
 
     void FixedUpdate()
     {
-        /**if (inTransition )
-        {
-            transform.position = Vector2.SmoothDamp(transform.position, transitionTarget, ref velocity, smoothTime);
-        }**/
+
     }
-    
-    public void TransitionToPosition(Vector2 targetPosition)
+    [PunRPC]
+    public void TransitionToPosition(Vector3 targetPosition)
     {
-        /**if (!inTransition)
-        {
-            transitionTarget = targetPosition;
-            // Debug.Log(transitionTarget);
-            inTransition = true;
-        }**/
-        transform.position = targetPosition;
+        transform.position = (Vector2)targetPosition;
         
-        rb.velocity = new Vector2(0.0f, 2.0f);
     }
 
 
     void OnCollisionEnter2D(Collision2D Collider)
     {
         print("A:" + Collider.gameObject.name); //印出A:碰撞對象的名字
-        if(Collider.gameObject.name == "Lava")
-            GameManager.Instance.LeaveRoom();
+        //if(Collider.gameObject.name == "Lava")
+            //GameManager.Instance.LeaveRoom();
+        //if( photonView.IsMine && Collider.gameObject.name == "BulletPrefab_Network(Clone)"){
+                //this.transform.position = Collider.gameObject.GetComponent<ProjectileController_Network>().initialPos;
+                //parentObject.transform.position =  bulletPos;
 
+        //}
     }
+
+    void OnTriggerEnter2D(Collider2D other) {
+            Debug.Log("ASDASDASDADASDADADSASD");
+            Debug.Log("trigger WITH " + other.gameObject.name);
+            //if( other.gameObject.name == "BulletPrefab_Network(Clone)"){
+              //  Debug.Log("ASDASDASDADASDADADSASD");
+                //TransitionToPosition(other.gameObject.GetComponent<ProjectileController_Network>().initialPos);
+                //parentObject.transform.position =  bulletPos;
+
+            }
+        
+
+
     #region IPunObservable implementation
+
 
 
 

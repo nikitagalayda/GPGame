@@ -103,12 +103,9 @@ public class Launcher : MonoBehaviourPunCallbacks
             if (PhotonNetwork.CurrentRoom.PlayerCount == 1)
             {
                 Debug.Log("We initial the room for the game ");
-
-
                 // #Critical
                 // Load the Room Level.
-                PhotonNetwork.LoadLevel("RoomForNetwork");
-                //PhotonNetwork.LoadLevel("ItemRoom");
+                PhotonNetwork.LoadLevel("WaitingRoom");
             }
         }
 

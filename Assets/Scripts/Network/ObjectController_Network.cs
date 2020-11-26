@@ -36,7 +36,7 @@ public class ObjectController_Network : MonoBehaviour
         **/
     }
 
-    public void TransitionToPosition(Vector2 targetPosition) {
+    public void TransitionToPosition(Vector3 targetPosition) {
         transform.position = targetPosition;
     }
 }

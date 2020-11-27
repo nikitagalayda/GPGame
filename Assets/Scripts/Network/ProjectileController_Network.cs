@@ -32,12 +32,12 @@ public class ProjectileController_Network : MonoBehaviour
     void OnCollisionEnter2D(Collision2D other) {
         Debug.Log("COLLISION WITH " + other.gameObject.name);
         Vector2 temp = other.transform.position;
-        other.gameObject.GetComponent<ObjectController_Network>().TransitionToPosition(parentObject.transform.position);
-        parentObject.GetComponent<SimpleTeleport_NetworkVersion>().TransitionToPosition(temp);
+        //other.gameObject.GetComponent<ObjectController_Network>().TransitionToPosition(parentObject.transform.position);
+        //parentObject.GetComponent<SimpleTeleport_NetworkVersion>().TransitionToPosition(temp);
 
         
 
-        Destroy(this.gameObject);
+        //Destroy(this.gameObject);
     }
 
     // private void OnTriggerEnter2D(Collider2D other) {

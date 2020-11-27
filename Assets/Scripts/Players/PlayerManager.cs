@@ -6,6 +6,7 @@ using Photon.Pun.Demo.PunBasics;
 
 public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
 {
+    public InventoryObject inventory;
     public float movePower = 10f;
     public float jumpPower = 15f; //Set Gravity Scale in Rigidbody2D Component to 5
 
@@ -58,6 +59,16 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
 
     }
 
+    private void Update(){
+        if (Input.GetKeyDown(KeyCode.Space)){
+            inventory.save();
+        }
+        if (Input.GetKeyDown(KeyCode.KeypadEnter)){
+            inventory.load();
+        }
+
+    }
+    
     private void FixedUpdate() {
         if (photonView.IsMine == false && PhotonNetwork.IsConnected == true)
         {
@@ -66,6 +77,36 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
         Jump();
         Run();
     }
+
+    public void OnTriggerFloorDetector(Collider2D other){
+        //Debug.Log("I am "+this.name+", floor detected");
+        anim.SetBool("isJumping",false); 
+        isJumping = false;
+    }
+
+    public void OnTriggerStayFloorDetector(Collider2D other) {
+        isInAir = false;
+    }
+
+    public void OnTriggerExitFloorDetector(Collider2D other) {
+        isInAir = true;
+    }
+
+    public void OnTriggerEnterItemObjectDetector(Collider2D other) {
+        Debug.Log(this.name+" touch: " + other.name);
+        var item = other.GetComponent<Item>();
+        //Debug.Log(item);
+        if(item){
+            inventory.AddItem(item.item, 1);
+            Destroy(other.gameObject);
+        }
+    }
+
+    private void OnApplicationQuit(){
+        inventory.Container.Clear();
+    }
+
+    /*
     private void OnTriggerEnter2D(Collider2D other) {
         anim.SetBool("isJumping",false); 
         isJumping = false;
@@ -78,8 +119,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
     private void OnTriggerExit2D(Collider2D other) {
         isInAir = true;
     }
-
-
+    */
     void Run(){
         Vector3 moveVelocity= Vector3.zero;
             anim.SetBool("isRunning",false);

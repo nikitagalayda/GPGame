@@ -45,8 +45,8 @@ public class SimpleTeleport : MonoBehaviourPunCallbacks
                 GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
                 Vector2 shootDirection = (Vector2)Vector3.Normalize(currentMouseVector - (Vector2)transform.position);
                 Debug.Log(shootDirection);
-                bullet.GetComponent<ProjectileController>().moveToTarget(shootDirection);
-                bullet.GetComponent<ProjectileController>().parentObject = this.gameObject;
+                bullet.GetComponent<ProjectileController_Network>().moveToTarget(shootDirection);
+                bullet.GetComponent<ProjectileController_Network>().parentObject = this.gameObject;
                 // }
             }
             if (Time.time >= nextShotTimestamp)

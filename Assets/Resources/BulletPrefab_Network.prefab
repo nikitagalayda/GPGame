@@ -121,7 +121,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectileSpeed: 10
-  parentObject: {fileID: 0}
+  parentObject: {fileID: 6401610849627112038, guid: 468316095e4dd9343824295b70e74b01, type: 3}
 --- !u!114 &7734685845312096330
 MonoBehaviour:
   m_ObjectHideFlags: 0

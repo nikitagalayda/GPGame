@@ -25,13 +25,13 @@ public class SimpleTeleport_NetworkVersion : MonoBehaviourPunCallbacks
     void Start()
     {
      
-        GameObject.Find("Main Camera").GetComponent<Camera_Network>().setPlayer(this.gameObject.transform);
+        //GameObject.Find("Main Camera").GetComponent<Camera_Network>().setPlayer(this.gameObject.transform);
         // Debug.Log("Starting Player Script");
     }
     void Awake()
     {
   
-        GetComponent<SpriteRenderer>().color = Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f); 
+        //GetComponent<SpriteRenderer>().color = Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f); 
         // #Important
         // used in GameManager.cs: we keep track of the localPlayer instance to prevent instantiation when levels are synchronized
         if (photonView.IsMine)
@@ -65,6 +65,7 @@ public class SimpleTeleport_NetworkVersion : MonoBehaviourPunCallbacks
                     bullet.GetComponent<ProjectileController_Network>().parentObject = this.gameObject;
                 // }
             }
+            /*
             GameObject manager = GameObject.Find("Game Manager");
             
             bool start = manager.GetComponent<GameManager>().gameStart;
@@ -73,6 +74,7 @@ public class SimpleTeleport_NetworkVersion : MonoBehaviourPunCallbacks
                 GetComponent<Rigidbody2D>().gravityScale = 0.05f;
                 falling = true;
             }
+            */
             if(Time.time >= nextShotTimestamp) {
                 canShoot = true;
             }

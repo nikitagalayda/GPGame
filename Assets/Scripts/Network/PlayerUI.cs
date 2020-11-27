@@ -39,6 +39,7 @@ public class PlayerUI : MonoBehaviour
     {
         this.transform.SetParent(GameObject.Find("Canvas").GetComponent<Transform>(), false);
         _canvasGroup = this.GetComponent<CanvasGroup>();
+
     }
 
     void LateUpdate()

@@ -28,15 +28,7 @@ public class SimpleTeleport_NetworkVersion : MonoBehaviourPunCallbacks
     void Start()
     {
         //initial player UI
-        if (PlayerUiPrefab != null)
-        {
-            GameObject _uiGo = Instantiate(PlayerUiPrefab);
-            _uiGo.SendMessage("SetTarget", this, SendMessageOptions.RequireReceiver);
-        }
-        else
-        {
-            Debug.LogWarning("<Color=Red><a>Missing</a></Color> PlayerUiPrefab reference on player Prefab.", this);
-        }
+        createNameUI();
 
         // GameObject.Find("Main Camera").GetComponent<Camera_Network>().setPlayer(this.gameObject.transform);
 
@@ -113,15 +105,47 @@ public class SimpleTeleport_NetworkVersion : MonoBehaviourPunCallbacks
 
     void FixedUpdate()
     {
+        Vector2 current2DPosition = new Vector2(transform.position.x, transform.position.y);
 
+        if (inTransition)
+        {
+            if (Vector2.Distance(current2DPosition, transitionTarget) <= distanceThreshold)
+            {
+                inTransition = false;
+            }
+            transform.position = Vector2.SmoothDamp(transform.position, transitionTarget, ref velocity, smoothTime);
+        }
+
+    }
+    [PunRPC]
+    public void TransitionToPosition(Vector2 targetPosition)
+    {
+        if (!inTransition)
+        {
+            transitionTarget = targetPosition;
+            Debug.Log(transitionTarget);
+            inTransition = true;
+        }
     }
     [PunRPC]
     public void TransitionToPosition(Vector3 targetPosition)
     {
-        transform.position = (Vector2)targetPosition;
+        transform.position = targetPosition;
         
     }
 
+    public void createNameUI()
+    {
+        if (PlayerUiPrefab != null)
+        {
+            GameObject _uiGo = Instantiate(PlayerUiPrefab);
+            _uiGo.SendMessage("SetTarget", this, SendMessageOptions.RequireReceiver);
+        }
+        else
+        {
+            Debug.LogWarning("<Color=Red><a>Missing</a></Color> PlayerUiPrefab reference on player Prefab.", this);
+        }
+    }
 
     void OnCollisionEnter2D(Collision2D Collider)
     {
@@ -135,16 +159,22 @@ public class SimpleTeleport_NetworkVersion : MonoBehaviourPunCallbacks
         //}
     }
 
-    void OnTriggerEnter2D(Collider2D other) {
-            Debug.Log("ASDASDASDADASDADADSASD");
-            Debug.Log("trigger WITH " + other.gameObject.name);
-            //if( other.gameObject.name == "BulletPrefab_Network(Clone)"){
-              //  Debug.Log("ASDASDASDADASDADADSASD");
-                //TransitionToPosition(other.gameObject.GetComponent<ProjectileController_Network>().initialPos);
-                //parentObject.transform.position =  bulletPos;
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        Debug.Log("trigger WITH " + other.gameObject.name);
 
+        if (other.gameObject.name == "BulletPrefab_Network(Clone)")
+        {
+            //  Debug.Log("ASDASDASDADASDADADSASD");
+            if ((other.gameObject.GetComponent<ProjectileController_Network>().parentObject != this.gameObject))
+            {
+                //this.transform.position = other.gameObject.GetComponent<ProjectileController_Network>().initialPos;
+                Debug.Log("Wooooooooo");
             }
-        
+            //parentObject.transform.position =  bulletPos;
+
+        }
+    }
 
 
     #region IPunObservable implementation

@@ -14,11 +14,11 @@ public class ProjectileController_Network : MonoBehaviourPunCallbacks
 
     void Start()
     {
-        
+        initialPos = this.transform.position;
     }
     void Awake()
     {
-        initialPos = this.transform.position;
+        
     }
     void FixedUpdate()
     {
@@ -35,6 +35,22 @@ public class ProjectileController_Network : MonoBehaviourPunCallbacks
         movingToTarget = true;
     }
 
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.tag == "Item")
+        {
+            Debug.Log("COLLISION WITH " + other.gameObject.name);
+            // PhotonView photonViewOther = PhotonView.Get(other.gameObject);
+            // photonViewOther.RPC("TransitionToPosition", RpcTarget.All, parentObject.transform.position);
+            PhotonView photonViewOther = PhotonView.Get(other.gameObject);
+            // other.gameObject.GetComponent<ObjectController_Network>().TransitionToPosition(parentObject.transform.position);
+            photonViewOther.RPC("TransitionToPosition", RpcTarget.All, parentObject.transform.position);
+            //parentObject.GetComponent<SimpleTeleport_NetworkVersion>().TransitionToPosition(other.transform.position);
+
+            Destroy(gameObject);
+        }
+    }
+    /*
     void OnTriggerEnter2D(Collider2D other) {
         Vector3 bulletPos = this.transform.position;
         if(!(other.gameObject==parentObject))
@@ -44,21 +60,24 @@ public class ProjectileController_Network : MonoBehaviourPunCallbacks
                 Debug.Log("-----------------ismine" + other.gameObject.name);
                 Vector2 temp = other.transform.position;
                 //other.transform.position = parentObject.transform.position;
-                other.gameObject.GetComponent<ObjectController_Network>().TransitionToPosition(parentObject.transform.position);
+                PhotonView photonViewOther = PhotonView.Get(other.gameObject);
+                photonViewOther.RPC("TransitionToPosition", RpcTarget.All, parentObject.transform.position);
                 parentObject.transform.position = temp;
                 PhotonNetwork.Destroy(this.gameObject);
                 
             
                 //parentObject.GetComponent<SimpleTeleport_NetworkVersion>().TransitionToPosition(temp);
             }
-            if( photonView.IsMine && other.gameObject.name == "Player_Network(Clone)"){
+            if(photonView.IsMine && other.gameObject.name == "Player_Network(Clone)"){
                 Debug.Log("-----------------ismine" + other.gameObject.name);
                 Vector3 temp = other.transform.position;
                 PhotonView photonViewOther = PhotonView.Get(other.gameObject);
+                //other.transform.position = parentObject.transform.position;
+                //other.gameObject.GetComponent<SimpleTeleport_NetworkVersion>().TransitionToPosition(parentObject.transform.position);
                 photonViewOther.RPC("TransitionToPosition", RpcTarget.All, parentObject.transform.position);
                 //PhotonView photonViewParent = PhotonView.Get(parentObject.gameObject);
                 //photonViewParent.RPC("TransitionToPosition", RpcTarget.All, temp);
-                parentObject.transform.position =  temp;
+                parentObject.transform.position = bulletPos;
                 //other.transform.position = temp;
                 
                 
@@ -77,6 +96,7 @@ public class ProjectileController_Network : MonoBehaviourPunCallbacks
        // if( other.gameObject.name == "Drop(Clone)" ||  other.gameObject.name == "Player_Network(Clone)")
             
     }
+    */
 
    
 }

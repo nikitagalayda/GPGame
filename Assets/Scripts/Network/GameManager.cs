@@ -8,7 +8,7 @@ using Photon.Realtime;
 using System.Collections;
 
 using UnityEngine.UI;
-
+using System.Linq;
 public class GameManager : MonoBehaviourPunCallbacks
 {
     #region Public Fields
@@ -18,47 +18,46 @@ public class GameManager : MonoBehaviourPunCallbacks
     #endregion
     public bool gameStart = false;
     private bool dropping = false;
-    [Tooltip("UI Text to display Player's ranking")]
-    [SerializeField]
-    private Text rankingText;
+    public GameObject[] Rankings;
     [Tooltip("start Button for the UI")]
     [SerializeField]
     private GameObject startButton;
     public float gravity = 0.5F;
     private GameObject[] Players;
-    private List<Text> Rankings = new List<Text>();
-    private List<GameObject> playerList = new List<GameObject>();
+    private List<GameObject> Playerlist = new List<GameObject>();
     // Start is called before the first frame update
+    void Awake()
+    {
+    
+    }
+
     void Start()
     {
+        Vector2 randPosition = new Vector2(Random.Range(-8.0f, 8.0f), -100.0f);
+        PhotonNetwork.Instantiate("Drop", randPosition, Quaternion.identity);
+        PhotonNetwork.Instantiate("Drop", randPosition, Quaternion.identity);
 
         StartGenerator();
         startButton.SetActive(false);
 
         Instance = this;
 
-        if (playerPrefab == null)
-        {
-            Debug.LogError("<Color=Red><a>Missing</a></Color> playerPrefab Reference. Please set it up in GameObject 'Game Manager'",this);
-        }
-        else
-        {
-            Debug.LogFormat("We are Instantiating LocalPlayer from {0}", Application.loadedLevelName);
-            // we're in a room. spawn a character for the local player. it gets synced by using PhotonNetwork.Instantiate
-            if (SimpleTeleport_NetworkVersion.LocalPlayerInstance == null)
-            {
-                Debug.LogFormat("We are Instantiating LocalPlayer from {0}", SceneManagerHelper.ActiveSceneName);
-                // we're in a room. spawn a character for the local player. it gets synced by using PhotonNetwork.Instantiate
-                playerList.Add(PhotonNetwork.Instantiate(this.playerPrefab.name, new Vector2(Random.Range(-6.0f, 6.0f), 1f), Quaternion.identity, 0));
-                
 
-            }
-            else
-            {
-                Debug.LogFormat("Ignoring scene load for {0}", SceneManagerHelper.ActiveSceneName);
-            }
-            
+        Players = GameObject.FindGameObjectsWithTag("player");
+        //Rankings = GameObject.FindGameObjectsWithTag("rank");
+
+        // now all your game objects are in GOs,
+        // all that remains is to getComponent of each and every script and you are good to go.
+        // to disable a components
+        for (int i = 0; i < Players.Length; i++)
+        {
+            // to access component - GOs[i].GetComponent.<BoxCollider>()
+            // but I do it everything in 1 line.
+            //Players[i].GetComponent<Rigidbody2D>().gravityScale = gravity;
+            Players[i].GetComponent<SimpleTeleport_NetworkVersion>().createNameUI();
+            //Players[i].transform.position += new Vector3(0, 0, 0);
         }
+
     }
 
     // Update is called once per frame
@@ -68,17 +67,51 @@ public class GameManager : MonoBehaviourPunCallbacks
         {
 
             dropping = true;
-            StartGenerator();
+            //StartGenerator();
             startButton.SetActive(false);
 
-        }    
+        }
+        //Rankings[0].text = Players.Length.ToString();
+        
+    }
+    void LateUpdate()
+    {
+
+        //Rankings[3].GetComponent<Text>().text = Players.Length.ToString();
+        //Rankings[2].GetComponent<Text>().text = Players.Length.ToString();
+        //Rankings[1].GetComponent<Text>().text = Players.Length.ToString();
+        //Rankings[0].GetComponent<Text>().text = Rankings.Length.ToString();
+        //GameObject[] SortedPlayer = Players;
+        float[] height = new float[5];
+        for (int i = 0; i < Players.Length; i++)
+        {
+            height[i] = Players[i].transform.position[1];
+        }
+
+        for (int i = 0; i < Players.Length; i++)
+        {
+            float max = -999;
+            int y = -1;
+            for (int j = 0;j < Players.Length; j++)
+            {
+                if(height[j]> max)
+                {
+                    max = height[j];
+                    y = j;
+                }
+            }
+            height[y] = -1000;
+            Rankings[i].GetComponent<Text>().text = (i + 1).ToString("0") + ". " + Players[y].GetComponent<SimpleTeleport_NetworkVersion>().photonView.Owner.NickName + " : " + Players[y].transform.position[1].ToString("0") + " m";
+            if (Players[y].GetComponent<SimpleTeleport_NetworkVersion>().photonView.IsMine)
+                Rankings[i].GetComponent<Text>().color = Color.red;
+        }
     }
 
     private IEnumerator EnemyGenerator()
     {
         while (true)
         {
-            Vector2 randPosition = new Vector2(Random.Range(-8.0f, 8.0f), 6.0f);
+            Vector2 randPosition = new Vector2(Random.Range(-8.0f, 8.0f), 100.0f);
             PhotonNetwork.Instantiate("Drop", randPosition, Quaternion.identity);
             yield return new WaitForSeconds(Mathf.Lerp(0.1f, 1.0f, Random.value));
         }
@@ -96,14 +129,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         // now all your game objects are in GOs,
         // all that remains is to getComponent of each and every script and you are good to go.
         // to disable a components
-        for (int i = 0; i < Players.Length; i++)
-        {
-            // to access component - GOs[i].GetComponent.<BoxCollider>()
-            // but I do it everything in 1 line.
-            Players[i].GetComponent<Rigidbody2D>().gravityScale = gravity;
-            Rankings.Add(Instantiate(rankingText));
-            Rankings[i].transform.SetParent(GameObject.Find("Canvas").GetComponent<Transform>(), false);
-        }
+
     }
     #region Photon Callbacks
 

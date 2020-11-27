@@ -65,7 +65,7 @@ using UnityEngine;
 		}
 
 
-		void LateUpdate()
+		void FixedUpdate()
 		{
 			// The transform target may not destroy on level load, 
 			// so we need to cover corner cases where the Main Camera is different everytime we load a new scene, and reconnect when that happens

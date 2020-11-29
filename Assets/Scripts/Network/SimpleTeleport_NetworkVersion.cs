@@ -24,6 +24,8 @@ public class SimpleTeleport_NetworkVersion : MonoBehaviourPunCallbacks
     private float nextShotTimestamp = 0.0f;
     private bool canShoot = true;
     private Color characterColor = Color.blue;
+    public BoxCollider2D m_Collider;
+
 
     void Start()
     {
@@ -128,12 +130,22 @@ public class SimpleTeleport_NetworkVersion : MonoBehaviourPunCallbacks
         }
     }
     [PunRPC]
-    public void TransitionToPosition(Vector3 targetPosition)
+    public void TransitionToPosition3(Vector3 targetPosition)
     {
-        transform.position = targetPosition;
-        
-    }
 
+        StartCoroutine(waitToTrans(0.2f, targetPosition));
+        m_Collider.enabled = false; 
+        StartCoroutine(turnOnCollider(0.3f));
+    }
+    IEnumerator waitToTrans(float time, Vector3 newPos)
+    {
+
+        //Wait for 4 seconds
+        yield return new WaitForSeconds(time);
+
+        //Rotate 40 deg
+        transform.position = newPos;
+    }    
     public void createNameUI()
     {
         if (PlayerUiPrefab != null)
@@ -149,9 +161,9 @@ public class SimpleTeleport_NetworkVersion : MonoBehaviourPunCallbacks
 
     void OnCollisionEnter2D(Collision2D Collider)
     {
-        print("A:" + Collider.gameObject.name); //印出A:碰撞對象的名字
-        //if(Collider.gameObject.name == "Lava")
-            //GameManager.Instance.LeaveRoom();
+        //print("A:" + Collider.gameObject.name); //印出A:碰撞對象的名字
+        if(Collider.gameObject.name == "lava")
+            GameManager.Instance.LeaveRoom();
         //if( photonView.IsMine && Collider.gameObject.name == "BulletPrefab_Network(Clone)"){
                 //this.transform.position = Collider.gameObject.GetComponent<ProjectileController_Network>().initialPos;
                 //parentObject.transform.position =  bulletPos;
@@ -176,7 +188,15 @@ public class SimpleTeleport_NetworkVersion : MonoBehaviourPunCallbacks
         }
     }
 
+    IEnumerator turnOnCollider(float time)
+    {
 
+        //Wait for 4 seconds
+        yield return new WaitForSeconds(time);
+
+        //Rotate 40 deg
+        m_Collider.enabled = true;
+    }
     #region IPunObservable implementation
 
 

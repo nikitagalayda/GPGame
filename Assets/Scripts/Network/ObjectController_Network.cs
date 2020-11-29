@@ -37,7 +37,7 @@ public class ObjectController_Network : MonoBehaviourPunCallbacks
             Debug.Log(transitionTarget);
         }
         **/
-        Debug.LogError("IM RUNNING");
+        //Debug.LogError("IM RUNNING");
         Vector2 current2DPosition = new Vector2(transform.position.x, transform.position.y);
 
         if (inTransition)
@@ -54,14 +54,13 @@ public class ObjectController_Network : MonoBehaviourPunCallbacks
 
 
     [PunRPC]
-    public void TransitionToPosition(Vector2 targetPosition)
+    public void TransitionToPosition(Vector3 targetPosition)
     {
-        if (!inTransition)
-        {
-            transitionTarget = targetPosition;
-            Debug.Log(transitionTarget);
-            inTransition = true;
-        }
+
+        transform.position = targetPosition;
+            //Debug.Log(transitionTarget);
+            //inTransition = true;
+        
     }
     /*
     public void TransitionToPosition(Vector3 targetPosition)

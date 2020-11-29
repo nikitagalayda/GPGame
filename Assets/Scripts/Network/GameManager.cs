@@ -22,9 +22,14 @@ public class GameManager : MonoBehaviourPunCallbacks
     [Tooltip("start Button for the UI")]
     [SerializeField]
     private GameObject startButton;
+    
+    public GameObject leaveButton;
     public float gravity = 0.5F;
     private GameObject[] Players;
     private List<GameObject> Playerlist = new List<GameObject>();
+    public GameObject floor ;
+    private float playerHeight = 0.05f;
+    private float elp = 5f;
     // Start is called before the first frame update
     void Awake()
     {
@@ -36,10 +41,40 @@ public class GameManager : MonoBehaviourPunCallbacks
         Vector2 randPosition = new Vector2(Random.Range(-8.0f, 8.0f), -100.0f);
         PhotonNetwork.Instantiate("Drop", randPosition, Quaternion.identity);
         PhotonNetwork.Instantiate("Drop", randPosition, Quaternion.identity);
+        if(PhotonNetwork.IsMasterClient)
+        {
+            for(int i = 0; i< 200;i++)
+            {
+                int randBox = Random.Range(0, 2);
+                float rand = Random.Range(-8.0f, 5.0f);
+                PhotonNetwork.Instantiate(this.floor.name, new Vector3(rand, -102f+(60f*playerHeight)*(float)(i+1), -5), Quaternion.identity, 0);
+                for(int j = 0;j< randBox;j++)
+                    PhotonNetwork.Instantiate("Drop", new Vector3(rand, -102f+(60f*playerHeight)*(float)(i+1)+1, -5), Quaternion.identity);
 
-        StartGenerator();
+                if(Mathf.Abs(rand+1.5f)>3f)
+                {
+                    if(rand>0){
+                        PhotonNetwork.Instantiate(this.floor.name, new Vector3(-8+5-rand, -102f+(60f*playerHeight)*(float)(i+1), -5), Quaternion.identity, 0);
+                        for(int j = 0;j< randBox;j++)
+                            PhotonNetwork.Instantiate("Drop", new Vector3(-8+5-rand, -102f+(60f*playerHeight)*(float)(i+1)+1, -5), Quaternion.identity, 0);
+                    }
+                    else
+                    {
+                        PhotonNetwork.Instantiate(this.floor.name, new Vector3(-8-rand+5, -102f+(60f*playerHeight)*(float)(i+1), -5), Quaternion.identity, 0);
+                        for(int j = 0;j< randBox;j++)
+                            PhotonNetwork.Instantiate("Drop", new Vector3(-8-rand+5, -102f+(60f*playerHeight)*(float)(i+1)+1, -5), Quaternion.identity, 0);
+
+                    }
+
+                }
+                   // PhotonNetwork.Instantiate(this.floor.name, new Vector3(Random.Range(-8.0f, 5.0f), -102f+(40f*playerHeight)*(float)(i+1), -5), Quaternion.identity, 0);
+
+            }
+            //StartCoroutine(SpawnLava());
+        }
+        //StartGenerator();
         startButton.SetActive(false);
-
+        leaveButton.SetActive(false);
         Instance = this;
 
 
@@ -63,6 +98,8 @@ public class GameManager : MonoBehaviourPunCallbacks
     // Update is called once per frame
     void Update()
     {
+
+        
         if(gameStart && dropping == false)
         {
 
@@ -85,7 +122,8 @@ public class GameManager : MonoBehaviourPunCallbacks
         float[] height = new float[5];
         for (int i = 0; i < Players.Length; i++)
         {
-            height[i] = Players[i].transform.position[1];
+            if(Players[i]!=null)
+                height[i] = Players[i].transform.position[1];
         }
 
         for (int i = 0; i < Players.Length; i++)
@@ -101,9 +139,11 @@ public class GameManager : MonoBehaviourPunCallbacks
                 }
             }
             height[y] = -1000;
-            Rankings[i].GetComponent<Text>().text = (i + 1).ToString("0") + ". " + Players[y].GetComponent<SimpleTeleport_NetworkVersion>().photonView.Owner.NickName + " : " + Players[y].transform.position[1].ToString("0") + " m";
-            if (Players[y].GetComponent<SimpleTeleport_NetworkVersion>().photonView.IsMine)
-                Rankings[i].GetComponent<Text>().color = Color.red;
+            if(Players[y]!=null)
+                {Rankings[i].GetComponent<Text>().text = (i + 1).ToString("0") + ". " + Players[y].GetComponent<SimpleTeleport_NetworkVersion>().photonView.Owner.NickName + " : " + Players[y].transform.position[1].ToString("0") + " m";
+                if (Players[y].GetComponent<SimpleTeleport_NetworkVersion>().photonView.IsMine)
+                    Rankings[i].GetComponent<Text>().color = Color.red;
+                }
         }
     }
 
@@ -185,8 +225,16 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     #endregion
     
-    #region Private Methods
 
+
+    #region Private Methods
+    private IEnumerator SpawnLava() 
+    {
+        while(true) {
+            PhotonNetwork.Instantiate("Liquid Particle", new Vector3(Random.Range(-8.0f, 5.0f), -100f, -5), Quaternion.identity, 0);
+            yield return new WaitForSeconds(0.1f);
+        }
+    }
 
     void LoadArena()
     {

@@ -91,6 +91,7 @@ using UnityEngine;
 		public void OnStartFollowing()
 		{	      
 			cameraTransform = Camera.main.transform;
+			
 			isFollowing = true;
 			// we don't smooth anything, we go straight to the right camera shot
 			Cut();
@@ -109,7 +110,7 @@ using UnityEngine;
 			cameraOffset.y = height;
 			
 			cameraTransform.position = this.transform.position+new Vector3(0.0f, 0.0f, -distance);
-
+			//GameObject.Find("Cameras").transform.position = this.transform.position+new Vector3(0.0f, 0.0f, -distance);
 		    
 	    }
 

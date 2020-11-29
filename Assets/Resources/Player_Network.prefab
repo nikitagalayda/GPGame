@@ -103,9 +103,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   smoothTime: 0.05
   distanceThreshold: 0.01
-  shootCooldown: 0.3
+  shootCooldown: 3
   PlayerUiPrefab: {fileID: 5932812169316714979, guid: d02a902e74c174d44b6b4f7617d47e3e, type: 3}
   bulletPrefab: {fileID: 7428196229701916301, guid: 0e7cc17725192d340aeb6fdca651aaaa, type: 3}
+  m_Collider: {fileID: 7304768650817721205}
 --- !u!50 &-17806746042696793
 Rigidbody2D:
   serializedVersion: 4
@@ -114,7 +115,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2114315733607091143}
-  m_BodyType: 1
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -183,7 +184,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MovementSpeed: 7
-  JumpForce: 7
+  JumpForce: 9
 --- !u!114 &-6157930337593824904
 MonoBehaviour:
   m_ObjectHideFlags: 0

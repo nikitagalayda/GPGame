@@ -34,7 +34,7 @@ public class ProjectileController_Network : MonoBehaviourPunCallbacks
         target = tg;
         movingToTarget = true;
     }
-
+/*
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.tag == "Item")
@@ -50,7 +50,7 @@ public class ProjectileController_Network : MonoBehaviourPunCallbacks
             Destroy(gameObject);
         }
     }
-    /*
+    */
     void OnTriggerEnter2D(Collider2D other) {
         Vector3 bulletPos = this.transform.position;
         if(!(other.gameObject==parentObject))
@@ -77,7 +77,9 @@ public class ProjectileController_Network : MonoBehaviourPunCallbacks
                 photonViewOther.RPC("TransitionToPosition", RpcTarget.All, parentObject.transform.position);
                 //PhotonView photonViewParent = PhotonView.Get(parentObject.gameObject);
                 //photonViewParent.RPC("TransitionToPosition", RpcTarget.All, temp);
-                parentObject.transform.position = bulletPos;
+                ///parentObject.transform.position = bulletPos;
+                PhotonView photonViewParent = PhotonView.Get(parentObject.gameObject);
+                photonViewParent.RPC("TransitionToPosition3", RpcTarget.All,bulletPos);
                 //other.transform.position = temp;
                 
                 
@@ -96,7 +98,7 @@ public class ProjectileController_Network : MonoBehaviourPunCallbacks
        // if( other.gameObject.name == "Drop(Clone)" ||  other.gameObject.name == "Player_Network(Clone)")
             
     }
-    */
+    
 
    
 }

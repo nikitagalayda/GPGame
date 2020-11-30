@@ -96,15 +96,19 @@ using UnityEngine;
 			// we don't smooth anything, we go straight to the right camera shot
 			Cut();
 		}
-		
-		#endregion
+		public void StopFollowing()
+		{
+			isFollowing = false;
+			// we don't smooth anything, we go straight to the right camera shot
+		}
+	#endregion
 
-		#region Private Methods
+	#region Private Methods
 
-		/// <summary>
-		/// Follow the target smoothly
-		/// </summary>
-		void Follow()
+	/// <summary>
+	/// Follow the target smoothly
+	/// </summary>
+	void Follow()
 		{
 			cameraOffset.z = -distance;
 			cameraOffset.y = height;

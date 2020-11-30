@@ -24,6 +24,8 @@ public class GameManager : MonoBehaviourPunCallbacks
     private GameObject startButton;
     
     public GameObject leaveButton;
+    public GameObject dieText;
+    public GameObject hintText;
     public float gravity = 0.5F;
     private GameObject[] Players;
     private List<GameObject> Playerlist = new List<GameObject>();
@@ -114,11 +116,6 @@ public class GameManager : MonoBehaviourPunCallbacks
     void LateUpdate()
     {
 
-        //Rankings[3].GetComponent<Text>().text = Players.Length.ToString();
-        //Rankings[2].GetComponent<Text>().text = Players.Length.ToString();
-        //Rankings[1].GetComponent<Text>().text = Players.Length.ToString();
-        //Rankings[0].GetComponent<Text>().text = Rankings.Length.ToString();
-        //GameObject[] SortedPlayer = Players;
         float[] height = new float[5];
         for (int i = 0; i < Players.Length; i++)
         {
@@ -205,7 +202,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient)
         {
             Debug.LogFormat("OnPlayerLeftRoom IsMasterClient {0}", PhotonNetwork.IsMasterClient); // called before OnPlayerLeftRoom
-
+            startButton.SetActive(true);
 
             LoadArena();
         }

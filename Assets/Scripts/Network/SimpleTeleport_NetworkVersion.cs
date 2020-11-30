@@ -25,8 +25,10 @@ public class SimpleTeleport_NetworkVersion : MonoBehaviourPunCallbacks
     private bool canShoot = true;
     private Color characterColor = Color.blue;
     public BoxCollider2D m_Collider;
-
-
+    private bool imDie = false;
+    private GameObject[] Players;
+    private int watchingPlayer = 0;
+    private CameraWork _cameraWork;
     void Start()
     {
         //initial player UI
@@ -34,7 +36,7 @@ public class SimpleTeleport_NetworkVersion : MonoBehaviourPunCallbacks
 
         // GameObject.Find("Main Camera").GetComponent<Camera_Network>().setPlayer(this.gameObject.transform);
 
-        CameraWork _cameraWork = this.gameObject.GetComponent<CameraWork>();
+        _cameraWork = this.gameObject.GetComponent<CameraWork>();
 
 
         if (_cameraWork != null)
@@ -59,6 +61,7 @@ public class SimpleTeleport_NetworkVersion : MonoBehaviourPunCallbacks
         // used in GameManager.cs: we keep track of the localPlayer instance to prevent instantiation when levels are synchronized
         if (photonView.IsMine)
         {
+            
             SimpleTeleport_NetworkVersion.LocalPlayerInstance = this.gameObject;
             
         }
@@ -68,7 +71,7 @@ public class SimpleTeleport_NetworkVersion : MonoBehaviourPunCallbacks
     }
     void Update()
     {
-        if (photonView.IsMine)
+        if (photonView.IsMine && !imDie)
         {
             // Debug.Log("sending out ray");
             // RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
@@ -95,10 +98,20 @@ public class SimpleTeleport_NetworkVersion : MonoBehaviourPunCallbacks
             if(Time.time >= nextShotTimestamp) {
                 canShoot = true;
             }
-
-
         }
-
+        if(imDie && photonView.IsMine)
+        {
+            
+            if (Input.GetKeyDown("space"))
+            {
+                _cameraWork.StopFollowing();
+                watchingPlayer = (watchingPlayer + 1) % Players.Length;
+                if(Players[watchingPlayer]==null)
+                    watchingPlayer = (watchingPlayer + 1) % Players.Length;
+                _cameraWork = Players[watchingPlayer].GetComponent<CameraWork>();
+                _cameraWork.OnStartFollowing();
+            }
+        }
 
 
         
@@ -119,21 +132,32 @@ public class SimpleTeleport_NetworkVersion : MonoBehaviourPunCallbacks
         }
 
     }
-    [PunRPC]
-    public void TransitionToPosition(Vector2 targetPosition)
+
+    public void TransitionToPosition2(Vector3 targetPosition)
     {
-        if (!inTransition)
-        {
-            transitionTarget = targetPosition;
-            Debug.Log(transitionTarget);
-            inTransition = true;
-        }
+        //if (!inTransition)
+        //{
+        this.transform.position = targetPosition;
+        //   Debug.Log(transitionTarget);
+        //inTransition = true;
+        //}
+    }
+
+    [PunRPC]
+    public void TransitionToPosition(Vector3 targetPosition)
+    {
+        //if (!inTransition)
+        //{
+            this.transform.position = targetPosition;
+         //   Debug.Log(transitionTarget);
+            //inTransition = true;
+        //}
     }
     [PunRPC]
     public void TransitionToPosition3(Vector3 targetPosition)
     {
 
-        StartCoroutine(waitToTrans(0.2f, targetPosition));
+        StartCoroutine(waitToTrans(0f, targetPosition));
         m_Collider.enabled = false; 
         StartCoroutine(turnOnCollider(0.3f));
     }
@@ -162,15 +186,31 @@ public class SimpleTeleport_NetworkVersion : MonoBehaviourPunCallbacks
     void OnCollisionEnter2D(Collision2D Collider)
     {
         //print("A:" + Collider.gameObject.name); //印出A:碰撞對象的名字
-        if(Collider.gameObject.name == "lava")
-            GameManager.Instance.LeaveRoom();
+        if (Collider.gameObject.name == "lava" && photonView.IsMine)
+        {
+            imDie = true;
+            GameManager.Instance.dieText.SetActive(true);
+            GameManager.Instance.hintText.SetActive(true);
+            StartCoroutine(delDieText());
+            Destroy(this.gameObject.GetComponent<CharacterController>());
+            Destroy(this.gameObject.GetComponent<Rigidbody2D>());
+            GameManager.Instance.leaveButton.SetActive(true);
+            Players = GameObject.FindGameObjectsWithTag("player");
+        }
+            
+                //GameManager.Instance.LeaveRoom();
         //if( photonView.IsMine && Collider.gameObject.name == "BulletPrefab_Network(Clone)"){
                 //this.transform.position = Collider.gameObject.GetComponent<ProjectileController_Network>().initialPos;
                 //parentObject.transform.position =  bulletPos;
 
         //}
     }
+    private IEnumerator delDieText()
+    {
+        yield return new WaitForSeconds(3f);
+        GameManager.Instance.dieText.SetActive(false);
 
+    }
     void OnTriggerEnter2D(Collider2D other)
     {
         Debug.Log("trigger WITH " + other.gameObject.name);

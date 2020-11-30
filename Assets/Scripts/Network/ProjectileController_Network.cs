@@ -74,6 +74,7 @@ public class ProjectileController_Network : MonoBehaviourPunCallbacks
                 PhotonView photonViewOther = PhotonView.Get(other.gameObject);
                 //other.transform.position = parentObject.transform.position;
                 //other.gameObject.GetComponent<SimpleTeleport_NetworkVersion>().TransitionToPosition(parentObject.transform.position);
+                other.gameObject.GetComponent<SimpleTeleport_NetworkVersion>().TransitionToPosition(parentObject.transform.position);
                 photonViewOther.RPC("TransitionToPosition", RpcTarget.All, parentObject.transform.position);
                 //PhotonView photonViewParent = PhotonView.Get(parentObject.gameObject);
                 //photonViewParent.RPC("TransitionToPosition", RpcTarget.All, temp);

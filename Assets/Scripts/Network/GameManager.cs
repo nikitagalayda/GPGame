@@ -115,6 +115,13 @@ public class GameManager : MonoBehaviourPunCallbacks
         player.GetComponent<PlayerManager>().inventory.Create();
         itembar.GetComponent<DisplayInventory>().inventory = player.GetComponent<PlayerManager>().inventory;
         */
+        for(int i = 0; i < Players.Count(); i++){
+            if (Players[i].GetComponent<PhotonView>().IsMine){
+                Debug.Log("set inventory");
+                itembar = GameObject.Find("ItemBar");
+                itembar.GetComponent<DisplayInventory>().inventory = Players[i].GetComponent<PlayerManager>().inventory;
+            }
+        }
         StartGenerator();
     }
 

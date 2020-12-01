@@ -1277,6 +1277,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 6401610849627112038, guid: 468316095e4dd9343824295b70e74b01, type: 3}
+  itembar: {fileID: 0}
+  database: {fileID: 11400000, guid: b6b9130b66130a044a5b5c15487e92b0, type: 2}
   gameStart: 0
   countdownText: {fileID: 1695902121}
   startButton: {fileID: 3442401}

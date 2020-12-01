@@ -14,6 +14,8 @@ public class WaitingManager : MonoBehaviourPunCallbacks, IOnEventCallback
     [Tooltip("The prefab to use for representing the player")]
     public GameObject playerPrefab;
     public static GameManager Instance;
+    public GameObject itembar;
+    public ItemDatabaseObject database;
     #endregion
     public bool gameStart = false;
     private bool dropping = false;
@@ -46,7 +48,13 @@ public class WaitingManager : MonoBehaviourPunCallbacks, IOnEventCallback
             {
                 Debug.LogFormat("We are Instantiating LocalPlayer from {0}", SceneManagerHelper.ActiveSceneName);
                 // we're in a room. spawn a character for the local player. it gets synced by using PhotonNetwork.Instantiate
-                playerList.Add(PhotonNetwork.Instantiate(this.playerPrefab.name, new Vector2(Random.Range(-6.0f, 6.0f), -100f), Quaternion.identity, 0));
+                GameObject player = PhotonNetwork.Instantiate(this.playerPrefab.name, new Vector2(Random.Range(-6.0f, 6.0f), -100f), Quaternion.identity, 0);
+                //playerList.Add(player);
+                player.GetComponent<PlayerManager>().inventory = (InventoryObject)InventoryObject.CreateInstance("InventoryObject");
+                player.GetComponent<PlayerManager>().inventory.savePath += "." + player.GetComponent<PhotonView>().ViewID;
+                player.GetComponent<PlayerManager>().inventory.database = database;
+                player.GetComponent<PlayerManager>().inventory.Create();
+                //itembar.GetComponent<DisplayInventory>().inventory = player.GetComponent<PlayerManager>().inventory;    
                 
 
             }

@@ -189,7 +189,7 @@ GameObject:
   - component: {fileID: -1000667385883363867}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Player
+  m_TagString: player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -347,7 +347,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 170aa3bff5d01c2428f840987af6239a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventory: {fileID: 11400000, guid: d9059f0f7b5c8bc46bee235e8bfdab02, type: 2}
+  inventory: {fileID: 0}
   movePower: 10
   jumpPower: 25
   bulletSpawnOffset: 8

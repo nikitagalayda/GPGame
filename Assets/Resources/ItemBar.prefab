@@ -89,7 +89,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   InventoryPrefab: {fileID: 7638471167274272499, guid: a38b546264febdf4b9e9d41a0f5fb453, type: 3}
-  inventory: {fileID: 11400000, guid: d9059f0f7b5c8bc46bee235e8bfdab02, type: 2}
+  inventory: {fileID: 0}
   X_START: -90
   Y_START: 0
   X_SPACE_BETWEEN_ITEM: 60

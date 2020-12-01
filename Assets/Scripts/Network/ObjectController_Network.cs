@@ -53,6 +53,7 @@ public class ObjectController_Network : MonoBehaviourPunCallbacks
     }
 
 
+
     [PunRPC]
     public void TransitionToPosition(Vector3 targetPosition)
     {
@@ -61,6 +62,15 @@ public class ObjectController_Network : MonoBehaviourPunCallbacks
             //Debug.Log(transitionTarget);
             //inTransition = true;
         
+    }
+    void OnCollisionEnter2D(Collision2D Collider)
+    {
+        //print("A:" + Collider.gameObject.name); //印出A:碰撞對象的名字
+        if (Collider.gameObject.name == "lava" && photonView.IsMine)
+        {
+            PhotonNetwork.Destroy(this.gameObject);
+        }
+            
     }
     /*
     public void TransitionToPosition(Vector3 targetPosition)

@@ -120,15 +120,15 @@ public class WaitingManager : MonoBehaviourPunCallbacks, IOnEventCallback
     public override void OnPlayerLeftRoom(Player other)
     {
         Debug.LogFormat("OnPlayerLeftRoom() {0}", other.NickName); // seen when other disconnects
-
+        PhotonNetwork.CurrentRoom.IsOpen = true; 
         countdownText.gameObject.SetActive(false);
         timeLeft = 3;
-
         if (PhotonNetwork.IsMasterClient)
         {
             everyoneReady = false;
             Debug.LogFormat("OnPlayerLeftRoom IsMasterClient {0}", PhotonNetwork.IsMasterClient); // called before OnPlayerLeftRoom
 
+            startButton.SetActive(true);
 
             LoadArena();
         }
@@ -144,6 +144,7 @@ public class WaitingManager : MonoBehaviourPunCallbacks, IOnEventCallback
     
     public void CountToStart()
     {
+        PhotonNetwork.CurrentRoom.IsOpen = false; 
         countdownText.gameObject.SetActive(true);
         StartCoroutine(ExecuteAfterTime(2,1));
         StartCoroutine(ExecuteAfterTime(1,2));
@@ -179,6 +180,9 @@ public class WaitingManager : MonoBehaviourPunCallbacks, IOnEventCallback
         yield return new WaitForSeconds(time);
         if(everyoneReady)
             PhotonNetwork.LoadLevel("RoomForNetwork");
+            PhotonNetwork.CurrentRoom.IsOpen = false; 
+            //RoomOptions roomOptions = new RoomOptions();
+            //PhotonNetwork.SendOptions
         // Code to execute after the delay
     }
 

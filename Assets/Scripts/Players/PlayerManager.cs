@@ -4,32 +4,18 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Pun.Demo.PunBasics;
 
-public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
+public class PlayerManager : MonoBehaviourPunCallbacks
 {
     public InventoryObject inventory;
     public float movePower = 10f;
     public float jumpPower = 15f; //Set Gravity Scale in Rigidbody2D Component to 5
-
+    public float bulletSpawnOffset = 100f;
     private Rigidbody2D rb;
     private Animator anim;
     Vector3 movement;
     private int direction=1;
     bool isJumping = false;
     bool isInAir = false;
-
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        if (stream.IsWriting)
-        {
-            // 為玩家本人的狀態, 將 IsFiring 的狀態更新給其他玩家
-            //stream.SendNext(IsFiring);
-        }
-        else
-        {
-            // 非為玩家本人的狀態, 單純接收更新的資料
-            //this.IsFiring = (bool)stream.ReceiveNext();
-        }
-    }
 
     // Start is called before the first frame update
     void Start()
@@ -58,16 +44,6 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
         anim=GetComponent<Animator>();
 
     }
-
-    private void Update(){
-        if (Input.GetKeyDown(KeyCode.Space)){
-            inventory.save();
-        }
-        if (Input.GetKeyDown(KeyCode.KeypadEnter)){
-            inventory.load();
-        }
-
-    }
     
     private void FixedUpdate() {
         if (photonView.IsMine == false && PhotonNetwork.IsConnected == true)
@@ -76,6 +52,15 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
         }
         Jump();
         Run();
+
+    }
+    private void Update(){
+        if (photonView.IsMine == false && PhotonNetwork.IsConnected == true)
+        {
+            return;
+        }
+        UseTheFirstItem();
+        DefaultShooting();
     }
 
     public void OnTriggerFloorDetector(Collider2D other){
@@ -94,16 +79,16 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
 
     public void OnTriggerEnterItemObjectDetector(Collider2D other) {
         Debug.Log(this.name+" touch: " + other.name);
-        var item = other.GetComponent<Item>();
+        var item = other.GetComponent<GroundItem>();
         //Debug.Log(item);
         if(item){
-            inventory.AddItem(item.item, 1);
+            inventory.AddItem(new Item(item.item), 1);
             Destroy(other.gameObject);
         }
     }
 
     private void OnApplicationQuit(){
-        inventory.Container.Clear();
+        inventory.Container.Items.Clear();
     }
 
     /*
@@ -164,6 +149,25 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
         rb.AddForce(jumpVelocity,ForceMode2D.Impulse);
 
         isJumping=false;
+    }
+
+    void UseTheFirstItem(){
+        if(Input.GetMouseButtonDown(1)){
+            //Debug.Log("GetButtonDown: time = " + Time.time);
+            var item = inventory.GetItemByIndex(0);
+            if(item != null){
+                Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                inventory.RemoveItem(item,1);                
+                item.ExecuteAllItemBuff(mousePosition);
+            }
+        }
+    }
+
+    void DefaultShooting(){
+        if(Input.GetMouseButtonDown(0)){
+            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            this.gameObject.GetComponent<ProjectileGenerator>().GenerateTheBullet(mousePosition,this.transform.position,bulletSpawnOffset);
+        }        
     }
 
 }

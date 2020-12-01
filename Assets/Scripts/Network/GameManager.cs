@@ -13,6 +13,9 @@ public class GameManager : MonoBehaviourPunCallbacks
     [Tooltip("The prefab to use for representing the player")]
     public GameObject playerPrefab;
     public GameObject playerSpawnLocation;
+    public GameObject itembar;
+    public ItemDatabaseObject database;
+    //public InventoryObject playerInventory;
     //public GameObject player;
     #endregion
     public static GameManager Instance;
@@ -27,7 +30,13 @@ public class GameManager : MonoBehaviourPunCallbacks
 
 
         Instance = this;
-        PhotonNetwork.Instantiate(this.playerPrefab.name, new Vector2(playerSpawnLocation.transform.position[0],playerSpawnLocation.transform.position[1]), Quaternion.identity, 0);
+        var player = PhotonNetwork.Instantiate(this.playerPrefab.name, new Vector2(playerSpawnLocation.transform.position[0],playerSpawnLocation.transform.position[1]), Quaternion.identity, 0);
+        //var inventory = PhotonNetwork.Instantiate(this.playerInventory.name, new Vector2(playerSpawnLocation.transform.position[0],playerSpawnLocation.transform.position[1]), Quaternion.identity, 0);
+        player.GetComponent<PlayerManager>().inventory = (InventoryObject)InventoryObject.CreateInstance("InventoryObject");
+        player.GetComponent<PlayerManager>().inventory.savePath += "." + player.GetComponent<PhotonView>().ViewID;
+        player.GetComponent<PlayerManager>().inventory.database = database;
+        player.GetComponent<PlayerManager>().inventory.Create();
+        itembar.GetComponent<DisplayInventory>().inventory = player.GetComponent<PlayerManager>().inventory;
         /*
         if (playerPrefab == null)
         {

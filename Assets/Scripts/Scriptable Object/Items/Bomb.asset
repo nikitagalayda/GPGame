@@ -12,8 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f03d69ce0fbb09142814c4a2f04ba986, type: 3}
   m_Name: Bomb
   m_EditorClassIdentifier: 
-  prefab: {fileID: 5760663561387464659, guid: 53d655869f6bac4419f68d3a6321b8d5, type: 3}
+  Id: 1
+  uiDisplay: {fileID: 21300000, guid: 1f4a0aae86ebe3a4abe7d92019f422cb, type: 3}
   itemType: 1
   description: The bomb that can be picked up and thrown by users.
-  pickableTimes: 1
-  useableTimes: 1
+  buffs:
+  - attribute: 0
+    value: 0
+    min: 2
+    max: 9

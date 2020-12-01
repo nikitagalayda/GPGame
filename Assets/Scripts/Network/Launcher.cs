@@ -105,7 +105,7 @@ public class Launcher : MonoBehaviourPunCallbacks
                 Debug.Log("We initial the room for the game ");
                 // #Critical
                 // Load the Room Level.
-                PhotonNetwork.LoadLevel("Room1");
+                PhotonNetwork.LoadLevel("WaitingRoom");
             }
         }
 

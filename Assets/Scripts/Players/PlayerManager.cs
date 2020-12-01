@@ -20,6 +20,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     void Start()
     {
+        /*
         CameraWork2D _cameraWork2d = this.gameObject.GetComponent<CameraWork2D>();
     
         if (_cameraWork2d != null)
@@ -34,6 +35,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
             Debug.LogError("playerPrefab- CameraWork component 遺失", 
                 this); 
         }
+        */
         
         if (photonView.IsMine == false && PhotonNetwork.IsConnected == true)
         {
@@ -60,7 +62,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
             return;
         }
         UseTheFirstItem();
-        DefaultShooting();
+        //DefaultShooting();
     }
 
     public void OnTriggerFloorDetector(Collider2D other){

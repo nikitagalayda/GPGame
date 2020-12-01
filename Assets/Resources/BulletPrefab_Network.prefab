@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 7428196229701916299}
   - component: {fileID: 7428196229701916298}
   - component: {fileID: 5439701622746340063}
-  - component: {fileID: 4050875085104875266}
   - component: {fileID: 7734685845312096330}
   - component: {fileID: 4056716815023056658}
-  - component: {fileID: -9048466508574276868}
+  - component: {fileID: 977279605111871201}
+  - component: {fileID: -5458652664135814510}
   m_Layer: 0
   m_Name: BulletPrefab_Network
   m_TagString: Untagged
@@ -31,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 7428196229701916301}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -106,22 +106,8 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
---- !u!114 &4050875085104875266
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7428196229701916301}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bba9c20e91310ba4489503a2c3784e22, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  projectileSpeed: 10
-  parentObject: {fileID: 6401610849627112038, guid: 468316095e4dd9343824295b70e74b01, type: 3}
 --- !u!114 &7734685845312096330
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -160,7 +146,7 @@ MonoBehaviour:
   m_SynchronizePosition: 1
   m_SynchronizeRotation: 0
   m_SynchronizeScale: 0
---- !u!58 &-9048466508574276868
+--- !u!58 &977279605111871201
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -170,9 +156,24 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.16
+--- !u!114 &-5458652664135814510
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7428196229701916301}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d97ddd9ba5d6a2b44a7f16f9371b947b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectileSpeed: 10
+  parentObject: {fileID: 0}
+  initialPos: {x: 0, y: 0, z: 0}

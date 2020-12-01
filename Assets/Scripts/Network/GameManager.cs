@@ -93,6 +93,7 @@ public class GameManager : MonoBehaviourPunCallbacks
                         {
                             flr = PhotonNetwork.Instantiate(this.floor.name, new Vector3(j, -102f + (60f * playerHeight) * (float)(i + 1), -5), Quaternion.identity, 0);
                             pastflrposition = j;
+                            PhotonNetwork.Instantiate("collectableBomb", new Vector3(j, -102f + (60f * playerHeight) * (float)(i + 1) +1, -5), Quaternion.identity, 0);
                         }
                     }
                 }

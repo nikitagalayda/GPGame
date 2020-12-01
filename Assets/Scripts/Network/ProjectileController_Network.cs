@@ -104,6 +104,10 @@ public class ProjectileController_Network : MonoBehaviourPunCallbacks
        // if( other.gameObject.name == "Drop(Clone)" ||  other.gameObject.name == "Player_Network(Clone)")
             
     }
+
+    void OnBecameInvisible() {
+        PhotonNetwork.Destroy(this.gameObject);
+    }
     
 
    

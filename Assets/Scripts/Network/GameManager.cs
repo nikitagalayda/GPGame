@@ -41,30 +41,28 @@ public class GameManager : MonoBehaviourPunCallbacks
     void Start()
     {
         Vector2 randPosition = new Vector2(Random.Range(-8.0f, 8.0f), -100.0f);
-        //PhotonNetwork.Instantiate("Drop", randPosition, Quaternion.identity);
-        //PhotonNetwork.Instantiate("Drop", randPosition, Quaternion.identity);
         if(PhotonNetwork.IsMasterClient)
         {
             for(int i = 0; i< 200;i++)
             {
                 /*int randBox = Random.Range(0, 2);
                 float rand = Random.Range(-8.0f, 5.0f);
-                PhotonNetwork.Instantiate(this.floor.name, new Vector3(rand, -102f+(60f*playerHeight)*(float)(i+1), -5), Quaternion.identity, 0);
+                PhotonNetwork.InstantiateSceneObject(this.floor.name, new Vector3(rand, -102f+(60f*playerHeight)*(float)(i+1), -5), Quaternion.identity, 0);
                 for(int j = 0;j< randBox;j++)
-                    PhotonNetwork.Instantiate("Drop", new Vector3(rand, -102f+(60f*playerHeight)*(float)(i+1)+1, -5), Quaternion.identity);
+                    PhotonNetwork.InstantiateSceneObject("Drop", new Vector3(rand, -102f+(60f*playerHeight)*(float)(i+1)+1, -5), Quaternion.identity);
 
                 if(Mathf.Abs(rand+1.5f)>3f)
                 {
                     if(rand>0){
-                        PhotonNetwork.Instantiate(this.floor.name, new Vector3(-8+5-rand, -102f+(60f*playerHeight)*(float)(i+1), -5), Quaternion.identity, 0);
+                        PhotonNetwork.InstantiateSceneObject(this.floor.name, new Vector3(-8+5-rand, -102f+(60f*playerHeight)*(float)(i+1), -5), Quaternion.identity, 0);
                         for(int j = 0;j< randBox;j++)
-                            PhotonNetwork.Instantiate("Drop", new Vector3(-8+5-rand, -102f+(60f*playerHeight)*(float)(i+1)+1, -5), Quaternion.identity, 0);
+                            PhotonNetwork.InstantiateSceneObject("Drop", new Vector3(-8+5-rand, -102f+(60f*playerHeight)*(float)(i+1)+1, -5), Quaternion.identity, 0);
                     }
                     else
                     {
-                        PhotonNetwork.Instantiate(this.floor.name, new Vector3(-8-rand+5, -102f+(60f*playerHeight)*(float)(i+1), -5), Quaternion.identity, 0);
+                        PhotonNetwork.InstantiateSceneObject(this.floor.name, new Vector3(-8-rand+5, -102f+(60f*playerHeight)*(float)(i+1), -5), Quaternion.identity, 0);
                         for(int j = 0;j< randBox;j++)
-                            PhotonNetwork.Instantiate("Drop", new Vector3(-8-rand+5, -102f+(60f*playerHeight)*(float)(i+1)+1, -5), Quaternion.identity, 0);
+                            PhotonNetwork.InstantiateSceneObject("Drop", new Vector3(-8-rand+5, -102f+(60f*playerHeight)*(float)(i+1)+1, -5), Quaternion.identity, 0);
 
                     }
 
@@ -228,7 +226,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient)
         {
             Debug.LogFormat("OnPlayerLeftRoom IsMasterClient {0}", PhotonNetwork.IsMasterClient); // called before OnPlayerLeftRoom
-            startButton.SetActive(true);
+            //startButton.SetActive(true);
 
             LoadArena();
         }

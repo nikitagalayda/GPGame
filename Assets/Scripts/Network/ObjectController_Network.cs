@@ -59,6 +59,7 @@ public class ObjectController_Network : MonoBehaviourPunCallbacks
     }
 
 
+
     [PunRPC]
     public void TransitionToPosition(Vector3 targetPosition)
     {
@@ -76,13 +77,6 @@ public class ObjectController_Network : MonoBehaviourPunCallbacks
         {
             PhotonNetwork.Destroy(this.gameObject);
         }
-
-        //GameManager.Instance.LeaveRoom();
-        //if( photonView.IsMine && Collider.gameObject.name == "BulletPrefab_Network(Clone)"){
-        //this.transform.position = Collider.gameObject.GetComponent<ProjectileController_Network>().initialPos;
-        //parentObject.transform.position =  bulletPos;
-
-        //}
     }
     /*
     public void TransitionToPosition(Vector3 targetPosition)

@@ -17,7 +17,6 @@ MonoBehaviour:
   itemType: 1
   description: The bomb that can be picked up and thrown by users.
   buffs:
-  - attribute: 0
-    value: 0
-    min: 2
-    max: 9
+  - attribute: 2
+    bulletPrefab: {fileID: 4931026771115612109, guid: 9d3467bf9f9341243bfe05655a506e2a, type: 3}
+    value: 2

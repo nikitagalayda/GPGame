@@ -64,7 +64,6 @@ public class PlayerManager : MonoBehaviourPunCallbacks
     }
 
     public void OnTriggerFloorDetector(Collider2D other){
-        //Debug.Log("I am "+this.name+", floor detected");
         anim.SetBool("isJumping",false); 
         isJumping = false;
     }
@@ -91,20 +90,6 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         inventory.Container.Items.Clear();
     }
 
-    /*
-    private void OnTriggerEnter2D(Collider2D other) {
-        anim.SetBool("isJumping",false); 
-        isJumping = false;
-    }
-
-    private void OnTriggerStay2D(Collider2D other) {
-        isInAir = false;
-    }
-
-    private void OnTriggerExit2D(Collider2D other) {
-        isInAir = true;
-    }
-    */
     void Run(){
         Vector3 moveVelocity= Vector3.zero;
             anim.SetBool("isRunning",false);
@@ -156,9 +141,10 @@ public class PlayerManager : MonoBehaviourPunCallbacks
             //Debug.Log("GetButtonDown: time = " + Time.time);
             var item = inventory.GetItemByIndex(0);
             if(item != null){
-                Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                //Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 inventory.RemoveItem(item,1);                
-                item.ExecuteAllItemBuff(mousePosition);
+                //item.ExecuteAllItemBuff(this.gameObject,mousePosition);
+                item.ExecuteAllItemBuff(this.gameObject);
             }
         }
     }
@@ -169,5 +155,4 @@ public class PlayerManager : MonoBehaviourPunCallbacks
             this.gameObject.GetComponent<ProjectileGenerator>().GenerateTheBullet(mousePosition,this.transform.position,bulletSpawnOffset);
         }        
     }
-
 }

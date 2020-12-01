@@ -17,7 +17,6 @@ MonoBehaviour:
   itemType: 1
   description: Testing coin
   buffs:
-  - attribute: 0
-    value: 0
-    min: 4
-    max: 8
+  - attribute: 2
+    bulletPrefab: {fileID: 5257450566379723510, guid: c3bb70f2066361f4f8c6e79b1d0c9394, type: 3}
+    value: 3

@@ -44,13 +44,14 @@ public class Item{
         {
             buffs[i] = new ItemBuff(item.buffs[i].value);
             buffs[i].attribute = item.buffs[i].attribute;
+            buffs[i].bulletPrefab = item.buffs[i].bulletPrefab;
         }
     }
 
-    public void ExecuteAllItemBuff(Vector3 mousePosition){
+    public void ExecuteAllItemBuff(GameObject user){
         foreach (var itemBuff in buffs)
         {
-            itemBuff.ExecuteByAttribute(mousePosition);
+            itemBuff.ExecuteByAttribute(user);
         }
     }
 }
@@ -58,40 +59,45 @@ public class Item{
 [System.Serializable]
 public class ItemBuff{
     public Attributes attribute;
+    public GameObject bulletPrefab;
+    //public string bulletPrefabName;
     public int value;
-    //public int min;
-    //public int max;
-    /*
-    public ItemBuff(int _min, int _max){
-        min = _min;
-        max = _max;
-        GenerateValue();
-    }
-    */
     public ItemBuff(int _value){
         value = _value;
     }
-    /*
-    public void GenerateValue(){
-        value = UnityEngine.Random.Range(min, max);
-    }
-    */
-    public void ExecuteByAttribute(Vector3 mousePosition){
-        Debug.Log("mousePosition: " + mousePosition);
+    public void ExecuteByAttribute(GameObject user){
+        //Debug.Log("mousePosition: " + mousePosition);
         switch (attribute)
         {
             case Attributes.BombThrowerState:
                 Debug.Log("exccute: BombThrowerState");
+                RunThrowerState(user);
                 break;
             case Attributes.FloatingState:
                 Debug.Log("exccute: FloatingState");
+                RunThrowerState(user);
                 break;
             case Attributes.StabalizeState:
                 Debug.Log("exccute: StabalizeState");
+                RunThrowerState(user);
                 break;
             default:
                 Debug.Log("exccute: default");
                 break;
         }
     }
+
+    public void RunThrowerState(GameObject user){
+        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        var ProjectileGenerator = user.GetComponent<ProjectileGenerator>();
+        if(ProjectileGenerator != null){
+            var originalBulletPrefab = ProjectileGenerator.bulletPrefab;
+            ProjectileGenerator.bulletPrefab = bulletPrefab;
+            //Debug.Log("generate bulletPrefab: " + bulletPrefab.name);
+            ProjectileGenerator.GenerateTheBullet(mousePosition,user.transform.position,user.GetComponent<PlayerManager>().bulletSpawnOffset);
+            ProjectileGenerator.bulletPrefab = originalBulletPrefab;
+        }
+    }
+
+
 }

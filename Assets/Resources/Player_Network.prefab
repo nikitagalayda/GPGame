@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: -1894963999493892182}
   - component: {fileID: -6157930337593824904}
   - component: {fileID: 2424335960596997367}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Player_Network
   m_TagString: player
   m_Icon: {fileID: 0}
@@ -103,7 +103,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   smoothTime: 0.05
   distanceThreshold: 0.01
-  shootCooldown: 3
+  shootCooldown: 0.5
   PlayerUiPrefab: {fileID: 5932812169316714979, guid: d02a902e74c174d44b6b4f7617d47e3e, type: 3}
   bulletPrefab: {fileID: 7428196229701916301, guid: 0e7cc17725192d340aeb6fdca651aaaa, type: 3}
   m_Collider: {fileID: 7304768650817721205}

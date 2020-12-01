@@ -34,23 +34,28 @@ public class ProjectileController_Network : MonoBehaviourPunCallbacks
         target = tg;
         movingToTarget = true;
     }
-/*
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.gameObject.tag == "Item")
-        {
-            Debug.Log("COLLISION WITH " + other.gameObject.name);
-            // PhotonView photonViewOther = PhotonView.Get(other.gameObject);
-            // photonViewOther.RPC("TransitionToPosition", RpcTarget.All, parentObject.transform.position);
-            PhotonView photonViewOther = PhotonView.Get(other.gameObject);
-            // other.gameObject.GetComponent<ObjectController_Network>().TransitionToPosition(parentObject.transform.position);
-            photonViewOther.RPC("TransitionToPosition", RpcTarget.All, parentObject.transform.position);
-            //parentObject.GetComponent<SimpleTeleport_NetworkVersion>().TransitionToPosition(other.transform.position);
 
-            Destroy(gameObject);
-        }
+    void OnBecameInvisible()
+    {
+        PhotonNetwork.Destroy(this.gameObject);
     }
-    */
+    /*
+        void OnTriggerEnter2D(Collider2D other)
+        {
+            if (other.gameObject.tag == "Item")
+            {
+                Debug.Log("COLLISION WITH " + other.gameObject.name);
+                // PhotonView photonViewOther = PhotonView.Get(other.gameObject);
+                // photonViewOther.RPC("TransitionToPosition", RpcTarget.All, parentObject.transform.position);
+                PhotonView photonViewOther = PhotonView.Get(other.gameObject);
+                // other.gameObject.GetComponent<ObjectController_Network>().TransitionToPosition(parentObject.transform.position);
+                photonViewOther.RPC("TransitionToPosition", RpcTarget.All, parentObject.transform.position);
+                //parentObject.GetComponent<SimpleTeleport_NetworkVersion>().TransitionToPosition(other.transform.position);
+
+                Destroy(gameObject);
+            }
+        }
+        */
     void OnTriggerEnter2D(Collider2D other) {
         Vector3 bulletPos = this.transform.position;
         if(!(other.gameObject==parentObject))

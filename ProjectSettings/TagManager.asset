@@ -8,6 +8,7 @@ TagManager:
   - Bullet
   - player
   - rank
+  - floor
   layers:
   - Default
   - TransparentFX
@@ -18,8 +19,8 @@ TagManager:
   - 
   - 
   - LiquidEffectLayer
-  - 
-  - 
+  - item
+  - floor
   - 
   - 
   - 

@@ -27,6 +27,8 @@ public class CharacterController : MonoBehaviourPunCallbacks
             {
                 _rigidbody.AddForce(new Vector2(0, JumpForce), ForceMode2D.Impulse);
             }
+            if (_rigidbody.velocity.y<=-2.0f) _rigidbody.gravityScale = 0.0f;
+            else _rigidbody.gravityScale = 1.0f;
         }
         
     }

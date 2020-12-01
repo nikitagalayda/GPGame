@@ -41,13 +41,13 @@ public class GameManager : MonoBehaviourPunCallbacks
     void Start()
     {
         Vector2 randPosition = new Vector2(Random.Range(-8.0f, 8.0f), -100.0f);
-        PhotonNetwork.Instantiate("Drop", randPosition, Quaternion.identity);
-        PhotonNetwork.Instantiate("Drop", randPosition, Quaternion.identity);
+        //PhotonNetwork.Instantiate("Drop", randPosition, Quaternion.identity);
+        //PhotonNetwork.Instantiate("Drop", randPosition, Quaternion.identity);
         if(PhotonNetwork.IsMasterClient)
         {
             for(int i = 0; i< 200;i++)
             {
-                int randBox = Random.Range(0, 2);
+                /*int randBox = Random.Range(0, 2);
                 float rand = Random.Range(-8.0f, 5.0f);
                 PhotonNetwork.Instantiate(this.floor.name, new Vector3(rand, -102f+(60f*playerHeight)*(float)(i+1), -5), Quaternion.identity, 0);
                 for(int j = 0;j< randBox;j++)
@@ -68,9 +68,33 @@ public class GameManager : MonoBehaviourPunCallbacks
 
                     }
 
+                }*/
+                //PhotonNetwork.Instantiate(this.floor.name, new Vector3(Random.Range(-8.0f, 5.0f), -102f+(40f*playerHeight)*(float)(i+1), -5), Quaternion.identity, 0);
+                GameObject flr = leaveButton;
+                float pastflrposition=  -1000.0f;
+                for (float j = -7.0f; j <= 7.0f; j=j+ 2.5f)
+                {
+                    int rand = Random.Range(0, 14);
+                    if (rand == 0)
+                    {
+                        if (j == pastflrposition + 2.5f)
+                        {
+                            flr.transform.localScale += new Vector3(2.5f, 0, 0);
+                            flr.transform.position += new Vector3(1.25f, 0, 0);
+                            pastflrposition = j;
+                        }
+                        else
+                        {
+                            flr = PhotonNetwork.Instantiate(this.floor.name, new Vector3(j, -102f + (60f * playerHeight) * (float)(i + 1), -5), Quaternion.identity, 0);
+                            pastflrposition = j;
+                        }
+                    }
                 }
-                   // PhotonNetwork.Instantiate(this.floor.name, new Vector3(Random.Range(-8.0f, 5.0f), -102f+(40f*playerHeight)*(float)(i+1), -5), Quaternion.identity, 0);
-
+                for (float j = -7.0f; j <= 7.0f; j = j + 1.25f)
+                {
+                    int rand = Random.Range(0, 9);
+                    if (rand == 0) PhotonNetwork.Instantiate("Drop", new Vector3(j, -102f + (60f * playerHeight) * (float)(i + 1) + 1, -5), Quaternion.identity);
+                }
             }
             //StartCoroutine(SpawnLava());
         }
@@ -94,7 +118,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             Players[i].GetComponent<SimpleTeleport_NetworkVersion>().createNameUI();
             //Players[i].transform.position += new Vector3(0, 0, 0);
         }
-
+        StartGenerator();
     }
 
     // Update is called once per frame
@@ -102,15 +126,14 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
 
         
-        if(gameStart && dropping == false)
+        /*if(gameStart && dropping == false)
         {
 
             dropping = true;
-            //StartGenerator();
             startButton.SetActive(false);
 
         }
-        //Rankings[0].text = Players.Length.ToString();
+        Rankings[0].text = Players.Length.ToString();*/
         
     }
     void LateUpdate()
@@ -148,9 +171,12 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         while (true)
         {
-            Vector2 randPosition = new Vector2(Random.Range(-8.0f, 8.0f), 100.0f);
-            PhotonNetwork.Instantiate("Drop", randPosition, Quaternion.identity);
-            yield return new WaitForSeconds(Mathf.Lerp(0.1f, 1.0f, Random.value));
+            for (float j = -7.0f; j <= 7.0f; j = j + 1.25f)
+            {
+                int rand = Random.Range(0, 9);
+                if (rand == 0) PhotonNetwork.Instantiate("Drop", new Vector3(j, -102f + (60f * playerHeight) * (float)(199 + 1) + 1, -5), Quaternion.identity);
+            }
+            yield return new WaitForSeconds(1.5f);
         }
     }
 

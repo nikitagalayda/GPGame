@@ -12,11 +12,16 @@ public class ObjectController_Network : MonoBehaviourPunCallbacks
     private bool inTransition = false;
     private Vector2 velocity = Vector2.zero;
     private Vector2 transitionTarget = Vector2.zero;
+    private Rigidbody2D _rigidbody;
 
-    
+    void Awake()
+    {
+        _rigidbody = GetComponent<Rigidbody2D>();
+    }
+
     void Start()
     {
-        
+        _rigidbody.AddForce(Physics.gravity*10);
     }
 
     // Update is called once per frame
@@ -24,6 +29,7 @@ public class ObjectController_Network : MonoBehaviourPunCallbacks
     {
 
     }
+
 
     private void FixedUpdate() {
         //Vector2 current2DPosition = new Vector2(transform.position.x, transform.position.y);
@@ -61,6 +67,22 @@ public class ObjectController_Network : MonoBehaviourPunCallbacks
             //Debug.Log(transitionTarget);
             //inTransition = true;
         
+    }
+
+    void OnCollisionEnter2D(Collision2D Collider)
+    {
+        //print("A:" + Collider.gameObject.name); //印出A:碰撞對象的名字
+        if (Collider.gameObject.name == "lava" && photonView.IsMine)
+        {
+            PhotonNetwork.Destroy(this.gameObject);
+        }
+
+        //GameManager.Instance.LeaveRoom();
+        //if( photonView.IsMine && Collider.gameObject.name == "BulletPrefab_Network(Clone)"){
+        //this.transform.position = Collider.gameObject.GetComponent<ProjectileController_Network>().initialPos;
+        //parentObject.transform.position =  bulletPos;
+
+        //}
     }
     /*
     public void TransitionToPosition(Vector3 targetPosition)

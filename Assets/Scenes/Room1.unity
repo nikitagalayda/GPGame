@@ -889,6 +889,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: collectableBag
       objectReference: {fileID: 0}
+    - target: {fileID: 4608481703616504101, guid: 4d51c8b8ecad68f40be8e9768e3e5357, type: 3}
+      propertyPath: viewIdField
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4d51c8b8ecad68f40be8e9768e3e5357, type: 3}
 --- !u!1001 &1197043776886490837
@@ -1003,6 +1007,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6253885813917384090, guid: f8728fb1c35549b4dafb1beba66ea517, type: 3}
+      propertyPath: viewIdField
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f8728fb1c35549b4dafb1beba66ea517, type: 3}
 --- !u!1001 &5257450566471218723
@@ -1059,6 +1067,10 @@ PrefabInstance:
     - target: {fileID: 5257450566379723515, guid: c3bb70f2066361f4f8c6e79b1d0c9394, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8524050393027082939, guid: c3bb70f2066361f4f8c6e79b1d0c9394, type: 3}
+      propertyPath: viewIdField
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3bb70f2066361f4f8c6e79b1d0c9394, type: 3}

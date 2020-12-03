@@ -20,7 +20,7 @@ public class DisplayInventory : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        CreateDisplay();
+        //CreateDisplay();
     }
 
     // Update is called once per frame

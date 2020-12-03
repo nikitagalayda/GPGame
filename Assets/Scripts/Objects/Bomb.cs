@@ -63,6 +63,6 @@ public class Bomb : MonoBehaviour
         triger_flag = false;
         //Animator bombAnimator = bombAnime.GetComponentInChildren<Animator>();
         //PhotonNetwork.Destroy(bombAnime);        
-        Destroy(this.gameObject);
+        PhotonView.Destroy(this.gameObject);
     }
 }

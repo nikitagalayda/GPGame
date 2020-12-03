@@ -188,7 +188,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bba9c20e91310ba4489503a2c3784e22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectileSpeed: 30
+  projectileSpeed: 60
   parentObject: {fileID: 0}
   tg: {x: 0, y: 0}
 --- !u!114 &-8742307393053279787

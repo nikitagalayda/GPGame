@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     public float gravity = 0.5F;
     private GameObject[] Players;
     private List<GameObject> Playerlist = new List<GameObject>();
-    public GameObject floor ;
+    public GameObject[] floor ;
     private float playerHeight = 0.05f;
     private float elp = 5f;
     // Start is called before the first frame update
@@ -81,6 +81,7 @@ public class GameManager : MonoBehaviourPunCallbacks
                 for (float j = -7.0f; j <= 7.0f; j=j+ 2.5f)
                 {
                     int rand = Random.Range(0, 14);
+                    int randColor = Random.Range(0, this.floor.Length);
                     if (rand == 0)
                     {
                         if (j == pastflrposition + 2.5f)
@@ -91,7 +92,7 @@ public class GameManager : MonoBehaviourPunCallbacks
                         }
                         else
                         {
-                            flr = PhotonNetwork.Instantiate(this.floor.name, new Vector3(j, -102f + (60f * playerHeight) * (float)(i + 1), -5), Quaternion.identity, 0);
+                            flr = PhotonNetwork.Instantiate(this.floor[randColor].name, new Vector3(j, -102f + (60f * playerHeight) * (float)(i + 1), -5), Quaternion.identity, 0);
                             pastflrposition = j;
                             PhotonNetwork.Instantiate("collectableBomb", new Vector3(j, -102f + (60f * playerHeight) * (float)(i + 1) +1, -5), Quaternion.identity, 0);
                         }

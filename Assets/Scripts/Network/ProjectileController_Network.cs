@@ -60,6 +60,7 @@ public class ProjectileController_Network : MonoBehaviourPunCallbacks
         Vector3 bulletPos = this.transform.position;
         if(!(other.gameObject==parentObject))
         {  
+
             Debug.Log("COLLISION WITH " + other.gameObject.name);
             if(photonView.IsMine && other.gameObject.name == "Drop(Clone)"){
                 Debug.Log("-----------------ismine" + other.gameObject.name);
@@ -68,12 +69,13 @@ public class ProjectileController_Network : MonoBehaviourPunCallbacks
                 PhotonView photonViewOther = PhotonView.Get(other.gameObject);
                 photonViewOther.RPC("TransitionToPosition", RpcTarget.All, parentObject.transform.position);
                 parentObject.transform.position = temp;
+                //parentObject.GetComponent<SimpleTeleport_NetworkVersion>().TransitionToPosition(temp);
                 PhotonNetwork.Destroy(this.gameObject);
                 
             
                 //parentObject.GetComponent<SimpleTeleport_NetworkVersion>().TransitionToPosition(temp);
             }
-            if(photonView.IsMine && other.gameObject.name == "Player_Network(Clone)"){
+            if(photonView.IsMine && other.gameObject.name == "Player(Clone)"){
                 Debug.Log("-----------------ismine" + other.gameObject.name);
                 Vector3 temp = other.transform.position;
                 PhotonView photonViewOther = PhotonView.Get(other.gameObject);

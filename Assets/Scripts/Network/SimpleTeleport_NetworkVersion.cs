@@ -146,10 +146,13 @@ public class SimpleTeleport_NetworkVersion : MonoBehaviourPunCallbacks
     {
         //if (!inTransition)
         //{
-            this.transform.position = targetPosition;
+        this.transform.position = targetPosition;
          //   Debug.Log(transitionTarget);
             //inTransition = true;
         //}
+        //StartCoroutine(waitToTrans(0f, targetPosition));
+        //m_Collider.enabled = false; 
+        //StartCoroutine(turnOnCollider(0.15f));
     }
     [PunRPC]
     public void TransitionToPosition3(Vector3 targetPosition)

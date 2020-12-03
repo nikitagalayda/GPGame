@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7096238273413651364}
   - component: {fileID: 8637902627228194406}
   - component: {fileID: 6253885813917384090}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: collectableBomb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -152,7 +152,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4434173526652117802}
   - component: {fileID: 4434173526652117805}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: bomb
   m_TagString: Untagged
   m_Icon: {fileID: 0}

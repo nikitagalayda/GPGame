@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 7177044296915588721}
   - component: {fileID: 4609281036706598039}
   - component: {fileID: 2503149742157505877}
+  - component: {fileID: -4384473816748384138}
   m_Layer: 10
   m_Name: Platform_Blue_Wide
   m_TagString: Untagged
@@ -189,3 +190,22 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 4.4, y: 1}
   m_EdgeRadius: 0
+--- !u!251 &-4384473816748384138
+PlatformEffector2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2574924350266506520}
+  m_Enabled: 1
+  m_UseColliderMask: 1
+  m_ColliderMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RotationalOffset: 0
+  m_UseOneWay: 1
+  m_UseOneWayGrouping: 0
+  m_SurfaceArc: 180
+  m_UseSideFriction: 0
+  m_UseSideBounce: 0
+  m_SideArc: 1

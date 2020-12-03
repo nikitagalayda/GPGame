@@ -186,7 +186,8 @@ public class WaitingManager : MonoBehaviourPunCallbacks, IOnEventCallback
     {
         yield return new WaitForSeconds(time);
         if(everyoneReady)
-            PhotonNetwork.LoadLevel("RoomForNetwork");
+            //PhotonNetwork.LoadLevel("RoomForNetwork");
+            PhotonNetwork.LoadLevel("FightRoom");
             PhotonNetwork.CurrentRoom.IsOpen = false; 
             //RoomOptions roomOptions = new RoomOptions();
             //PhotonNetwork.SendOptions

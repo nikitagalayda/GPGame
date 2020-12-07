@@ -37,7 +37,7 @@ using UnityEngine;
 	    [Tooltip("The Smoothing for the camera to follow the target")]
 	    [SerializeField]
 	    private float smoothSpeed = 0.125f;
-
+ 		private Vector3 velocity = Vector3.zero;
         // cached transform of the target
         Transform cameraTransform;
 
@@ -113,7 +113,8 @@ using UnityEngine;
 			cameraOffset.z = -distance;
 			cameraOffset.y = height;
 			
-			cameraTransform.position = this.transform.position+new Vector3(0.0f, 0.0f, -distance);
+			//cameraTransform.position = this.transform.position+new Vector3(0.0f, 0.0f, -distance);
+			cameraTransform.position = Vector3.SmoothDamp(cameraTransform.position, this.transform.position+new Vector3(0.0f, 0.0f, -distance), ref velocity, 0.7f);
 			//GameObject.Find("Cameras").transform.position = this.transform.position+new Vector3(0.0f, 0.0f, -distance);
 		    
 	    }

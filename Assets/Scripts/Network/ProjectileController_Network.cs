@@ -56,6 +56,7 @@ public class ProjectileController_Network : MonoBehaviourPunCallbacks
             }
         }
         */
+    
     void OnTriggerEnter2D(Collider2D other) {
         Vector3 bulletPos = this.transform.position;
         if(!(other.gameObject==parentObject))
@@ -63,6 +64,9 @@ public class ProjectileController_Network : MonoBehaviourPunCallbacks
 
             Debug.Log("COLLISION WITH " + other.gameObject.name);
             if(photonView.IsMine && other.gameObject.name == "Drop(Clone)"){
+                PhotonView photonViewParent = PhotonView.Get(parentObject.gameObject);
+                photonViewParent.RPC("MoveLine", RpcTarget.All,other.transform.position);
+
                 Debug.Log("-----------------ismine" + other.gameObject.name);
                 Vector2 temp = other.transform.position;
                 //other.transform.position = parentObject.transform.position;
@@ -76,18 +80,23 @@ public class ProjectileController_Network : MonoBehaviourPunCallbacks
                 //parentObject.GetComponent<SimpleTeleport_NetworkVersion>().TransitionToPosition(temp);
             }
             if(photonView.IsMine && other.gameObject.name == "Player(Clone)"){
+                PhotonView photonViewParent = PhotonView.Get(parentObject.gameObject);
+                photonViewParent.RPC("MoveLine", RpcTarget.All,bulletPos);
                 Debug.Log("-----------------ismine" + other.gameObject.name);
                 Vector3 temp = other.transform.position;
                 PhotonView photonViewOther = PhotonView.Get(other.gameObject);
                 //other.transform.position = parentObject.transform.position;
                 //other.gameObject.GetComponent<SimpleTeleport_NetworkVersion>().TransitionToPosition(parentObject.transform.position);
-                other.gameObject.GetComponent<SimpleTeleport_NetworkVersion>().TransitionToPosition(parentObject.transform.position);
+
+                
+                
                 photonViewOther.RPC("TransitionToPosition", RpcTarget.All, parentObject.transform.position);
                 //PhotonView photonViewParent = PhotonView.Get(parentObject.gameObject);
                 //photonViewParent.RPC("TransitionToPosition", RpcTarget.All, temp);
                 ///parentObject.transform.position = bulletPos;
-                PhotonView photonViewParent = PhotonView.Get(parentObject.gameObject);
+                
                 photonViewParent.RPC("TransitionToPosition3", RpcTarget.All,bulletPos);
+                
                 //other.transform.position = temp;
                 
                 

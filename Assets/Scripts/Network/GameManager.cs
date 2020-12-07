@@ -32,10 +32,12 @@ public class GameManager : MonoBehaviourPunCallbacks
     public GameObject leaveButton;
     public GameObject dieText;
     public GameObject hintText;
+    public GameObject[] dieImages;
     public float gravity = 0.5F;
     private GameObject[] Players;
     private List<GameObject> Playerlist = new List<GameObject>();
     public GameObject[] floor ;
+    public GameObject lava;
     private float playerHeight = 0.05f;
     private float elp = 5f;
     // Start is called before the first frame update
@@ -47,7 +49,8 @@ public class GameManager : MonoBehaviourPunCallbacks
     void Start()
     {
         StartGame();
-
+        for(int i = Players.Length; i < 4; i++)
+            Rankings[i].SetActive(false);
         Vector2 randPosition = new Vector2(Random.Range(-8.0f, 8.0f), -100.0f);
         if(PhotonNetwork.IsMasterClient)
         {
@@ -166,9 +169,13 @@ public class GameManager : MonoBehaviourPunCallbacks
             height[y] = -1000;
             if(Players[y]!=null)
                 {Rankings[i].GetComponent<Text>().text = (i + 1).ToString("0") + ". " + Players[y].GetComponent<SimpleTeleport_NetworkVersion>().photonView.Owner.NickName + " : " + Players[y].transform.position[1].ToString("0") + " m";
+                //dieImages[i].SetActive(true);
                 if (Players[y].GetComponent<SimpleTeleport_NetworkVersion>().photonView.IsMine)
                     Rankings[i].GetComponent<Text>().color = Color.red;
+                if(Players[y].GetComponent<SimpleTeleport_NetworkVersion>().imDie)
+                    dieImages[i].SetActive(true);
                 }
+            Rankings[4].GetComponent<Text>().text = "Lava Height : " + lava.transform.position[1].ToString("0"); 
         }
     }
 

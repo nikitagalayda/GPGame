@@ -25,12 +25,17 @@ public class SimpleTeleport_NetworkVersion : MonoBehaviourPunCallbacks
     private bool canShoot = true;
     private Color characterColor = Color.blue;
     public BoxCollider2D m_Collider;
-    private bool imDie = false;
+    public bool imDie = false;
     private GameObject[] Players;
     private int watchingPlayer = 0;
     private CameraWork _cameraWork;
+    public GameObject lineRend;
     void Start()
     {
+        lineRend.SetActive(true);
+        lineRend.GetComponent<LineRenderer>().SetPosition(0, this.transform.position);
+        lineRend.GetComponent<LineRenderer>().SetPosition(1, this.transform.position+new Vector3(10,10,0));
+
         //initial player UI
         createNameUI();
         
@@ -69,6 +74,7 @@ public class SimpleTeleport_NetworkVersion : MonoBehaviourPunCallbacks
     }
     void Update()
     {
+
         if (photonView.IsMine && !imDie)
         {
             // Debug.Log("sending out ray");
@@ -86,7 +92,7 @@ public class SimpleTeleport_NetworkVersion : MonoBehaviourPunCallbacks
                     Vector2 shootDirection = (Vector2)Vector3.Normalize(currentMouseVector - (Vector2)transform.position);
                     //Debug.Log(shootDirection);
                     
-                    bullet.GetComponent<ProjectileController_Network>().parentObject = this.gameObject;
+                    bullet.GetComponent<ProjectileController_Network>().parentObject = gameObject;
                     bullet.GetComponent<ProjectileController_Network>().moveToTarget(shootDirection);
                 // }
             }
@@ -162,6 +168,13 @@ public class SimpleTeleport_NetworkVersion : MonoBehaviourPunCallbacks
         m_Collider.enabled = false; 
         StartCoroutine(turnOnCollider(0.3f));
     }
+    [PunRPC]
+    public void MoveLine(Vector3 otherPos)
+    {
+        Debug.Log("move line");
+        lineRend.GetComponent<LineRenderer>().SetPosition(0, this.transform.position);
+        lineRend.GetComponent<LineRenderer>().SetPosition(1, otherPos);
+    }
     IEnumerator waitToTrans(float time, Vector3 newPos)
     {
 
@@ -193,12 +206,12 @@ public class SimpleTeleport_NetworkVersion : MonoBehaviourPunCallbacks
             GameManager.Instance.dieText.SetActive(true);
             GameManager.Instance.hintText.SetActive(true);
             StartCoroutine(delDieText());
-            /*
+            
             Destroy(this.gameObject.GetComponent<PlayerManager>());
             Destroy(this.gameObject.GetComponent< PhotonRigidbody2DView>());
             Destroy(this.gameObject.GetComponent<Rigidbody2D>());
-            */
-            PhotonNetwork.Destroy(this.gameObject);
+            
+            //PhotonNetwork.Destroy(this.gameObject);
             GameManager.Instance.leaveButton.SetActive(true);
             Players = GameObject.FindGameObjectsWithTag("player");
         }

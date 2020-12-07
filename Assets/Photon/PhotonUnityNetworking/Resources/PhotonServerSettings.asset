@@ -41,6 +41,8 @@ MonoBehaviour:
   - RespawnSpaceship
   - TransitionToPosition
   - TransitionToPosition3
+  - moveLine
+  - MoveLine
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

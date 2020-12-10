@@ -348,9 +348,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 0}
+  energyBar: {fileID: 0}
   movePower: 10
   jumpPower: 25
   bulletSpawnOffset: 4
+  maxEnergy: 100
+  energy: 100
+  energyNaturalRecoveryRate: 1
+  defaultShootingEnergyConsuming: 10
 --- !u!114 &873511851651922439
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -7,9 +7,14 @@ using Photon.Pun.Demo.PunBasics;
 public class PlayerManager : MonoBehaviourPunCallbacks
 {
     public InventoryObject inventory;
+    public GameObject energyBar;
     public float movePower = 10f;
     public float jumpPower = 15f; //Set Gravity Scale in Rigidbody2D Component to 5
     public float bulletSpawnOffset = 100f;
+    public float maxEnergy = 100;
+    public float energy = 100;
+    public float energyNaturalRecoveryRate = 10;
+    public float defaultShootingEnergyConsuming = 10;
     private Rigidbody2D rb;
     private Animator anim;
     Vector3 movement;
@@ -62,7 +67,15 @@ public class PlayerManager : MonoBehaviourPunCallbacks
             return;
         }
         UseTheFirstItem();
-        //DefaultShooting();
+        DefaultShooting();
+        EnergyDefaultModify();
+    }
+
+    public void EnergyDefaultModify(){
+        energy = energy + energyNaturalRecoveryRate * Time.deltaTime;
+        if(energy >= maxEnergy){
+            energy = maxEnergy;
+        }
     }
 
     public void OnTriggerFloorDetector(Collider2D other){
@@ -153,8 +166,9 @@ public class PlayerManager : MonoBehaviourPunCallbacks
 
     void DefaultShooting(){
         if(Input.GetMouseButtonDown(0)){
-            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            this.gameObject.GetComponent<ProjectileGenerator>().GenerateTheBullet(mousePosition,this.transform.position,bulletSpawnOffset);
+            energy -= defaultShootingEnergyConsuming;
+            //Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            //this.gameObject.GetComponent<ProjectileGenerator>().GenerateTheBullet(mousePosition,this.transform.position,bulletSpawnOffset);
         }        
     }
 }

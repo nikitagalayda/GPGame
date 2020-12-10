@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     public GameObject playerPrefab;
     public GameObject playerSpawnLocation;
     public GameObject itembar;
+    public GameObject energybar;
     public ItemDatabaseObject database;
     //public InventoryObject playerInventory;
     //public GameObject player;
@@ -121,6 +122,8 @@ public class GameManager : MonoBehaviourPunCallbacks
                 Debug.Log("set inventory");
                 itembar = GameObject.Find("ItemBar");
                 itembar.GetComponent<DisplayInventory>().inventory = Players[i].GetComponent<PlayerManager>().inventory;
+                energybar = GameObject.Find("EnergyBar");
+                energybar.GetComponent<DisplayEnergyBar>().player = Players[i];
             }
         }
         StartGenerator();

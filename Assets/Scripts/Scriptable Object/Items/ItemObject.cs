@@ -9,9 +9,14 @@ public enum ItemType
 }
 
 public enum Attributes{
-    FloatingState,
-    StabalizeState,
-    BombThrowerState
+    //FloatingState,
+    //StabalizeState,
+    BombThrowerState,
+    EnergyRestore,
+    Booster,
+    ShockWave,
+    SlowDownWave,
+    TimeCountDownDebug
 }
 
 public abstract class ItemObject : ScriptableObject
@@ -45,6 +50,7 @@ public class Item{
             buffs[i] = new ItemBuff(item.buffs[i].value);
             buffs[i].attribute = item.buffs[i].attribute;
             buffs[i].bulletPrefab = item.buffs[i].bulletPrefab;
+            buffs[i].time = item.buffs[i].time;
         }
     }
 
@@ -62,6 +68,7 @@ public class ItemBuff{
     public GameObject bulletPrefab;
     //public string bulletPrefabName;
     public int value;
+    public float time;
     public ItemBuff(int _value){
         value = _value;
     }
@@ -73,13 +80,9 @@ public class ItemBuff{
                 Debug.Log("exccute: BombThrowerState");
                 RunThrowerState(user);
                 break;
-            case Attributes.FloatingState:
-                Debug.Log("exccute: FloatingState");
-                RunThrowerState(user);
-                break;
-            case Attributes.StabalizeState:
-                Debug.Log("exccute: StabalizeState");
-                RunThrowerState(user);
+            case Attributes.Booster:
+                Debug.Log("execute: Booster t: " + time);
+                Booster(user);
                 break;
             default:
                 Debug.Log("exccute: default");
@@ -97,6 +100,12 @@ public class ItemBuff{
             ProjectileGenerator.GenerateTheBullet(mousePosition,user.transform.position,user.GetComponent<PlayerManager>().bulletSpawnOffset);
             ProjectileGenerator.bulletPrefab = originalBulletPrefab;
         }
+    }
+
+    public void Booster(GameObject user){
+        var statusScript = user.GetComponent<PlayerStatus>();
+        int id = statusScript.GetStatusIdByName("Boost");
+        user.GetComponent<PlayerManager>().SetStatusEffect(id,time);
     }
 
 

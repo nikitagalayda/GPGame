@@ -13,7 +13,8 @@ public class PlayerManager : MonoBehaviourPunCallbacks
     public float bulletSpawnOffset = 100f;
     public float maxEnergy = 100;
     public float energy = 100;
-    public float energyNaturalRecoveryRate = 10;
+    public float energyNaturalRecoveryRate = 0;
+    public float energyNaturalLostRate = 10;
     public float defaultShootingEnergyConsuming = 10;
     private Rigidbody2D rb;
     private Animator anim;
@@ -72,7 +73,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
     }
 
     public void EnergyDefaultModify(){
-        energy = energy + energyNaturalRecoveryRate * Time.deltaTime;
+        energy = energy + (energyNaturalRecoveryRate+energyNaturalLostRate) * Time.deltaTime;
         if(energy >= maxEnergy){
             energy = maxEnergy;
         }
@@ -170,5 +171,10 @@ public class PlayerManager : MonoBehaviourPunCallbacks
             //Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             //this.gameObject.GetComponent<ProjectileGenerator>().GenerateTheBullet(mousePosition,this.transform.position,bulletSpawnOffset);
         }        
+    }
+
+    [PunRPC]
+    public void SetStatusEffect(int id, float t){
+        this.GetComponent<PlayerStatus>().StartAndAddEffect(id,t);
     }
 }

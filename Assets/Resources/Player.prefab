@@ -357,6 +357,7 @@ MonoBehaviour:
   maxEnergy: 100
   energy: 100
   energyNaturalRecoveryRate: 1
+  energyNaturalLostRate: 10
   defaultShootingEnergyConsuming: 10
 --- !u!114 &873511851651922439
 MonoBehaviour:

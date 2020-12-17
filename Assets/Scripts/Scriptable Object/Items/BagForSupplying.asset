@@ -17,6 +17,7 @@ MonoBehaviour:
   itemType: 1
   description: Contain other obtainable objects.
   buffs:
-  - attribute: 2
+  - attribute: 0
     bulletPrefab: {fileID: 372642212286487912, guid: 4d51c8b8ecad68f40be8e9768e3e5357, type: 3}
     value: 1
+    time: 0

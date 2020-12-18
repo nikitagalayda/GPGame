@@ -65,6 +65,9 @@ public class PlayerStatus : MonoBehaviourPunCallbacks
                         case (int)Status.EnergyDoubleLost:
                             EnergyDoubleLostEnd();
                             break;
+                        case (int)Status.Freeze:
+                            FreezeEffectEnd();
+                            break;
                     }
                 }
             }
@@ -94,6 +97,9 @@ public class PlayerStatus : MonoBehaviourPunCallbacks
                     break;
                 case (int)Status.EnergyDoubleLost:
                     EnergyDoubleLostStart();
+                    break;
+                case (int)Status.Freeze:
+                    FreezeEffectStart();
                     break;
             }
         }
@@ -135,4 +141,12 @@ public class PlayerStatus : MonoBehaviourPunCallbacks
     void EnergyDoubleLostEnd(){
         this.gameObject.GetComponent<PlayerManager>().energyNaturalRecoveryRate = 0;
     }
+    void FreezeEffectStart(){
+        this.gameObject.GetComponent<PlayerManager>().enabled = false;
+        this.gameObject.GetComponent<SimpleTeleport_NetworkVersion>().enabled = false;
+    }
+    void FreezeEffectEnd(){
+        this.gameObject.GetComponent<PlayerManager>().enabled = true;
+        this.gameObject.GetComponent<SimpleTeleport_NetworkVersion>().enabled = true;    
+        }
 }

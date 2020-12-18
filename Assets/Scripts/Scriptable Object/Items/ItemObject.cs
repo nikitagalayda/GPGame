@@ -16,6 +16,7 @@ public enum Attributes{
     Booster,
     ShockWave,
     SlowDownWave,
+    Freeze,
     TimeCountDownDebug
 }
 
@@ -84,6 +85,10 @@ public class ItemBuff{
                 Debug.Log("execute: Booster t: " + time);
                 Booster(user);
                 break;
+            case Attributes.Freeze:
+                Debug.Log("execute: FreezeState: " + time);
+                FreezeState(user);
+                break;
             default:
                 Debug.Log("exccute: default");
                 break;
@@ -108,5 +113,17 @@ public class ItemBuff{
         user.GetComponent<PlayerManager>().SetStatusEffect(id,time);
     }
 
+
+    public void FreezeState(GameObject user){
+        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        var ProjectileGenerator = user.GetComponent<ProjectileGenerator>();
+        if(ProjectileGenerator != null){
+            var originalBulletPrefab = ProjectileGenerator.bulletPrefab;
+            ProjectileGenerator.bulletPrefab = bulletPrefab;
+            //Debug.Log("generate bulletPrefab: " + bulletPrefab.name);
+            ProjectileGenerator.GenerateTheBullet(mousePosition,user.transform.position,user.GetComponent<PlayerManager>().bulletSpawnOffset);
+            ProjectileGenerator.bulletPrefab = originalBulletPrefab;
+        }
+    }
 
 }

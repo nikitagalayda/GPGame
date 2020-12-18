@@ -18,6 +18,7 @@ public class PlayerStatus : MonoBehaviourPunCallbacks
         EnergyRegenerate,
         EnergyStopLost,
         EnergyDoubleLost,
+        CameraShaking,
         length
     }
 
@@ -101,6 +102,9 @@ public class PlayerStatus : MonoBehaviourPunCallbacks
                 case (int)Status.Freeze:
                     FreezeEffectStart();
                     break;
+                case (int)Status.CameraShaking:
+                    ShakeEffectStart();
+                    break;
             }
         }
     }
@@ -148,5 +152,10 @@ public class PlayerStatus : MonoBehaviourPunCallbacks
     void FreezeEffectEnd(){
         this.gameObject.GetComponent<PlayerManager>().enabled = true;
         this.gameObject.GetComponent<SimpleTeleport_NetworkVersion>().enabled = true;    
-        }
+    }
+    void ShakeEffectStart(){
+        if(Camera.main.GetComponent<CameraShake>())
+            StartCoroutine(Camera.main.GetComponent<CameraShake>().Shake(3f, .4f));
+    }
+
 }

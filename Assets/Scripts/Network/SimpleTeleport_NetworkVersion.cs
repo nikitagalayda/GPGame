@@ -97,10 +97,17 @@ public class SimpleTeleport_NetworkVersion : MonoBehaviourPunCallbacks
             }
             //GameObject manager = GameObject.Find("Game Manager");
             
+            // move player direction to the cursor
+            Vector2 positionOnScreen = Camera.main.WorldToViewportPoint (transform.position);
+            Vector2 mouseOnScreen = (Vector2)Camera.main.ScreenToViewportPoint(Input.mousePosition);
+            float angle = AngleBetweenTwoPoints(positionOnScreen, mouseOnScreen);
+            transform.rotation =  Quaternion.Euler (new Vector3(0f,0f,angle+90));
 
             if(Time.time >= nextShotTimestamp) {
                 canShoot = true;
             }
+
+
         }
         if(imDie && photonView.IsMine)
         {
@@ -243,6 +250,10 @@ public class SimpleTeleport_NetworkVersion : MonoBehaviourPunCallbacks
             //parentObject.transform.position =  bulletPos;
 
         }
+    }
+
+    private float AngleBetweenTwoPoints(Vector3 a, Vector3 b) {
+         return Mathf.Atan2(a.y - b.y, a.x - b.x) * Mathf.Rad2Deg;
     }
 
     IEnumerator turnOnCollider(float time)

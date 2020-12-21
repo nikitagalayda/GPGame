@@ -17,7 +17,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
     public float energyNaturalLostRate = 10;
     public float defaultShootingEnergyConsuming = 10;
     private Rigidbody2D rb;
-    private Animator anim;
+    //private Animator anim;
     Vector3 movement;
     private int direction=1;
     bool isJumping = false;
@@ -49,7 +49,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         }
         
         rb=GetComponent<Rigidbody2D>();
-        anim=GetComponent<Animator>();
+        //anim=GetComponent<Animator>();
 
     }
     
@@ -58,7 +58,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         {
             return;
         }
-        Jump();
+        //Jump();
         Run();
 
     }
@@ -79,10 +79,12 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         }
     }
 
+    /*
     public void OnTriggerFloorDetector(Collider2D other){
         anim.SetBool("isJumping",false); 
         isJumping = false;
     }
+
 
     public void OnTriggerStayFloorDetector(Collider2D other) {
         isInAir = false;
@@ -91,6 +93,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
     public void OnTriggerExitFloorDetector(Collider2D other) {
         isInAir = true;
     }
+    */
 
     public void OnTriggerEnterItemObjectDetector(Collider2D other) {
         Debug.Log(this.name+" touch: " + other.name);
@@ -108,7 +111,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
 
     void Run(){
         Vector3 moveVelocity= Vector3.zero;
-            anim.SetBool("isRunning",false);
+        //anim.SetBool("isRunning",false);
 
 
         if( Input.GetAxisRaw("Horizontal")<0){
@@ -116,19 +119,32 @@ public class PlayerManager : MonoBehaviourPunCallbacks
             moveVelocity = Vector3.left;
 
             transform.localScale = new Vector3(direction,1,1);
-            anim.SetBool("isRunning",true);
+            //anim.SetBool("isRunning",true);
 
         }
         if( Input.GetAxisRaw("Horizontal")>0){
             direction= 1;
             moveVelocity = Vector3.right;
-
             transform.localScale = new Vector3(direction,1,1);
-            anim.SetBool("isRunning",true);
+            //anim.SetBool("isRunning",true);
+        }
+        if( Input.GetAxisRaw("Vertical")<0){
+            direction= -1;
+            moveVelocity = Vector3.down;
+            transform.localScale = new Vector3(direction,1,1);
+            //anim.SetBool("isRunning",true);
 
         }
+        if( Input.GetAxisRaw("Vertical")>0){
+            direction= 1;
+            moveVelocity = Vector3.up;
+            transform.localScale = new Vector3(direction,1,1);
+            //anim.SetBool("isRunning",true);
+        }
+
         transform.position+=moveVelocity*movePower*Time.deltaTime;
     }
+    /*
     void Jump(){
         if( ( Input.GetButtonDown("Jump") || Input.GetAxisRaw("Vertical")>0 )
         &&!anim.GetBool("isJumping")){
@@ -151,7 +167,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
 
         isJumping=false;
     }
-
+    */
     void UseTheFirstItem(){
         if(Input.GetMouseButtonDown(1)){
             //Debug.Log("GetButtonDown: time = " + Time.time);

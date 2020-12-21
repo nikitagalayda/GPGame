@@ -16,7 +16,9 @@ public enum Attributes{
     Booster,
     ShockWave,
     SlowDownWave,
-    TimeCountDownDebug
+    TimeCountDownDebug,
+    EnergyStopConsuming,
+    EnergyRegenerate
 }
 
 public abstract class ItemObject : ScriptableObject
@@ -47,7 +49,8 @@ public class Item{
         buffs = new ItemBuff[item.buffs.Length];
         for (int i = 0; i < buffs.Length; i++)
         {
-            buffs[i] = new ItemBuff(item.buffs[i].value);
+            buffs[i] = new ItemBuff();
+            buffs[i].value = item.buffs[i].value;
             buffs[i].attribute = item.buffs[i].attribute;
             buffs[i].bulletPrefab = item.buffs[i].bulletPrefab;
             buffs[i].time = item.buffs[i].time;
@@ -69,9 +72,7 @@ public class ItemBuff{
     //public string bulletPrefabName;
     public int value;
     public float time;
-    public ItemBuff(int _value){
-        value = _value;
-    }
+    public ItemBuff(){}
     public void ExecuteByAttribute(GameObject user){
         //Debug.Log("mousePosition: " + mousePosition);
         switch (attribute)
@@ -83,6 +84,18 @@ public class ItemBuff{
             case Attributes.Booster:
                 Debug.Log("execute: Booster t: " + time);
                 Booster(user);
+                break;
+            case Attributes.EnergyRestore:
+                Debug.Log("execute: EnergyRestore");
+                EnergyRestore(user);
+                break;
+            case Attributes.EnergyStopConsuming:
+                Debug.Log("execute: EnergyStopConsuming t: " + time);
+                EnergyStopConsuming(user);
+                break;
+            case Attributes.EnergyRegenerate:
+                Debug.Log("execute: EnergyRegenerate t: " + time);
+                EnergyRegenerate(user);
                 break;
             default:
                 Debug.Log("exccute: default");
@@ -108,5 +121,20 @@ public class ItemBuff{
         user.GetComponent<PlayerManager>().SetStatusEffect(id,time);
     }
 
+    public void EnergyRestore(GameObject user){
+        user.GetComponent<PlayerManager>().energy += value;
+    }
+
+    public void EnergyStopConsuming(GameObject user){
+        var statusScript = user.GetComponent<PlayerStatus>();
+        int id = statusScript.GetStatusIdByName("EnergyStopLost");
+        user.GetComponent<PlayerManager>().SetStatusEffect(id,time);
+    }
+
+    public void EnergyRegenerate(GameObject user){
+        var statusScript = user.GetComponent<PlayerStatus>();
+        int id = statusScript.GetStatusIdByName("EnergyRegenerate");
+        user.GetComponent<PlayerManager>().SetStatusEffect(id,time);
+    }
 
 }

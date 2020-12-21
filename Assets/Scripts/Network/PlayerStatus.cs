@@ -18,6 +18,7 @@ public class PlayerStatus : MonoBehaviourPunCallbacks
         EnergyRegenerate,
         EnergyStopLost,
         EnergyDoubleLost,
+        CameraShaking,
         length
     }
 
@@ -65,6 +66,9 @@ public class PlayerStatus : MonoBehaviourPunCallbacks
                         case (int)Status.EnergyDoubleLost:
                             EnergyDoubleLostEnd();
                             break;
+                        case (int)Status.Freeze:
+                            FreezeEffectEnd();
+                            break;
                     }
                 }
             }
@@ -94,6 +98,12 @@ public class PlayerStatus : MonoBehaviourPunCallbacks
                     break;
                 case (int)Status.EnergyDoubleLost:
                     EnergyDoubleLostStart();
+                    break;
+                case (int)Status.Freeze:
+                    FreezeEffectStart();
+                    break;
+                case (int)Status.CameraShaking:
+                    ShakeEffectStart();
                     break;
             }
         }
@@ -135,4 +145,17 @@ public class PlayerStatus : MonoBehaviourPunCallbacks
     void EnergyDoubleLostEnd(){
         this.gameObject.GetComponent<PlayerManager>().energyNaturalRecoveryRate = 0;
     }
+    void FreezeEffectStart(){
+        this.gameObject.GetComponent<PlayerManager>().enabled = false;
+        this.gameObject.GetComponent<SimpleTeleport_NetworkVersion>().enabled = false;
+    }
+    void FreezeEffectEnd(){
+        this.gameObject.GetComponent<PlayerManager>().enabled = true;
+        this.gameObject.GetComponent<SimpleTeleport_NetworkVersion>().enabled = true;    
+    }
+    void ShakeEffectStart(){
+        if(Camera.main.GetComponent<CameraShake>())
+            StartCoroutine(Camera.main.GetComponent<CameraShake>().Shake(3f, .4f));
+    }
+
 }

@@ -16,9 +16,9 @@ public enum Attributes{
     Booster,
     ShockWave,
     SlowDownWave,
-    TimeCountDownDebug,
     EnergyStopConsuming,
-    EnergyRegenerate
+    EnergyRegenerate,
+    Freeze
 }
 
 public abstract class ItemObject : ScriptableObject
@@ -97,6 +97,14 @@ public class ItemBuff{
                 Debug.Log("execute: EnergyRegenerate t: " + time);
                 EnergyRegenerate(user);
                 break;
+            case Attributes.Freeze:
+                Debug.Log("execute: FreezeState: " + time);
+                FreezeState(user);
+                break;
+            case Attributes.ShockWave:
+                Debug.Log("execute: ShockWave: " + time);
+                CameraShake(user);
+                break;
             default:
                 Debug.Log("exccute: default");
                 break;
@@ -135,6 +143,33 @@ public class ItemBuff{
         var statusScript = user.GetComponent<PlayerStatus>();
         int id = statusScript.GetStatusIdByName("EnergyRegenerate");
         user.GetComponent<PlayerManager>().SetStatusEffect(id,time);
+    }
+
+    public void FreezeState(GameObject user){
+        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        var ProjectileGenerator = user.GetComponent<ProjectileGenerator>();
+        if(ProjectileGenerator != null){
+            var originalBulletPrefab = ProjectileGenerator.bulletPrefab;
+            ProjectileGenerator.bulletPrefab = bulletPrefab;
+            //Debug.Log("generate bulletPrefab: " + bulletPrefab.name);
+            ProjectileGenerator.GenerateTheBullet(mousePosition,user.transform.position,user.GetComponent<PlayerManager>().bulletSpawnOffset);
+            ProjectileGenerator.bulletPrefab = originalBulletPrefab;
+        }
+    }
+
+    public void CameraShake(GameObject user){
+        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        var ProjectileGenerator = user.GetComponent<ProjectileGenerator>();
+        if(ProjectileGenerator != null){
+            var originalBulletPrefab = ProjectileGenerator.bulletPrefab;
+            ProjectileGenerator.bulletPrefab = bulletPrefab;
+            //Debug.Log("generate bulletPrefab: " + bulletPrefab.name);
+            ProjectileGenerator.GenerateTheBullet(mousePosition,user.transform.position,user.GetComponent<PlayerManager>().bulletSpawnOffset);
+            ProjectileGenerator.bulletPrefab = originalBulletPrefab;
+        }
+        //var statusScript = user.GetComponent<PlayerStatus>();
+        //int id = statusScript.GetStatusIdByName("CameraShaking");
+        //user.GetComponent<PlayerManager>().SetStatusEffect(id,time);
     }
 
 }

@@ -14,7 +14,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/RoomForNetwork.unity
     guid: 2cda990e2423bbf4892e6590ba056729
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/FightRoom.unity
     guid: 8a7312378124cb5489c906c0c59ff851
+  - enabled: 1
+    path: Assets/Scenes/SampleScene.unity
+    guid: 28d3471a26cd676478ec0ce27b3f6da7
   m_configObjects: {}

@@ -4,27 +4,27 @@ using UnityEngine;
 
 public class ElectricityAC : MonoBehaviour
 {
-    public float period = 5f;
+    public float minPeriod = 0.5f;
+    public float maxPeriod = 5f;
 
+    private float period = 1f;
     private float lastPlayed;
     private Animator[] childAnimators;
-    private GameObject lastObj;
+    private Coroutine coroutine;
 
     void Start()
     {
         lastPlayed = Time.time;
         childAnimators = GetComponentsInChildren<Animator>(includeInactive: true);
-        lastObj = childAnimators[0].gameObject;
     }
 
     void FixedUpdate()
     {
         if ((Time.time - lastPlayed) > period)
         {
-            lastObj.SetActive(false);
             AnimateRandom();
             lastPlayed = Time.time;
-            period = Random.Range(0.5f, 5f);
+            period = Random.Range(minPeriod, maxPeriod);
         }
     }
 
@@ -34,25 +34,32 @@ public class ElectricityAC : MonoBehaviour
         Animator animator = childAnimators[rand];
 
         animator.gameObject.SetActive(true);
-        lastObj = animator.gameObject;
-        animator.Play("electricity", -1);
-        // WaitForAnimation(animator);
+        StartCoroutine(WaitForAnimation(animator));
     }
 
-    // private bool AnimatorIsPlaying(Animator animator)
-    // {
-    //     if (animator.GetCurrentAnimatorStateInfo(-1).IsName("electricity"))
-    //     {
-    //         return true;
-    //     }
-    //     return false;
-    // }
+    private bool AnimatorIsPlaying(Animator animator)
+    {
 
-    // private IEnumerator WaitForAnimation(Animator animator)
-    // {
-    //     do
-    //     {
-    //         yield return null;
-    //     } while (AnimatorIsPlaying(animator));
-    // }
+        if(animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f) {
+            return false;
+        }
+        
+        if (animator.GetCurrentAnimatorStateInfo(1).fullPathHash == 0)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    private IEnumerator WaitForAnimation(Animator animator)
+    {
+        do
+        {
+            yield return null;
+        } while (AnimatorIsPlaying(animator));
+        animator.gameObject.SetActive(false);
+        yield return null;
+    }
+
 }

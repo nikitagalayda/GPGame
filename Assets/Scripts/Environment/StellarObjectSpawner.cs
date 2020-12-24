@@ -23,8 +23,6 @@ public class StellarObjectSpawner : MonoBehaviour
         spawnMaxLocation = borders[1].transform.position.x;
         // spawnLocations = new List<float> {-16f, -14f, -12f, -10f, -8f, -6f, -4f, -2f, 0f, 2f, 4f, 6f, 8f, 10f, 12f, 14f, 16f};
         spawnLocations = new List<float> {-6.5f, -5f, -3.5f, -2f, -0.5f, 1f, 2.5f, 4f, 5.5f, 6.5f};
-
-        Debug.Log(Screen.width);
     }
 
     void Update()

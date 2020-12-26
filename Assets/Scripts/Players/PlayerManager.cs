@@ -68,7 +68,6 @@ public class PlayerManager : MonoBehaviourPunCallbacks
             return;
         }
         UseTheFirstItem();
-        DefaultShooting();
         EnergyDefaultModify();
     }
 
@@ -182,13 +181,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         }
     }
 
-    void DefaultShooting(){
-        if(Input.GetMouseButtonDown(0)){
-            energy -= defaultShootingEnergyConsuming;
-            //Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            //this.gameObject.GetComponent<ProjectileGenerator>().GenerateTheBullet(mousePosition,this.transform.position,bulletSpawnOffset);
-        }        
-    }
+
 
     [PunRPC]
     public void SetStatusEffect(int id, float t){

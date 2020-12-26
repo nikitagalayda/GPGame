@@ -2432,16 +2432,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56ff9f58f01b7844f8e545625c4e6806, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerPrefabs:
-  - {fileID: 6401610849627112038, guid: c7cfe96fa8c6ebf47a5fbcb71b76b1a5, type: 3}
-  - {fileID: 6401610849627112038, guid: af3d510ae9358274f88d5b1859568bc2, type: 3}
-  - {fileID: 6401610849627112038, guid: 03352ee194e4951498918a812b0e1a3a, type: 3}
-  - {fileID: 6401610849627112038, guid: 468316095e4dd9343824295b70e74b01, type: 3}
+  playerPrefab: {fileID: 6401610849627112038, guid: 468316095e4dd9343824295b70e74b01, type: 3}
   itembar: {fileID: 0}
   database: {fileID: 11400000, guid: b6b9130b66130a044a5b5c15487e92b0, type: 2}
   gameStart: 0
   countdownText: {fileID: 1695902121}
   startButton: {fileID: 3442401}
+  spaceSrpites:
+  - {fileID: 21300000, guid: 870c2d66c731bd94693fa3fcc5a25fb2, type: 3}
+  - {fileID: 21300000, guid: 736c96304c5f14e4bb5105647e098e31, type: 3}
+  - {fileID: 21300000, guid: 61571f10e619d694c89be0130cfcf158, type: 3}
+  - {fileID: 21300000, guid: 798c161dc6e03df4d82df0deff1ce862, type: 3}
   gravity: 0.5
 --- !u!4 &2057791723
 Transform:

@@ -1793,7 +1793,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56ff9f58f01b7844f8e545625c4e6806, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerPrefab: {fileID: 6401610849627112038, guid: 468316095e4dd9343824295b70e74b01, type: 3}
+  playerPrefabs:
+  - {fileID: 6401610849627112038, guid: c7cfe96fa8c6ebf47a5fbcb71b76b1a5, type: 3}
+  - {fileID: 6401610849627112038, guid: af3d510ae9358274f88d5b1859568bc2, type: 3}
+  - {fileID: 6401610849627112038, guid: 03352ee194e4951498918a812b0e1a3a, type: 3}
+  - {fileID: 6401610849627112038, guid: 468316095e4dd9343824295b70e74b01, type: 3}
   itembar: {fileID: 0}
   database: {fileID: 11400000, guid: b6b9130b66130a044a5b5c15487e92b0, type: 2}
   gameStart: 0

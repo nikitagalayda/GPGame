@@ -12,7 +12,7 @@ public class WaitingManager : MonoBehaviourPunCallbacks, IOnEventCallback
 {
     #region Public Fields
     [Tooltip("The prefab to use for representing the player")]
-    public GameObject playerPrefab;
+    public GameObject[] playerPrefabs;
     public static GameManager Instance;
     public GameObject itembar;
     public ItemDatabaseObject database;
@@ -36,8 +36,8 @@ public class WaitingManager : MonoBehaviourPunCallbacks, IOnEventCallback
     void Start()
     {
 
-
-        if (playerPrefab == null)
+        int playerCount = PhotonNetwork.CurrentRoom.PlayerCount;
+        if (playerPrefabs[playerCount-1] == null)
         {
             Debug.LogError("<Color=Red><a>Missing</a></Color> playerPrefab Reference. Please set it up in GameObject 'Game Manager'",this);
         }
@@ -49,7 +49,7 @@ public class WaitingManager : MonoBehaviourPunCallbacks, IOnEventCallback
             {
                 Debug.LogFormat("We are Instantiating LocalPlayer from {0}", SceneManagerHelper.ActiveSceneName);
                 // we're in a room. spawn a character for the local player. it gets synced by using PhotonNetwork.Instantiate
-                GameObject player = PhotonNetwork.Instantiate(this.playerPrefab.name, new Vector3(Random.Range(-0.1f, 0.1f), 0f,-1f), Quaternion.identity, 0);
+                GameObject player = PhotonNetwork.Instantiate(this.playerPrefabs[playerCount-1].name, new Vector3(Random.Range(-0.1f, 0.1f), 0f,-1f), Quaternion.identity, 0);
                 //playerList.Add(player);
                 player.GetComponent<PlayerManager>().inventory = (InventoryObject)InventoryObject.CreateInstance("InventoryObject");
                 player.GetComponent<PlayerManager>().inventory.savePath += "." + player.GetComponent<PhotonView>().ViewID;

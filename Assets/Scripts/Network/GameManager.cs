@@ -49,6 +49,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     void Start()
     {
+        PlayerSetup();
         StartGame();
         for(int i = Players.Length; i < 4; i++)
             Rankings[i].SetActive(false);
@@ -120,6 +121,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         player.GetComponent<PlayerManager>().inventory.Create();
         itembar.GetComponent<DisplayInventory>().inventory = player.GetComponent<PlayerManager>().inventory;
         */
+        /*
         for(int i = 0; i < Players.Count(); i++){
             if (Players[i].GetComponent<PhotonView>().IsMine){
                 Debug.Log("set inventory");
@@ -129,6 +131,8 @@ public class GameManager : MonoBehaviourPunCallbacks
                 energybar.GetComponent<DisplayEnergyBar>().player = Players[i];
             }
         }
+        */
+        //Debug.Log("game manager player:"+WaitingManager.player.name);
         StartGenerator();
     }
 
@@ -285,6 +289,19 @@ public class GameManager : MonoBehaviourPunCallbacks
         //PhotonNetwork.LoadLevel("RoomForNetwork");
     }
 
+    void PlayerSetup(){
+        var Playerlist = GameObject.FindGameObjectsWithTag("player");
+        for(int i = 0; i < Playerlist.Count(); i++){
+            if (Playerlist[i].GetComponent<PhotonView>().IsMine){
+                var myPlayer = Playerlist[i];
+                Debug.Log("set inventory");
+                itembar = GameObject.Find("ItemBar");
+                itembar.GetComponent<DisplayInventory>().inventory = myPlayer.GetComponent<PlayerManager>().inventory;
+                energybar = GameObject.Find("EnergyBar");
+                energybar.GetComponent<DisplayEnergyBar>().player = myPlayer;
+            }
+        }
+    }
 
     #endregion
 

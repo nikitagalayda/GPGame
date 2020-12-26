@@ -25,6 +25,7 @@ public class WaitingManager : MonoBehaviourPunCallbacks, IOnEventCallback
     private GameObject startButton;
     public float gravity = 0.5F;
     private GameObject[] Players;
+    //public static GameObject player;
     private List<Text> Rankings = new List<Text>();
     private List<GameObject> playerList = new List<GameObject>();
     // Start is called before the first frame update

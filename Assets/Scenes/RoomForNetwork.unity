@@ -3796,6 +3796,10 @@ PrefabInstance:
       propertyPath: lava
       value: 
       objectReference: {fileID: 735366665}
+    - target: {fileID: 3434691694661613088, guid: 0774e26dc7ba8634e8de5382885ccd76, type: 3}
+      propertyPath: playerPrefab
+      value: 
+      objectReference: {fileID: 6401610849627112038, guid: 468316095e4dd9343824295b70e74b01, type: 3}
     - target: {fileID: 3434691694661613089, guid: 0774e26dc7ba8634e8de5382885ccd76, type: 3}
       propertyPath: m_LocalPosition.x
       value: 5.520917

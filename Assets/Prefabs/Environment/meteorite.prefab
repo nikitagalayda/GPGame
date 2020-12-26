@@ -1,0 +1,111 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &951530413639563090
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2184696065071211654}
+  - component: {fileID: 609631019}
+  m_Layer: 0
+  m_Name: meteorite
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2184696065071211654
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 951530413639563090}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -18.81, y: 0.32864478, z: -0.06493556}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1849733791023959097}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &609631019
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 951530413639563090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8dcfedcad3c659458dab5ea51ecb6e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 1
+  meteorParticles: {fileID: 4368067018957938596, guid: 57e8cb7955c5a3640b5660ad6cdd2140, type: 3}
+--- !u!1001 &2486728586589785813
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 2184696065071211654}
+    m_Modifications:
+    - target: {fileID: 4262992863542592236, guid: 6324e7d714b7b7445a3854d69d0c7420, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4262992863542592236, guid: 6324e7d714b7b7445a3854d69d0c7420, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4262992863542592236, guid: 6324e7d714b7b7445a3854d69d0c7420, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4262992863542592236, guid: 6324e7d714b7b7445a3854d69d0c7420, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4262992863542592236, guid: 6324e7d714b7b7445a3854d69d0c7420, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4262992863542592236, guid: 6324e7d714b7b7445a3854d69d0c7420, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4262992863542592236, guid: 6324e7d714b7b7445a3854d69d0c7420, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4262992863542592236, guid: 6324e7d714b7b7445a3854d69d0c7420, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4262992863542592236, guid: 6324e7d714b7b7445a3854d69d0c7420, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4262992863542592236, guid: 6324e7d714b7b7445a3854d69d0c7420, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4262992863542592236, guid: 6324e7d714b7b7445a3854d69d0c7420, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4262992863542592238, guid: 6324e7d714b7b7445a3854d69d0c7420, type: 3}
+      propertyPath: m_Name
+      value: meteor
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 3315521201846116127, guid: 6324e7d714b7b7445a3854d69d0c7420, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: 6324e7d714b7b7445a3854d69d0c7420, type: 3}
+--- !u!4 &1849733791023959097 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4262992863542592236, guid: 6324e7d714b7b7445a3854d69d0c7420, type: 3}
+  m_PrefabInstance: {fileID: 2486728586589785813}
+  m_PrefabAsset: {fileID: 0}

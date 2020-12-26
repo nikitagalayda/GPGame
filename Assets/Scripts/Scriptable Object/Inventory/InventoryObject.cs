@@ -47,6 +47,10 @@ public class InventoryObject : ScriptableObject//, ISerializationCallbackReceive
         return 0;
     }
 
+    public void clearItems(){
+        Container.Items.Clear();  
+    }
+
     public void AddItem(Item _item, int _amount){
         // 如果已經有了該物品，則直接增加存入的數量
         for(int i = 0; i < Container.Items.Count; i++){

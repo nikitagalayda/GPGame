@@ -100,6 +100,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         var item = other.GetComponent<GroundItem>();
         //Debug.Log(item);
         if(item){
+            inventory.clearItems();
             inventory.AddItem(new Item(item.item), 1);
             Destroy(other.gameObject);
         }

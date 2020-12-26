@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Booster
   m_EditorClassIdentifier: 
   Id: 3
-  uiDisplay: {fileID: 21300000, guid: ea9306e1aa95eb8439400efefff9f8db, type: 3}
+  uiDisplay: {fileID: 21300000, guid: f57b58561868fa64ab0e28c5a633146a, type: 3}
   itemType: 1
   description: This item will increse user speed for a short time.
   buffs:

@@ -206,20 +206,20 @@ public class SimpleTeleport_NetworkVersion : MonoBehaviourPunCallbacks
     void OnCollisionEnter2D(Collision2D Collider)
     {
         //print("A:" + Collider.gameObject.name); //印出A:碰撞對象的名字
-        if (Collider.gameObject.name == "lava" && photonView.IsMine)
+        if (Collider.gameObject.name == "death_zone" && photonView.IsMine)
         {
             imDie = true;
             GameManager.Instance.dieText.SetActive(true);
-            GameManager.Instance.hintText.SetActive(true);
+            //GameManager.Instance.hintText.SetActive(true);
             StartCoroutine(delDieText());
             
             Destroy(this.gameObject.GetComponent<PlayerManager>());
-            Destroy(this.gameObject.GetComponent< PhotonRigidbody2DView>());
+            Destroy(this.gameObject.GetComponent<PhotonRigidbody2DView>());
             Destroy(this.gameObject.GetComponent<Rigidbody2D>());
             
             //PhotonNetwork.Destroy(this.gameObject);
             GameManager.Instance.leaveButton.SetActive(true);
-            Players = GameObject.FindGameObjectsWithTag("player");
+            //Players = GameObject.FindGameObjectsWithTag("player");
         }
             
                 //GameManager.Instance.LeaveRoom();

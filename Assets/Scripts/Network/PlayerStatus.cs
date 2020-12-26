@@ -126,24 +126,33 @@ public class PlayerStatus : MonoBehaviourPunCallbacks
         this.gameObject.GetComponent<PlayerManager>().movePower = this.gameObject.GetComponent<PlayerManager>().movePower/2;
     }
     void EnergyStopLostStart(){
-        this.gameObject.GetComponent<PlayerManager>().energyNaturalRecoveryRate 
-        = this.gameObject.GetComponent<PlayerManager>().energyNaturalLostRate;
+        Debug.Log("todo");
+        /*
+        this.gameObject.GetComponent<PlayerManager>().energyModifyRate 
+        += this.gameObject.GetComponent<PlayerManager>().energyNaturalLostRate;
+        */
     }
     void EnergyStopLostEnd(){
-        this.gameObject.GetComponent<PlayerManager>().energyNaturalRecoveryRate = 0;
+        Debug.Log("todo");
+        /*
+        this.gameObject.GetComponent<PlayerManager>().energyModifyRate = 0;
+        */
     }
     void EnergyRegenerateStart(){
-        this.gameObject.GetComponent<PlayerManager>().energyNaturalRecoveryRate 
-        = this.gameObject.GetComponent<PlayerManager>().energyNaturalLostRate*2;
+        this.gameObject.GetComponent<PlayerManager>().energyModifyRate 
+        += this.gameObject.GetComponent<PlayerManager>().energyNaturalRecoveryRate;
     }
     void EnergyRegenerateEnd(){
-        this.gameObject.GetComponent<PlayerManager>().energyNaturalRecoveryRate = 0;        
+        this.gameObject.GetComponent<PlayerManager>().energyModifyRate 
+        -= this.gameObject.GetComponent<PlayerManager>().energyNaturalRecoveryRate;       
     }
     void EnergyDoubleLostStart(){
-        this.gameObject.GetComponent<PlayerManager>().energyNaturalRecoveryRate = -this.gameObject.GetComponent<PlayerManager>().energyNaturalLostRate;
+        this.gameObject.GetComponent<PlayerManager>().energyModifyRate 
+        -= this.gameObject.GetComponent<PlayerManager>().energyNaturalLostRate;
     }
     void EnergyDoubleLostEnd(){
-        this.gameObject.GetComponent<PlayerManager>().energyNaturalRecoveryRate = 0;
+        this.gameObject.GetComponent<PlayerManager>().energyModifyRate 
+        += this.gameObject.GetComponent<PlayerManager>().energyNaturalLostRate;
     }
     void FreezeEffectStart(){
         this.gameObject.GetComponent<PlayerManager>().enabled = false;

@@ -79,9 +79,11 @@ public class SimpleTeleport_NetworkVersion : MonoBehaviourPunCallbacks
             // Debug.Log("sending out ray");
             // RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
             // GameObject target = hit.collider.gameObject;
-            if (Input.GetMouseButton(0) && canShoot)
+            PlayerManager plyManager = this.gameObject.GetComponent<PlayerManager>();
+            if (Input.GetMouseButton(0) && canShoot && plyManager.energy >= plyManager.defaultShootingEnergyConsuming)
             {
                 canShoot = false;
+                plyManager.energy -= plyManager.defaultShootingEnergyConsuming;
                 nextShotTimestamp = Time.time + shootCooldown;
                 // if (Time.time >= shootTimeStamp + shootCooldown)
                 // {

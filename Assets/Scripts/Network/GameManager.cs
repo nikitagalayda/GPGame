@@ -26,15 +26,12 @@ public class GameManager : MonoBehaviourPunCallbacks
     public bool gameStart = false;
     private bool dropping = false;
     public GameObject[] Rankings;
-    [Tooltip("start Button for the UI")]
-    [SerializeField]
-    private GameObject startButton;
+
     [Tooltip("the spaceShip")]
     [SerializeField]
     private GameObject spaceShip;
     public GameObject leaveButton;
     public GameObject dieText;
-    public GameObject hintText;
     public GameObject[] dieImages;
     public float gravity = 0.5F;
     private GameObject[] Players;
@@ -51,70 +48,70 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     void Start()
     {
+        Instance = this;
         PlayerSetup();
         StartGame();
-        for(int i = Players.Length; i < 4; i++)
-            Rankings[i].SetActive(false);
-        Vector2 randPosition = new Vector2(Random.Range(-8.0f, 8.0f), -100.0f);
-        if(PhotonNetwork.IsMasterClient)
-        {
-            for(int i = 0; i< 200;i++)
-            {
-                /*int randBox = Random.Range(0, 2);
-                float rand = Random.Range(-8.0f, 5.0f);
-                PhotonNetwork.InstantiateSceneObject(this.floor.name, new Vector3(rand, -102f+(60f*playerHeight)*(float)(i+1), -5), Quaternion.identity, 0);
-                for(int j = 0;j< randBox;j++)
-                    PhotonNetwork.InstantiateSceneObject("Drop", new Vector3(rand, -102f+(60f*playerHeight)*(float)(i+1)+1, -5), Quaternion.identity);
+        //for(int i = Players.Length; i < 4; i++)
+        //    Rankings[i].SetActive(false);
+//        Vector2 randPosition = new Vector2(Random.Range(-8.0f, 8.0f), -100.0f);
+        // if(PhotonNetwork.IsMasterClient)
+        // {
+        //     
+        //     for(int i = 0; i< 200;i++)
+        //     {
+        //         /*int randBox = Random.Range(0, 2);
+        //         float rand = Random.Range(-8.0f, 5.0f);
+        //         PhotonNetwork.InstantiateSceneObject(this.floor.name, new Vector3(rand, -102f+(60f*playerHeight)*(float)(i+1), -5), Quaternion.identity, 0);
+        //         for(int j = 0;j< randBox;j++)
+        //             PhotonNetwork.InstantiateSceneObject("Drop", new Vector3(rand, -102f+(60f*playerHeight)*(float)(i+1)+1, -5), Quaternion.identity);
 
-                if(Mathf.Abs(rand+1.5f)>3f)
-                {
-                    if(rand>0){
-                        PhotonNetwork.InstantiateSceneObject(this.floor.name, new Vector3(-8+5-rand, -102f+(60f*playerHeight)*(float)(i+1), -5), Quaternion.identity, 0);
-                        for(int j = 0;j< randBox;j++)
-                            PhotonNetwork.InstantiateSceneObject("Drop", new Vector3(-8+5-rand, -102f+(60f*playerHeight)*(float)(i+1)+1, -5), Quaternion.identity, 0);
-                    }
-                    else
-                    {
-                        PhotonNetwork.InstantiateSceneObject(this.floor.name, new Vector3(-8-rand+5, -102f+(60f*playerHeight)*(float)(i+1), -5), Quaternion.identity, 0);
-                        for(int j = 0;j< randBox;j++)
-                            PhotonNetwork.InstantiateSceneObject("Drop", new Vector3(-8-rand+5, -102f+(60f*playerHeight)*(float)(i+1)+1, -5), Quaternion.identity, 0);
+        //         if(Mathf.Abs(rand+1.5f)>3f)
+        //         {
+        //             if(rand>0){
+        //                 PhotonNetwork.InstantiateSceneObject(this.floor.name, new Vector3(-8+5-rand, -102f+(60f*playerHeight)*(float)(i+1), -5), Quaternion.identity, 0);
+        //                 for(int j = 0;j< randBox;j++)
+        //                     PhotonNetwork.InstantiateSceneObject("Drop", new Vector3(-8+5-rand, -102f+(60f*playerHeight)*(float)(i+1)+1, -5), Quaternion.identity, 0);
+        //             }
+        //             else
+        //             {
+        //                 PhotonNetwork.InstantiateSceneObject(this.floor.name, new Vector3(-8-rand+5, -102f+(60f*playerHeight)*(float)(i+1), -5), Quaternion.identity, 0);
+        //                 for(int j = 0;j< randBox;j++)
+        //                     PhotonNetwork.InstantiateSceneObject("Drop", new Vector3(-8-rand+5, -102f+(60f*playerHeight)*(float)(i+1)+1, -5), Quaternion.identity, 0);
 
-                    }
+        //             }
 
-                }*/
-                //PhotonNetwork.Instantiate(this.floor.name, new Vector3(Random.Range(-8.0f, 5.0f), -102f+(40f*playerHeight)*(float)(i+1), -5), Quaternion.identity, 0);
-                GameObject flr = leaveButton;
-                float pastflrposition=  -1000.0f;
-                for (float j = -7.0f; j <= 7.0f; j=j+ 2.5f)
-                {
-                    int rand = Random.Range(0, 14);
-                    int randColor = Random.Range(0, this.floor.Length);
-                    if (rand == 0)
-                    {
-                        if (j == pastflrposition + 2.5f)
-                        {
-                            flr.transform.localScale += new Vector3(2.5f, 0, 0);
-                            flr.transform.position += new Vector3(1.25f, 0, 0);
-                            pastflrposition = j;
-                        }
-                        else
-                        {
-                            flr = PhotonNetwork.Instantiate(this.floor[randColor].name, new Vector3(j, -102f + (60f * playerHeight) * (float)(i + 1), -5), Quaternion.identity, 0);
-                            pastflrposition = j;
-                            PhotonNetwork.Instantiate("collectableBomb", new Vector3(j, -102f + (60f * playerHeight) * (float)(i + 1) +1, -5), Quaternion.identity, 0);
-                        }
-                    }
-                }
-                for (float j = -7.0f; j <= 7.0f; j = j + 1.25f)
-                {
-                    int rand = Random.Range(0, 9);
-                    if (rand == 0) PhotonNetwork.Instantiate("Drop", new Vector3(j, -102f + (60f * playerHeight) * (float)(i + 1) + 1, -5), Quaternion.identity);
-                }
-            }
-        }
-        startButton.SetActive(false);
-        leaveButton.SetActive(false);
-        Instance = this;
+        //         }*/
+        //         //PhotonNetwork.Instantiate(this.floor.name, new Vector3(Random.Range(-8.0f, 5.0f), -102f+(40f*playerHeight)*(float)(i+1), -5), Quaternion.identity, 0);
+        //         GameObject flr = leaveButton;
+        //         float pastflrposition=  -1000.0f;
+        //         for (float j = -7.0f; j <= 7.0f; j=j+ 2.5f)
+        //         {
+        //             int rand = Random.Range(0, 14);
+        //             int randColor = Random.Range(0, this.floor.Length);
+        //             if (rand == 0)
+        //             {
+        //                 if (j == pastflrposition + 2.5f)
+        //                 {
+        //                     flr.transform.localScale += new Vector3(2.5f, 0, 0);
+        //                     flr.transform.position += new Vector3(1.25f, 0, 0);
+        //                     pastflrposition = j;
+        //                 }
+        //                 else
+        //                 {
+        //                     flr = PhotonNetwork.Instantiate(this.floor[randColor].name, new Vector3(j, -102f + (60f * playerHeight) * (float)(i + 1), -5), Quaternion.identity, 0);
+        //                     pastflrposition = j;
+        //                     PhotonNetwork.Instantiate("collectableBomb", new Vector3(j, -102f + (60f * playerHeight) * (float)(i + 1) +1, -5), Quaternion.identity, 0);
+        //                 }
+        //             }
+        //         }
+        //         for (float j = -7.0f; j <= 7.0f; j = j + 1.25f)
+        //         {
+        //             int rand = Random.Range(0, 9);
+        //             if (rand == 0) PhotonNetwork.Instantiate("Drop", new Vector3(j, -102f + (60f * playerHeight) * (float)(i + 1) + 1, -5), Quaternion.identity);
+        //         }
+        //     }
+        
+        
         /*
         var player = PhotonNetwork.Instantiate(this.playerPrefab.name, new Vector2(playerSpawnLocation.transform.position[0],playerSpawnLocation.transform.position[1]), Quaternion.identity, 0);
         player.GetComponent<PlayerManager>().inventory = (InventoryObject)InventoryObject.CreateInstance("InventoryObject");
@@ -135,7 +132,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         }
         */
         //Debug.Log("game manager player:"+WaitingManager.player.name);
-        StartGenerator();
+        //StartGenerator();
     }
 
     // Update is called once per frame
@@ -176,6 +173,7 @@ public class GameManager : MonoBehaviourPunCallbacks
                 }
             }
             height[y] = -1000;
+            /*
             if(Players[y]!=null)
                 {Rankings[i].GetComponent<Text>().text = (i + 1).ToString("0") + ". " + Players[y].GetComponent<SimpleTeleport_NetworkVersion>().photonView.Owner.NickName + " : " + Players[y].transform.position[1].ToString("0") + " m";
                 //dieImages[i].SetActive(true);
@@ -185,26 +183,27 @@ public class GameManager : MonoBehaviourPunCallbacks
                     dieImages[i].SetActive(true);
                 }
             Rankings[4].GetComponent<Text>().text = "Lava Height : " + lava.transform.position[1].ToString("0"); 
+            */
         }
     }
 
-    private IEnumerator EnemyGenerator()
-    {
-        while (true)
-        {
-            for (float j = -7.0f; j <= 7.0f; j = j + 1.25f)
-            {
-                int rand = Random.Range(0, 9);
-                if (rand == 0) PhotonNetwork.Instantiate("Drop", new Vector3(j, -102f + (60f * playerHeight) * (float)(199 + 1) + 1, -5), Quaternion.identity);
-            }
-            yield return new WaitForSeconds(1.5f);
-        }
-    }
+    // private IEnumerator EnemyGenerator()
+    // {
+    //     while (true)
+    //     {
+    //         for (float j = -7.0f; j <= 7.0f; j = j + 1.25f)
+    //         {
+    //             int rand = Random.Range(0, 9);
+    //             if (rand == 0) PhotonNetwork.Instantiate("Drop", new Vector3(j, -102f + (60f * playerHeight) * (float)(199 + 1) + 1, -5), Quaternion.identity);
+    //         }
+    //         yield return new WaitForSeconds(1.5f);
+    //     }
+    // }
 
-    public void StartGenerator()
-    {
-        StartCoroutine(EnemyGenerator());
-    }
+    // public void StartGenerator()
+    // {
+    //     StartCoroutine(EnemyGenerator());
+    // }
 
     public void StartGame()
     {
@@ -272,15 +271,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     
 
 
-    #region Private Methods
-    private IEnumerator SpawnLava() 
-    {
-        while(true) {
-            PhotonNetwork.Instantiate("Liquid Particle", new Vector3(Random.Range(-8.0f, 5.0f), -100f, -5), Quaternion.identity, 0);
-            yield return new WaitForSeconds(0.1f);
-        }
-    }
-
+    #region Method
     void LoadArena()
     {
         if (!PhotonNetwork.IsMasterClient)

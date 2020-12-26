@@ -13,11 +13,12 @@ MonoBehaviour:
   m_Name: FreezeBomb
   m_EditorClassIdentifier: 
   Id: 5
-  uiDisplay: {fileID: 21300000, guid: 53f0a099e5669d345a3f0b7f41c2f8c7, type: 3}
+  uiDisplay: {fileID: 21300000, guid: bb747fa0e6a48694c8f5d66be7969086, type: 3}
   itemType: 1
   description: Freeze Bomb can freeze everything it touch.
   buffs:
   - attribute: 7
     bulletPrefab: {fileID: 4931026771115612109, guid: e6bb06571d13f5946b3b265f6891720d, type: 3}
     value: 0
+    bulletOffset: 1
     time: 0

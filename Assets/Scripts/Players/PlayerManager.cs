@@ -10,7 +10,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
     public GameObject energyBar;
     public float movePower = 10f;
     public float jumpPower = 15f; //Set Gravity Scale in Rigidbody2D Component to 5
-    public float bulletSpawnOffset = 100f;
+    public float bulletSpawnOffset = 0f;
     public float maxEnergy = 100;
     public float energy = 100;
     public float energyNaturalRecoveryRate = 0;

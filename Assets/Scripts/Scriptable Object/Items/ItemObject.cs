@@ -53,6 +53,7 @@ public class Item{
             buffs[i].value = item.buffs[i].value;
             buffs[i].attribute = item.buffs[i].attribute;
             buffs[i].bulletPrefab = item.buffs[i].bulletPrefab;
+            buffs[i].bulletOffset = item.buffs[i].bulletOffset;
             buffs[i].time = item.buffs[i].time;
         }
     }
@@ -70,7 +71,8 @@ public class ItemBuff{
     public Attributes attribute;
     public GameObject bulletPrefab;
     //public string bulletPrefabName;
-    public int value;
+    public float value;
+    public float bulletOffset;
     public float time;
     public ItemBuff(){}
     public void ExecuteByAttribute(GameObject user){
@@ -152,7 +154,7 @@ public class ItemBuff{
             var originalBulletPrefab = ProjectileGenerator.bulletPrefab;
             ProjectileGenerator.bulletPrefab = bulletPrefab;
             //Debug.Log("generate bulletPrefab: " + bulletPrefab.name);
-            ProjectileGenerator.GenerateTheBullet(mousePosition,user.transform.position,user.GetComponent<PlayerManager>().bulletSpawnOffset);
+            ProjectileGenerator.GenerateTheBullet(mousePosition,user.transform.position,bulletOffset);
             ProjectileGenerator.bulletPrefab = originalBulletPrefab;
         }
     }

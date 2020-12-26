@@ -29,7 +29,9 @@ public class GameManager : MonoBehaviourPunCallbacks
     [Tooltip("start Button for the UI")]
     [SerializeField]
     private GameObject startButton;
-    
+    [Tooltip("the spaceShip")]
+    [SerializeField]
+    private GameObject spaceShip;
     public GameObject leaveButton;
     public GameObject dieText;
     public GameObject hintText;
@@ -140,7 +142,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     void Update()
     {
 
-        
+        spaceShip.transform.position = spaceShip.transform.position - new Vector3(0, Time.fixedDeltaTime * 0.1f, 0);
         /*if(gameStart && dropping == false)
         {
 

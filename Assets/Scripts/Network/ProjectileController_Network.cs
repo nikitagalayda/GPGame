@@ -96,7 +96,7 @@ public class ProjectileController_Network : MonoBehaviourPunCallbacks
                 ///parentObject.transform.position = bulletPos;
                 
                 photonViewParent.RPC("TransitionToPosition3", RpcTarget.All,bulletPos);
-                
+                generateEnergy(parentObject);
                 //other.transform.position = temp;
                 
                 
@@ -110,10 +110,22 @@ public class ProjectileController_Network : MonoBehaviourPunCallbacks
                 //parentObject.GetComponent<SimpleTeleport_NetworkVersion>().TransitionToPosition(temp);
             }
         }  
+
+        
         //if(photonView.IsMine)
             
        // if( other.gameObject.name == "Drop(Clone)" ||  other.gameObject.name == "Player_Network(Clone)")
             
+    }
+    public void generateEnergy(GameObject target)
+    {
+        int num = 10;
+        for(int i = 0; i < num; i++) {
+            Vector3 genPos = new Vector3(transform.position.x + Random.Range(-0.5f, 0.5f), transform.position.y + Random.Range(-0.5f, 0.5f), transform.position.z); 
+            GameObject energy = PhotonNetwork.Instantiate("energy", genPos, Quaternion.identity);
+            energy.GetComponent<GoDestination>().SetDest(target);
+            Debug.Log("asdasdasd"+energy.GetComponent<GoDestination>().DestObject.name);
+        }
     }
    
 }

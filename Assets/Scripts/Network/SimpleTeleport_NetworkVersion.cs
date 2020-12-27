@@ -248,11 +248,13 @@ public class SimpleTeleport_NetworkVersion : MonoBehaviourPunCallbacks
             {
                 //this.transform.position = other.gameObject.GetComponent<ProjectileController_Network>().initialPos;
                 Debug.Log("Wooooooooo");
+                
             }
             //parentObject.transform.position =  bulletPos;
 
         }
     }
+
 
     private float AngleBetweenTwoPoints(Vector3 a, Vector3 b) {
          return Mathf.Atan2(a.y - b.y, a.x - b.x) * Mathf.Rad2Deg;

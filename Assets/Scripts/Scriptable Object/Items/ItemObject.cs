@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
+using Photon.Realtime;
 
 public enum ItemType
 {
@@ -233,10 +235,21 @@ public class ItemBuff{
                 }else{
                     realDrainAmount = playerManagerScript.energy;
                 }
-                playerManagerScript.energy -= realDrainAmount;
+                //playerManagerScript. -= realDrainAmount;
+                item.GetComponent<PhotonView>().RPC("ModifyEnergy",RpcTarget.All,-realDrainAmount);
                 user.GetComponent<PlayerManager>().energy += realDrainAmount;
+                DrainAnimation(10,item.transform.position,user);
             }    
         }
+    }
+
+    public void DrainAnimation(int nummber,Vector3 fromLocation, GameObject toLocation){
+        for(int i = 0; i < nummber; i++) {
+            Vector3 genPos = new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f), 0) + fromLocation;
+            GameObject energy = PhotonNetwork.Instantiate("energy", genPos, Quaternion.identity);
+            energy.GetComponent<GoDestination>().SetDest(toLocation);
+            //Debug.Log("asdasdasd"+energy.GetComponent<GoDestination>().DestObject.name);
+        }        
     }
 
     public void ShockWave(GameObject user){

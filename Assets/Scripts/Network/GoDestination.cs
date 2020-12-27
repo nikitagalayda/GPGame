@@ -33,11 +33,19 @@ public class GoDestination : MonoBehaviourPunCallbacks
         //}
     }
     
+
+    private void OnTriggerEnter2D(Collider2D other){ 
+        Debug.Log("energy point collide"); 
+        if(other.gameObject == DestObject){
+            PhotonNetwork.Destroy(this.gameObject);
+        }      
+    }
+
     public void SetDest(GameObject target)
     {
         
         DestObject = target;
-        Debug.Log("Target 123:"+DestObject.name);
+        //Debug.Log("Target 123:"+DestObject.name);
     }
 
 }

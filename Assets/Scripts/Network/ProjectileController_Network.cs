@@ -96,7 +96,7 @@ public class ProjectileController_Network : MonoBehaviourPunCallbacks
                 ///parentObject.transform.position = bulletPos;
                 
                 photonViewParent.RPC("TransitionToPosition3", RpcTarget.All,bulletPos);
-                generateEnergy(parentObject);
+                //generateEnergy(parentObject);
                 //other.transform.position = temp;
                 
                 

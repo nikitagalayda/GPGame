@@ -191,4 +191,9 @@ public class PlayerManager : MonoBehaviourPunCallbacks
     public void SetStatusEffect(int id, float t){
         this.GetComponent<PlayerStatus>().StartAndAddEffect(id,t);
     }
+
+    [PunRPC]
+    public void ModifyEnergy(float modifyEnergy){
+        this.energy += modifyEnergy;
+    }
 }

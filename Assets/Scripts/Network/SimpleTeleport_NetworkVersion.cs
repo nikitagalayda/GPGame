@@ -4,7 +4,7 @@ using UnityEngine;
 
 using Photon.Pun;
 using Photon.Realtime;
-public class SimpleTeleport_NetworkVersion : MonoBehaviourPunCallbacks
+public class SimpleTeleport_NetworkVersion : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
 {
 
     [Tooltip("The local player instance. Use this to know if the local player is represented in the Scene")]
@@ -15,7 +15,9 @@ public class SimpleTeleport_NetworkVersion : MonoBehaviourPunCallbacks
     public GameObject PlayerUiPrefab;
     // public float bulletSpeed;
     public GameObject bulletPrefab;
-
+    [Tooltip("diff style of spaceShip sprite")]
+    [SerializeField]
+    private Sprite[] spaceSrpites;
     private Rigidbody2D rb;
     private bool falling = false;
     private bool inTransition = false;
@@ -268,6 +270,15 @@ public class SimpleTeleport_NetworkVersion : MonoBehaviourPunCallbacks
 
         //Rotate 40 deg
         m_Collider.enabled = true;
+    }
+
+    public void OnPhotonInstantiate(PhotonMessageInfo info)
+    {
+        object[] instantiationData = info.photonView.InstantiationData;
+
+        int number = (int)instantiationData[0];
+        this.transform.FindChild("Spaceship").GetComponent<SpriteRenderer>().sprite = spaceSrpites[number];
+
     }
     #region IPunObservable implementation
 

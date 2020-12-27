@@ -476,6 +476,11 @@ MonoBehaviour:
   shootCooldown: 0.5
   PlayerUiPrefab: {fileID: 5932812169316714979, guid: d02a902e74c174d44b6b4f7617d47e3e, type: 3}
   bulletPrefab: {fileID: 7428196229701916301, guid: 0e7cc17725192d340aeb6fdca651aaaa, type: 3}
+  spaceSrpites:
+  - {fileID: 21300000, guid: 870c2d66c731bd94693fa3fcc5a25fb2, type: 3}
+  - {fileID: 21300000, guid: 736c96304c5f14e4bb5105647e098e31, type: 3}
+  - {fileID: 21300000, guid: 61571f10e619d694c89be0130cfcf158, type: 3}
+  - {fileID: 21300000, guid: 798c161dc6e03df4d82df0deff1ce862, type: 3}
   m_Collider: {fileID: 6401610849627112045}
   imDie: 0
 --- !u!114 &-1000667385883363867

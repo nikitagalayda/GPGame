@@ -32,7 +32,7 @@ public class DisplayInventory : MonoBehaviour
 
     public void UpdateDisplay(){
         // 如果之前的容器長度比較大，那麼代表說應該重新繪製icon
-        if(previousInventoryContainerItemsCount > inventory.Container.Items.Count){
+        if(previousInventoryContainerItemsCount >= inventory.Container.Items.Count){
             
             foreach(var item in itemsDisplayed)
             {

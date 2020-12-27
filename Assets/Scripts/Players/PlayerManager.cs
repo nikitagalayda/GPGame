@@ -10,12 +10,13 @@ public class PlayerManager : MonoBehaviourPunCallbacks
     public GameObject energyBar;
     public float movePower = 10f;
     public float jumpPower = 15f; //Set Gravity Scale in Rigidbody2D Component to 5
-    public float bulletSpawnOffset = 100f;
+    public float bulletSpawnOffset = 0f;
     public float maxEnergy = 100;
     public float energy = 100;
-    public float energyNaturalRecoveryRate = 0;
-    public float energyNaturalLostRate = 10;
-    public float defaultShootingEnergyConsuming = 10;
+    public float energyNaturalRecoveryRate = 10;
+    public float energyNaturalLostRate = 0;
+    public float energyModifyRate = 0;
+    public float defaultShootingEnergyConsuming = 20;
     private Rigidbody2D rb;
     //private Animator anim;
     Vector3 movement;
@@ -72,9 +73,12 @@ public class PlayerManager : MonoBehaviourPunCallbacks
     }
 
     public void EnergyDefaultModify(){
-        energy = energy + (energyNaturalRecoveryRate+energyNaturalLostRate) * Time.deltaTime;
+        energy = energy + (energyNaturalRecoveryRate-energyNaturalLostRate+energyModifyRate) * Time.deltaTime;
         if(energy >= maxEnergy){
             energy = maxEnergy;
+        }
+        if(energy <= 0){
+            energy = 0;
         }
     }
 

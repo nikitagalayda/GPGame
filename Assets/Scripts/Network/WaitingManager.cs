@@ -55,7 +55,7 @@ public class WaitingManager : MonoBehaviourPunCallbacks, IOnEventCallback
                 // we're in a room. spawn a character for the local player. it gets synced by using PhotonNetwork.Instantiate
                 GameObject player = PhotonNetwork.Instantiate(this.playerPrefab.name, new Vector3(Random.Range(-0.1f, 0.1f), 0f,-1f), Quaternion.identity, 0);
                 player.GetComponent<PlayerMetaData>().Type = playerCount-1;
-                player.transform.FindChild("Spaceship").GetComponent<SpriteRenderer>().sprite = spaceSrpites[playerCount-1];
+                player.transform.Find("Spaceship").GetComponent<SpriteRenderer>().sprite = spaceSrpites[playerCount-1];
                 //playerList.Add(player);
                 player.GetComponent<PlayerManager>().inventory = (InventoryObject)InventoryObject.CreateInstance("InventoryObject");
                 player.GetComponent<PlayerManager>().inventory.savePath += "." + player.GetComponent<PhotonView>().ViewID;

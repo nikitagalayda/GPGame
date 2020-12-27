@@ -227,7 +227,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   triger_flag: 0
-  radius: 0.2
+  radius: 1
   bombForce: 7
   explosion: {fileID: 139366, guid: b185c1a9cf067374586d095111b15bd1, type: 3}
 --- !u!114 &-231602242600167740

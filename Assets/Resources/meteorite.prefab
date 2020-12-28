@@ -10,6 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2184696065071211654}
   - component: {fileID: 609631019}
+  - component: {fileID: -5432856855498517880}
+  - component: {fileID: 7928996640597284876}
+  - component: {fileID: 3621064290144411756}
   m_Layer: 0
   m_Name: meteorite
   m_TagString: EnvironmentObject
@@ -46,6 +49,70 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 1
   meteorParticles: {fileID: 4368067018957938596, guid: 57e8cb7955c5a3640b5660ad6cdd2140, type: 3}
+--- !u!114 &-5432856855498517880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 951530413639563090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  observableSearch: 2
+  Synchronization: 3
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 7928996640597284876}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &7928996640597284876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 951530413639563090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+--- !u!61 &3621064290144411756
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 951530413639563090}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.4, y: 0.4}
+  m_EdgeRadius: 0
 --- !u!1001 &2486728586589785813
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -53,6 +120,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2184696065071211654}
     m_Modifications:
+    - target: {fileID: 4262992863542592236, guid: 6324e7d714b7b7445a3854d69d0c7420, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4262992863542592236, guid: 6324e7d714b7b7445a3854d69d0c7420, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -66,6 +137,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4262992863542592236, guid: 6324e7d714b7b7445a3854d69d0c7420, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4262992863542592236, guid: 6324e7d714b7b7445a3854d69d0c7420, type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
@@ -75,14 +150,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4262992863542592236, guid: 6324e7d714b7b7445a3854d69d0c7420, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4262992863542592236, guid: 6324e7d714b7b7445a3854d69d0c7420, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4262992863542592236, guid: 6324e7d714b7b7445a3854d69d0c7420, type: 3}
-      propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4262992863542592236, guid: 6324e7d714b7b7445a3854d69d0c7420, type: 3}

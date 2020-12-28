@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 6462110822199178233}
   - component: {fileID: 6462110822199178230}
   - component: {fileID: 6462110822199178231}
+  - component: {fileID: 3073388610073451874}
   m_Layer: 0
   m_Name: _reeze
   m_TagString: Untagged
@@ -203,3 +204,17 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 7.2, y: 7.2}
   m_EdgeRadius: 0
+--- !u!114 &3073388610073451874
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6462110822199178228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 581a5ceb29ae53e4fac2a97484b00aae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 1
+  meteorParticles: {fileID: 0}

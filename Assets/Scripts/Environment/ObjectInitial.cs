@@ -1,9 +1,8 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Photon.Pun;
-using Photon.Realtime;
-public class MeteorParticleController : MonoBehaviour
+
+public class ObjectInitial : MonoBehaviour
 {
     public float speed = 1f;
     public GameObject meteorParticles;
@@ -16,9 +15,7 @@ public class MeteorParticleController : MonoBehaviour
 
         meteorTransform = GetComponentInChildren<Transform>();
         meteorTransform.localEulerAngles = new Vector3(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, Random.Range(0.0f, 360.0f));
-        
-        Instantiate(meteorParticles, new Vector3(transform.position.x+0.3f, transform.position.y, transform.position.z), Quaternion.identity, gameObject.transform);
-        // mPart.transform.parent = gameObject.transform;
+                // mPart.transform.parent = gameObject.transform;
         // mPart.transform.localPosition = new Vector3(0.3f, 0f, 0f);
         
     }

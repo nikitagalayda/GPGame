@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 7945700561864240446}
   - component: {fileID: 7945700561864240433}
   - component: {fileID: 7945700561864240432}
+  - component: {fileID: 7187514013915947998}
   m_Layer: 0
   m_Name: restore_fuel
   m_TagString: Untagged
@@ -203,3 +204,17 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 7.2, y: 7.2}
   m_EdgeRadius: 0
+--- !u!114 &7187514013915947998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7945700561864240435}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 581a5ceb29ae53e4fac2a97484b00aae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 1
+  meteorParticles: {fileID: 0}

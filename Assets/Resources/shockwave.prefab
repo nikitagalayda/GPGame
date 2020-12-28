@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 1407601944274645268}
   - component: {fileID: 1407601944274645275}
   - component: {fileID: 1407601944274645274}
+  - component: {fileID: -7646107203934841491}
   m_Layer: 0
   m_Name: shockwave
   m_TagString: Untagged
@@ -203,3 +204,17 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 7.2, y: 7.2}
   m_EdgeRadius: 0
+--- !u!114 &-7646107203934841491
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1407601944274645273}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 581a5ceb29ae53e4fac2a97484b00aae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 1
+  meteorParticles: {fileID: 0}

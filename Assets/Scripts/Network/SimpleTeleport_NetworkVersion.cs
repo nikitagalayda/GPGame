@@ -283,7 +283,7 @@ public class SimpleTeleport_NetworkVersion : MonoBehaviourPunCallbacks, IPunInst
         object[] instantiationData = info.photonView.InstantiationData;
 
         int number = (int)instantiationData[0];
-        this.transform.FindChild("Spaceship").GetComponent<SpriteRenderer>().sprite = spaceSrpites[number];
+        this.transform.Find("Spaceship").GetComponent<SpriteRenderer>().sprite = spaceSrpites[number];
         color = number;
     }
     #region IPunObservable implementation

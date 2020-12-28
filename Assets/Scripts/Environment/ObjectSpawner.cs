@@ -15,34 +15,55 @@ public class ObjectSpawner : MonoBehaviourPunCallbacks
     private float spawnMinLocation;
     private float spawnMaxLocation;
     private float nextSpawnTime = 1.0f;
+    private float nextItemSpawnTime = 1.0f;
     private List<float> spawnLocations;
     private float lastSpawnLocation = 0f;
 
     void Start()
     {
         // TODO: add half of border width
-        spawnMinLocation = borders[0].transform.position.x;
-        spawnMaxLocation = borders[1].transform.position.x;
+       // spawnMinLocation = borders[0].transform.position.x;
+        //spawnMaxLocation = borders[1].transform.position.x;
         spawnLocations = new List<float> {-2f, -1f, 0f, 1f, 2f};
     }
 
     void Update()
     {
-        if(Time.time >= nextSpawnTime) {
-            SpawnRandomItem();
-            nextSpawnTime = Time.time + spawnCooldown;
-        }
+        if(PhotonNetwork.IsMasterClient){
+            if(Time.time >= nextSpawnTime) {
+                    SpawnMeteor();
+                    nextSpawnTime = Time.time + spawnCooldown;
+                }
+                if(Time.time >= nextItemSpawnTime) {
+                    int itemIdx = Random.Range(0, spawnItems.Length-1);
+                    SpawnRandomItem(itemIdx);
+                    nextItemSpawnTime = Time.time + spawnCooldown;
+                }
+            }
+        
     }
 
-    private void SpawnRandomItem() {
+    private void SpawnMeteor() {
         List<float> modList = new List<float>(spawnLocations);
         modList.Remove(lastSpawnLocation);
         
         int randPos = Random.Range(0, modList.Count-1);
         float spawnLocation = modList[randPos];
 
-        PhotonNetwork.Instantiate("MyPrefabName", new Vector3(0, 0, 0), Quaternion.identity, 0);
-        Instantiate(spawnItem, new Vector3(spawnLocation, gameObject.transform.position.y, 0), Quaternion.identity);
+        PhotonNetwork.Instantiate(spawnItem.name, new Vector3(spawnLocation, gameObject.transform.position.y, -2), Quaternion.identity, 0);
+        //Instantiate(spawnItem, new Vector3(spawnLocation, gameObject.transform.position.y, -2), Quaternion.identity);
+        
+        lastSpawnLocation = spawnLocation;
+    }
+    private void SpawnRandomItem(int itemIdx) {
+        List<float> modList = new List<float>(spawnLocations);
+        modList.Remove(lastSpawnLocation);
+        
+        int randPos = Random.Range(0, modList.Count-1);
+        float spawnLocation = modList[randPos];
+
+        PhotonNetwork.Instantiate(spawnItems[itemIdx].name,  new Vector3(spawnLocation, gameObject.transform.position.y, -2), Quaternion.identity, 0);
+        //Instantiate(spawnItem, new Vector3(spawnLocation, gameObject.transform.position.y, -2), Quaternion.identity);
         
         lastSpawnLocation = spawnLocation;
     }

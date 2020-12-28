@@ -5,6 +5,7 @@ using UnityEngine;
 public class StellarObjectSpawner : MonoBehaviour
 {
     public Sprite[] sprites;
+    public GameObject[] Items;
     public float spawnCooldown;
     public GameObject[] borders;
     public float minSize = 0.15f;
@@ -22,7 +23,7 @@ public class StellarObjectSpawner : MonoBehaviour
         spawnMinLocation = borders[0].transform.position.x;
         spawnMaxLocation = borders[1].transform.position.x;
         // spawnLocations = new List<float> {-16f, -14f, -12f, -10f, -8f, -6f, -4f, -2f, 0f, 2f, 4f, 6f, 8f, 10f, 12f, 14f, 16f};
-        spawnLocations = new List<float> {-6.5f, -5f, -3.5f, -2f, -0.5f, 1f, 2.5f, 4f, 5.5f, 6.5f};
+        spawnLocations = new List<float> {-6.5f, -5f, -3.5f, -2f, -0.5f};
     }
 
     void Update()
@@ -48,12 +49,12 @@ public class StellarObjectSpawner : MonoBehaviour
         SpriteRenderer sr = newObject.AddComponent(typeof(SpriteRenderer)) as SpriteRenderer;
         sr.sprite = sprites[randIdx];
         newObject.transform.localScale = new Vector3(randSize, randSize, randSize);
-        newObject.transform.localPosition = new Vector3(spawnLocation, 7f, 0);
-        sr.sortingOrder = 1;
+        newObject.transform.localPosition = new Vector3(spawnLocation, 7f, -2);
+        sr.sortingOrder = 0;
 
         GameObject randItem = newObject;
         
-        // Instantiate(randItem, new Vector3(spawnLocation, gameObject.transform.position.y, 0), Quaternion.identity);
+        Instantiate(randItem, new Vector3(spawnLocation, gameObject.transform.position.y, -2), Quaternion.identity);
         lastSpawnLocation = spawnLocation;
     }
 }

@@ -13,6 +13,7 @@ public class SimpleTeleport_NetworkVersion : MonoBehaviourPunCallbacks, IPunInst
     public float distanceThreshold = 1F;
     public float shootCooldown = 2.0f;
     public GameObject PlayerUiPrefab;
+    public GameObject[] bulletPrefabs;
     // public float bulletSpeed;
     public GameObject bulletPrefab;
     [Tooltip("diff style of spaceShip sprite")]
@@ -31,6 +32,7 @@ public class SimpleTeleport_NetworkVersion : MonoBehaviourPunCallbacks, IPunInst
     private GameObject[] Players;
     private int watchingPlayer = 0;
     private CameraWork _cameraWork;
+    private int color = -1;
     //public GameObject lineRend;
     void Start()
     {
@@ -78,6 +80,11 @@ public class SimpleTeleport_NetworkVersion : MonoBehaviourPunCallbacks, IPunInst
     {
         if (photonView.IsMine && !imDie)
         {
+            // move player direction to the cursor
+            Vector2 positionOnScreen = Camera.main.WorldToViewportPoint (transform.position);
+            Vector2 mouseOnScreen = (Vector2)Camera.main.ScreenToViewportPoint(Input.mousePosition);
+            float angle = AngleBetweenTwoPoints(positionOnScreen, mouseOnScreen);
+            transform.rotation =  Quaternion.Euler (new Vector3(0f,0f,angle+90));
             // Debug.Log("sending out ray");
             // RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
             // GameObject target = hit.collider.gameObject;
@@ -91,9 +98,12 @@ public class SimpleTeleport_NetworkVersion : MonoBehaviourPunCallbacks, IPunInst
                 // {
                     // shootTimeStamp = Time.time;
                     Vector2 currentMouseVector = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                    GameObject bullet = PhotonNetwork.Instantiate("BulletPrefab_Network", transform.position, Quaternion.identity);
-                    Vector2 shootDirection = (Vector2)Vector3.Normalize(currentMouseVector - (Vector2)transform.position);
-                    //Debug.Log(shootDirection);
+                    object[] myCustomInitData = new object[]{color};
+                    
+                    GameObject bullet = PhotonNetwork.Instantiate(this.bulletPrefabs[color].name, transform.position, Quaternion.Euler(0, 0,  angle+90), 0, myCustomInitData);
+                    Vector2 shootDirection = (Vector2)Vector3.Normalize(currentMouseVector - (Vector2)bullet.transform.position);
+                    Vector2 shootDirection2 = (Vector2)Vector3.Normalize(currentMouseVector - (Vector2)transform.position);
+                    
                     
                     bullet.GetComponent<ProjectileController_Network>().parentObject = gameObject;
                     bullet.GetComponent<ProjectileController_Network>().moveToTarget(shootDirection);
@@ -101,11 +111,7 @@ public class SimpleTeleport_NetworkVersion : MonoBehaviourPunCallbacks, IPunInst
             }
             //GameObject manager = GameObject.Find("Game Manager");
             
-            // move player direction to the cursor
-            Vector2 positionOnScreen = Camera.main.WorldToViewportPoint (transform.position);
-            Vector2 mouseOnScreen = (Vector2)Camera.main.ScreenToViewportPoint(Input.mousePosition);
-            float angle = AngleBetweenTwoPoints(positionOnScreen, mouseOnScreen);
-            transform.rotation =  Quaternion.Euler (new Vector3(0f,0f,angle+90));
+            
 
             if(Time.time >= nextShotTimestamp) {
                 canShoot = true;
@@ -278,7 +284,7 @@ public class SimpleTeleport_NetworkVersion : MonoBehaviourPunCallbacks, IPunInst
 
         int number = (int)instantiationData[0];
         this.transform.FindChild("Spaceship").GetComponent<SpriteRenderer>().sprite = spaceSrpites[number];
-
+        color = number;
     }
     #region IPunObservable implementation
 

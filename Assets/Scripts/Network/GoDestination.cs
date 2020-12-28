@@ -7,6 +7,7 @@ using Photon.Realtime;
 
 public class GoDestination : MonoBehaviourPunCallbacks
 {
+    
     public GameObject DestObject;
     public float speed = 0.01f;
     // Start is called before the first frame update

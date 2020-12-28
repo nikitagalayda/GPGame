@@ -3,15 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
-public class ProjectileController_Network : MonoBehaviourPunCallbacks
+public class ProjectileController_Network : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
 {
-    public float projectileSpeed = 1000.0f;
+    public float projectileSpeed = 1f;
     public GameObject parentObject = null;
     public Vector3 initialPos;
     private Vector2 target;
     private bool movingToTarget = false;
     private float liveSecond = 0.7f;
-
+    [Tooltip("diff style of bullet sprite")]
+    [SerializeField]
+    private Sprite[] bulletSrpites;
     void Start()
     {
         initialPos = this.transform.position;
@@ -20,19 +22,28 @@ public class ProjectileController_Network : MonoBehaviourPunCallbacks
     {
         
     }
+
     void FixedUpdate()
     {
         if (movingToTarget)
         {
-            this.transform.Translate(target * projectileSpeed * Time.deltaTime);
+            Debug.Log("shoot dir"+ transform.position);
+            transform.position = transform.position + (transform.up * Time.deltaTime * projectileSpeed);
+            //this.transform.Translate(target * projectileSpeed * Time.deltaTime);
         }
     }
 
     public void moveToTarget(Vector2 tg)
     {
-        projectileSpeed += parentObject.GetComponent<Rigidbody2D>().velocity.magnitude;
+        //this.gameObject.GetComponent<Rigidbody2D>().AddForce(transform.transform.right * projectileSpeed * 10);
+        //projectileSpeed += parentObject.GetComponent<Rigidbody2D>().velocity.magnitude;
         target = tg;
         movingToTarget = true;
+        //Vector2 positionOnScreen = Camera.main.WorldToViewportPoint (transform.position);
+        //Vector2 mouseOnScreen = (Vector2)Camera.main.ScreenToViewportPoint(Input.mousePosition);
+        //float angle = AngleBetweenTwoPoints(positionOnScreen, mouseOnScreen);
+        //transform.rotation =  Quaternion.Euler (new Vector3(0f,0f,angle));
+        //transform.rotation =  Quaternion.Euler (new Vector3(tg.y,tg.x,0));
     }
 
     void OnBecameInvisible()
@@ -117,6 +128,10 @@ public class ProjectileController_Network : MonoBehaviourPunCallbacks
        // if( other.gameObject.name == "Drop(Clone)" ||  other.gameObject.name == "Player_Network(Clone)")
             
     }
+
+    private float AngleBetweenTwoPoints(Vector3 a, Vector3 b) {
+         return Mathf.Atan2(a.y - b.y, a.x - b.x) * Mathf.Rad2Deg;
+    }
     public void generateEnergy(GameObject target)
     {
         int num = 10;
@@ -127,5 +142,33 @@ public class ProjectileController_Network : MonoBehaviourPunCallbacks
             Debug.Log("asdasdasd"+energy.GetComponent<GoDestination>().DestObject.name);
         }
     }
-   
+    public void OnPhotonInstantiate(PhotonMessageInfo info)
+    {
+        object[] instantiationData = info.photonView.InstantiationData;
+
+        int number = (int)instantiationData[0];
+        if(number>=0){
+            //this.gameObject.GetComponent<SpriteRenderer>().sprite = bulletSrpites[number];
+            var animator = gameObject.GetComponent<Animator>();
+            // switch (number)
+            // {
+            //     case 0:
+            //         animator.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("Assets/Assets/Sprites/SFX/Bullet/blue_bullet_AC.controller");
+            //         break;
+            //     case 1:
+            //         animator.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("Assets/Assets/Sprites/SFX/Bullet/green_bullet_AC.controller");
+            //         break;
+            //     case 2:
+            //         animator.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("Assets/Assets/Sprites/SFX/Bullet/orange_bullet_AC.controller");
+            //         break;
+            //     case 3:
+            //         animator.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("Assets/Assets/Sprites/SFX/Bullet/red_bullet_AC.controller");
+            //         break;
+
+            // }
+            
+
+        }
+            
+    }
 }

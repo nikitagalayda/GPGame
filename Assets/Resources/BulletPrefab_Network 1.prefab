@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: -2553584333823753487}
   - component: {fileID: 9107455343214157074}
   m_Layer: 0
-  m_Name: BulletPrefab_Network
+  m_Name: BulletPrefab_Network 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -78,7 +78,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 50d0f0383306b3444b4dbb9b3fdf9a25, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 710077bec27437446be76f27922e0b94, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -301,7 +301,7 @@ Animator:
   m_GameObject: {fileID: 7428196229701916301}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 22fdbd26b5c23d6438158b6bc1704228, type: 2}
+  m_Controller: {fileID: 9100000, guid: 0d491e8b4882ebe448b61a4766ddb035, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

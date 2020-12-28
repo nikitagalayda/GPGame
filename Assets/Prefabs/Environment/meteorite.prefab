@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 609631019}
   m_Layer: 0
   m_Name: meteorite
-  m_TagString: Untagged
+  m_TagString: EnvironmentObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -96,6 +96,10 @@ PrefabInstance:
     - target: {fileID: 4262992863542592236, guid: 6324e7d714b7b7445a3854d69d0c7420, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4262992863542592237, guid: 6324e7d714b7b7445a3854d69d0c7420, type: 3}
+      propertyPath: m_SortingOrder
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4262992863542592238, guid: 6324e7d714b7b7445a3854d69d0c7420, type: 3}
       propertyPath: m_Name

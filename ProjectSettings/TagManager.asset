@@ -9,6 +9,7 @@ TagManager:
   - player
   - rank
   - floor
+  - EnvironmentObject
   layers:
   - Default
   - TransparentFX

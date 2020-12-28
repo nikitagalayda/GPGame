@@ -20,10 +20,10 @@ public class Background : MonoBehaviour
     void Update()
     {
         transform.Translate(new Vector3(0, -backgroundSpeed, 0) * Time.deltaTime);
-    }
+    
 
-    void LateUpdate()
-    {
+    // void LateUpdate()
+    // {
         GameObject lastBgCard = cardList.Last.Value;
         GameObject firstBgCard = cardList.First.Value;
 
@@ -34,6 +34,6 @@ public class Background : MonoBehaviour
             cardList.AddFirst(lastBgCard);
             cardList.RemoveLast();
         }
+    // }
     }
-
 }

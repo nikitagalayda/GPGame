@@ -9,26 +9,32 @@ public class MainMenuController : MonoBehaviour
 
     private LinkedList<Button> menuItems;
     private LinkedListNode<Button> selectedButton;
+    private LinkedListNode<Button> lastButton;
 
     void Start()
     {
         menuItems = new LinkedList<Button>(buttons);
         selectedButton = menuItems.First;
-        selectedButton.Value.GetComponentInChildren<MainMenuTextController>().EnlargeText(2);
     }
 
     void Update()
     {
         if (Input.GetKeyDown("up"))
         {
-            selectedButton = selectedButton.Previous ?? selectedButton.List.First;
+            lastButton = selectedButton;
+            selectedButton = selectedButton.Previous ?? selectedButton.List.Last;
+            selectedButton.Value.GetComponentInChildren<MainMenuTextController>().ChangeTextSize(1.4f, 0.2f);
+            lastButton.Value.GetComponentInChildren<MainMenuTextController>().ChangeTextSize(1f, 0.2f);
         }
 
         if (Input.GetKeyDown("down"))
         {
+            lastButton = selectedButton;
             selectedButton = selectedButton.Next ?? selectedButton.List.First;
+            selectedButton.Value.GetComponentInChildren<MainMenuTextController>().ChangeTextSize(1.4f, 0.2f);
+            lastButton.Value.GetComponentInChildren<MainMenuTextController>().ChangeTextSize(1f, 0.2f);
         }
 
-        Debug.Log(selectedButton.Value);
+        // Debug.Log(selectedButton.Value);
     }
 }

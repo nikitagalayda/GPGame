@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class VerticalMovement : MonoBehaviour
 {
+    public float minSpeed = 0.8f;
+    public float maxSpeed = 2;
+    
     private float size;
     private float speed;
-    private float minSpeed = 0.8f;
-    private float maxSpeed = 2;
     private float minRotationSpeed = -1f;
     private float maxRotationSpeed = 1f;
     private float rotationSpeed;

@@ -1,12 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class ObjectSpawner : MonoBehaviour
+using Photon.Pun;
+using Photon.Realtime;
+using UnityEngine.UI;
+public class ObjectSpawner : MonoBehaviourPunCallbacks
 {
     public float spawnCooldown;
     public GameObject[] borders;
     public GameObject spawnItem;
+    public GameObject[] spawnItems;
+    public float[] spawnItemsRate;
 
     private float spawnMinLocation;
     private float spawnMaxLocation;
@@ -36,8 +40,10 @@ public class ObjectSpawner : MonoBehaviour
         
         int randPos = Random.Range(0, modList.Count-1);
         float spawnLocation = modList[randPos];
-        
+
+        PhotonNetwork.Instantiate("MyPrefabName", new Vector3(0, 0, 0), Quaternion.identity, 0);
         Instantiate(spawnItem, new Vector3(spawnLocation, gameObject.transform.position.y, 0), Quaternion.identity);
+        
         lastSpawnLocation = spawnLocation;
     }
 }

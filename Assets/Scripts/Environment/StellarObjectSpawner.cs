@@ -45,7 +45,11 @@ public class StellarObjectSpawner : MonoBehaviour
         
         GameObject newObject = new GameObject();
         newObject.AddComponent(typeof(VerticalMovement));
+        Rigidbody2D rb = newObject.AddComponent(typeof(Rigidbody2D)) as Rigidbody2D;
+        rb.bodyType = RigidbodyType2D.Kinematic;
         SpriteRenderer sr = newObject.AddComponent(typeof(SpriteRenderer)) as SpriteRenderer;
+        CircleCollider2D cc = newObject.AddComponent(typeof(CircleCollider2D)) as CircleCollider2D;
+        cc.isTrigger = true;
         sr.sprite = sprites[randIdx];
         newObject.transform.localScale = new Vector3(randSize, randSize, randSize);
         newObject.transform.localPosition = new Vector3(spawnLocation, 7f, 0);

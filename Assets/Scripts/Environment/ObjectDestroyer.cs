@@ -16,10 +16,16 @@ public class ObjectDestroyer : MonoBehaviour
         
     }
 
-    void OnCollisionEnter2D(Collision2D col)
-    {
-        if(col.gameObject.tag == "EnvironmentObject"){
-            Destroy(gameObject);
-        }
+    // void OnCollisionEnter2D(Collision2D col)
+    // {
+    //     // if(col.gameObject.tag == "EnvironmentObject"){
+    //         Debug.Log(col.gameObject.name);
+    //         Destroy(col.gameObject);
+    //     // }
+    // }
+
+    void OnTriggerEnter2D(Collider2D col) {
+        Debug.Log(col.gameObject.name);
+        Destroy(col.gameObject);
     }
 }

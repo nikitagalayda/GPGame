@@ -5,85 +5,214 @@ using UnityEngine.SceneManagement;
 
 using Photon.Pun;
 using Photon.Realtime;
-using System.Collections;
 
+
+using UnityEngine.UI;
+using System.Linq;
 public class GameManager : MonoBehaviourPunCallbacks
 {
     #region Public Fields
     [Tooltip("The prefab to use for representing the player")]
     public GameObject playerPrefab;
     public GameObject playerSpawnLocation;
+    public GameObject itembar;
+    public GameObject energybar;
+    public ItemDatabaseObject database;
+    //public InventoryObject playerInventory;
     //public GameObject player;
     #endregion
     public static GameManager Instance;
+
     public bool gameStart = false;
     private bool dropping = false;
-    [Tooltip("start Button for the UI")]
+    public GameObject[] Rankings;
+
+    [Tooltip("the spaceShip")]
     [SerializeField]
-    private GameObject startButton;
+    private GameObject spaceShip;
+    public GameObject leaveButton;
+    public GameObject dieText;
+    public GameObject[] dieImages;
+    public float gravity = 0.5F;
+    private GameObject[] Players;
+    private List<GameObject> Playerlist = new List<GameObject>();
+    public GameObject[] floor ;
+    public GameObject lava;
+    private float playerHeight = 0.05f;
+    private float elp = 5f;
     // Start is called before the first frame update
+    void Awake()
+    {
+    
+    }
+
     void Start()
     {
-
-
         Instance = this;
-        PhotonNetwork.Instantiate(this.playerPrefab.name, new Vector2(playerSpawnLocation.transform.position[0],playerSpawnLocation.transform.position[1]), Quaternion.identity, 0);
-        /*
-        if (playerPrefab == null)
-        {
-            Debug.LogError("<Color=Red><a>Missing</a></Color> playerPrefab Reference. Please set it up in GameObject 'Game Manager'",this);
-        }
-        else
-        {
-            GameObject player;
-            Debug.LogFormat("We are Instantiating LocalPlayer from {0}", Application.loadedLevelName);
-            // we're in a room. spawn a character for the local player. it gets synced by using PhotonNetwork.Instantiate
-            if (SimpleTeleport_NetworkVersion.LocalPlayerInstance == null)
-            {
-                Debug.LogFormat("We are Instantiating LocalPlayer from {0}", SceneManagerHelper.ActiveSceneName);
-                // we're in a room. spawn a character for the local player. it gets synced by using PhotonNetwork.Instantiate
-                PhotonNetwork.Instantiate(this.playerPrefab.name, new Vector2(Random.Range(-6.0f, 6.0f), -3f), Quaternion.identity, 0);
-                
+        PlayerSetup();
+        StartGame();
+        //for(int i = Players.Length; i < 4; i++)
+        //    Rankings[i].SetActive(false);
+//        Vector2 randPosition = new Vector2(Random.Range(-8.0f, 8.0f), -100.0f);
+        // if(PhotonNetwork.IsMasterClient)
+        // {
+        //     
+        //     for(int i = 0; i< 200;i++)
+        //     {
+        //         /*int randBox = Random.Range(0, 2);
+        //         float rand = Random.Range(-8.0f, 5.0f);
+        //         PhotonNetwork.InstantiateSceneObject(this.floor.name, new Vector3(rand, -102f+(60f*playerHeight)*(float)(i+1), -5), Quaternion.identity, 0);
+        //         for(int j = 0;j< randBox;j++)
+        //             PhotonNetwork.InstantiateSceneObject("Drop", new Vector3(rand, -102f+(60f*playerHeight)*(float)(i+1)+1, -5), Quaternion.identity);
 
+        //         if(Mathf.Abs(rand+1.5f)>3f)
+        //         {
+        //             if(rand>0){
+        //                 PhotonNetwork.InstantiateSceneObject(this.floor.name, new Vector3(-8+5-rand, -102f+(60f*playerHeight)*(float)(i+1), -5), Quaternion.identity, 0);
+        //                 for(int j = 0;j< randBox;j++)
+        //                     PhotonNetwork.InstantiateSceneObject("Drop", new Vector3(-8+5-rand, -102f+(60f*playerHeight)*(float)(i+1)+1, -5), Quaternion.identity, 0);
+        //             }
+        //             else
+        //             {
+        //                 PhotonNetwork.InstantiateSceneObject(this.floor.name, new Vector3(-8-rand+5, -102f+(60f*playerHeight)*(float)(i+1), -5), Quaternion.identity, 0);
+        //                 for(int j = 0;j< randBox;j++)
+        //                     PhotonNetwork.InstantiateSceneObject("Drop", new Vector3(-8-rand+5, -102f+(60f*playerHeight)*(float)(i+1)+1, -5), Quaternion.identity, 0);
+
+        //             }
+
+        //         }*/
+        //         //PhotonNetwork.Instantiate(this.floor.name, new Vector3(Random.Range(-8.0f, 5.0f), -102f+(40f*playerHeight)*(float)(i+1), -5), Quaternion.identity, 0);
+        //         GameObject flr = leaveButton;
+        //         float pastflrposition=  -1000.0f;
+        //         for (float j = -7.0f; j <= 7.0f; j=j+ 2.5f)
+        //         {
+        //             int rand = Random.Range(0, 14);
+        //             int randColor = Random.Range(0, this.floor.Length);
+        //             if (rand == 0)
+        //             {
+        //                 if (j == pastflrposition + 2.5f)
+        //                 {
+        //                     flr.transform.localScale += new Vector3(2.5f, 0, 0);
+        //                     flr.transform.position += new Vector3(1.25f, 0, 0);
+        //                     pastflrposition = j;
+        //                 }
+        //                 else
+        //                 {
+        //                     flr = PhotonNetwork.Instantiate(this.floor[randColor].name, new Vector3(j, -102f + (60f * playerHeight) * (float)(i + 1), -5), Quaternion.identity, 0);
+        //                     pastflrposition = j;
+        //                     PhotonNetwork.Instantiate("collectableBomb", new Vector3(j, -102f + (60f * playerHeight) * (float)(i + 1) +1, -5), Quaternion.identity, 0);
+        //                 }
+        //             }
+        //         }
+        //         for (float j = -7.0f; j <= 7.0f; j = j + 1.25f)
+        //         {
+        //             int rand = Random.Range(0, 9);
+        //             if (rand == 0) PhotonNetwork.Instantiate("Drop", new Vector3(j, -102f + (60f * playerHeight) * (float)(i + 1) + 1, -5), Quaternion.identity);
+        //         }
+        //     }
+        
+        
+        /*
+        var player = PhotonNetwork.Instantiate(this.playerPrefab.name, new Vector2(playerSpawnLocation.transform.position[0],playerSpawnLocation.transform.position[1]), Quaternion.identity, 0);
+        player.GetComponent<PlayerManager>().inventory = (InventoryObject)InventoryObject.CreateInstance("InventoryObject");
+        player.GetComponent<PlayerManager>().inventory.savePath += "." + player.GetComponent<PhotonView>().ViewID;
+        player.GetComponent<PlayerManager>().inventory.database = database;
+        player.GetComponent<PlayerManager>().inventory.Create();
+        itembar.GetComponent<DisplayInventory>().inventory = player.GetComponent<PlayerManager>().inventory;
+        */
+        /*
+        for(int i = 0; i < Players.Count(); i++){
+            if (Players[i].GetComponent<PhotonView>().IsMine){
+                Debug.Log("set inventory");
+                itembar = GameObject.Find("ItemBar");
+                itembar.GetComponent<DisplayInventory>().inventory = Players[i].GetComponent<PlayerManager>().inventory;
+                energybar = GameObject.Find("EnergyBar");
+                energybar.GetComponent<DisplayEnergyBar>().player = Players[i];
             }
-            else
-            {
-                Debug.LogFormat("Ignoring scene load for {0}", SceneManagerHelper.ActiveSceneName);
-            }
-            
         }
         */
+        //Debug.Log("game manager player:"+WaitingManager.player.name);
+        //StartGenerator();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(gameStart && dropping == false)
-        {
-            dropping = true;
-            StartGenerator();
-            startButton.SetActive(false);
-        }    
-    }
 
-    private IEnumerator EnemyGenerator()
-    {
-        while (true)
+        spaceShip.transform.position = spaceShip.transform.position - new Vector3(0, Time.fixedDeltaTime * 0.1f, 0);
+        /*if(gameStart && dropping == false)
         {
-            Vector2 randPosition = new Vector2(Random.Range(-8.0f, 8.0f), 6.0f);
-            PhotonNetwork.Instantiate("Drop", randPosition, Quaternion.identity);
-            yield return new WaitForSeconds(Mathf.Lerp(0.1f, 1.0f, Random.value));
+
+            dropping = true;
+            startButton.SetActive(false);
+
+        }
+        Rankings[0].text = Players.Length.ToString();*/
+        
+    }
+    void LateUpdate()
+    {
+
+        float[] height = new float[5];
+        for (int i = 0; i < Players.Length; i++)
+        {
+            if(Players[i]!=null)
+                height[i] = Players[i].transform.position[1];
+        }
+
+        for (int i = 0; i < Players.Length; i++)
+        {
+            float max = -999;
+            int y = -1;
+            for (int j = 0;j < Players.Length; j++)
+            {
+                if(height[j]> max)
+                {
+                    max = height[j];
+                    y = j;
+                }
+            }
+            height[y] = -1000;
+            /*
+            if(Players[y]!=null)
+                {Rankings[i].GetComponent<Text>().text = (i + 1).ToString("0") + ". " + Players[y].GetComponent<SimpleTeleport_NetworkVersion>().photonView.Owner.NickName + " : " + Players[y].transform.position[1].ToString("0") + " m";
+                //dieImages[i].SetActive(true);
+                if (Players[y].GetComponent<SimpleTeleport_NetworkVersion>().photonView.IsMine)
+                    Rankings[i].GetComponent<Text>().color = Color.red;
+                if(Players[y].GetComponent<SimpleTeleport_NetworkVersion>().imDie)
+                    dieImages[i].SetActive(true);
+                }
+            Rankings[4].GetComponent<Text>().text = "Lava Height : " + lava.transform.position[1].ToString("0"); 
+            */
         }
     }
 
-    public void StartGenerator()
-    {
-        StartCoroutine(EnemyGenerator());
-    }
+    // private IEnumerator EnemyGenerator()
+    // {
+    //     while (true)
+    //     {
+    //         for (float j = -7.0f; j <= 7.0f; j = j + 1.25f)
+    //         {
+    //             int rand = Random.Range(0, 9);
+    //             if (rand == 0) PhotonNetwork.Instantiate("Drop", new Vector3(j, -102f + (60f * playerHeight) * (float)(199 + 1) + 1, -5), Quaternion.identity);
+    //         }
+    //         yield return new WaitForSeconds(1.5f);
+    //     }
+    // }
+
+    // public void StartGenerator()
+    // {
+    //     StartCoroutine(EnemyGenerator());
+    // }
 
     public void StartGame()
     {
         gameStart = true;
+        Players = GameObject.FindGameObjectsWithTag("player");
+        // now all your game objects are in GOs,
+        // all that remains is to getComponent of each and every script and you are good to go.
+        // to disable a components
+
     }
 
     #region Photon Callbacks
@@ -120,7 +249,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient)
         {
             Debug.LogFormat("OnPlayerLeftRoom IsMasterClient {0}", PhotonNetwork.IsMasterClient); // called before OnPlayerLeftRoom
-
+            //startButton.SetActive(true);
 
             LoadArena();
         }
@@ -140,9 +269,9 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     #endregion
     
-    #region Private Methods
 
 
+    #region Method
     void LoadArena()
     {
         if (!PhotonNetwork.IsMasterClient)
@@ -153,7 +282,24 @@ public class GameManager : MonoBehaviourPunCallbacks
         //PhotonNetwork.LoadLevel("RoomForNetwork");
     }
 
+    void PlayerSetup(){
+        var Playerlist = GameObject.FindGameObjectsWithTag("player");
+        for(int i = 0; i < Playerlist.Count(); i++){
+            if (Playerlist[i].GetComponent<PhotonView>().IsMine){
+                var myPlayer = Playerlist[i];
+                Debug.Log("set inventory");
+                itembar = GameObject.Find("ItemBar");
+                itembar.GetComponent<DisplayInventory>().inventory = myPlayer.GetComponent<PlayerManager>().inventory;
+                energybar = GameObject.Find("EnergyBar");
+                energybar.GetComponent<DisplayEnergyBar>().player = myPlayer;
+            }
+        }
+    }
 
     #endregion
+
+
+
+
 
 }

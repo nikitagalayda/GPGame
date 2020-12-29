@@ -10,8 +10,7 @@
 
 using UnityEngine;
 
-namespace Photon.Pun.Demo.PunBasics
-{
+
 	/// <summary>
 	/// Camera work. Follow a target
 	/// </summary>
@@ -38,7 +37,7 @@ namespace Photon.Pun.Demo.PunBasics
 	    [Tooltip("The Smoothing for the camera to follow the target")]
 	    [SerializeField]
 	    private float smoothSpeed = 0.125f;
-
+ 		private Vector3 velocity = Vector3.zero;
         // cached transform of the target
         Transform cameraTransform;
 
@@ -66,7 +65,7 @@ namespace Photon.Pun.Demo.PunBasics
 		}
 
 
-		void LateUpdate()
+		void FixedUpdate()
 		{
 			// The transform target may not destroy on level load, 
 			// so we need to cover corner cases where the Main Camera is different everytime we load a new scene, and reconnect when that happens
@@ -92,26 +91,31 @@ namespace Photon.Pun.Demo.PunBasics
 		public void OnStartFollowing()
 		{	      
 			cameraTransform = Camera.main.transform;
+			
 			isFollowing = true;
 			// we don't smooth anything, we go straight to the right camera shot
 			Cut();
 		}
-		
-		#endregion
+		public void StopFollowing()
+		{
+			isFollowing = false;
+			// we don't smooth anything, we go straight to the right camera shot
+		}
+	#endregion
 
-		#region Private Methods
+	#region Private Methods
 
-		/// <summary>
-		/// Follow the target smoothly
-		/// </summary>
-		void Follow()
+	/// <summary>
+	/// Follow the target smoothly
+	/// </summary>
+	void Follow()
 		{
 			cameraOffset.z = -distance;
 			cameraOffset.y = height;
 			
-		    cameraTransform.position = Vector3.Lerp(cameraTransform.position, this.transform.position +this.transform.TransformVector(cameraOffset), smoothSpeed*Time.deltaTime);
-
-		    cameraTransform.LookAt(this.transform.position + centerOffset);
+			//cameraTransform.position = this.transform.position+new Vector3(0.0f, 0.0f, -distance);
+			cameraTransform.position = Vector3.SmoothDamp(cameraTransform.position, this.transform.position+new Vector3(0.0f, 0.0f, -distance), ref velocity, 0.7f);
+			//GameObject.Find("Cameras").transform.position = this.transform.position+new Vector3(0.0f, 0.0f, -distance);
 		    
 	    }
 
@@ -121,10 +125,9 @@ namespace Photon.Pun.Demo.PunBasics
 			cameraOffset.z = -distance;
 			cameraOffset.y = height;
 
-			cameraTransform.position = this.transform.position + this.transform.TransformVector(cameraOffset);
+			cameraTransform.position = this.transform.position+new Vector3(0.0f, 0.0f, -distance);
 
-			cameraTransform.LookAt(this.transform.position + centerOffset);
+			
 		}
 		#endregion
 	}
-}

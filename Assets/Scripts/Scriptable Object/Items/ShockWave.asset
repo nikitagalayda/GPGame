@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f03d69ce0fbb09142814c4a2f04ba986, type: 3}
+  m_Name: ShockWave
+  m_EditorClassIdentifier: 
+  Id: 3
+  uiDisplay: {fileID: 21300000, guid: 9aa97caba27e96145b1f6f8f6eeda504, type: 3}
+  itemType: 1
+  description: Create shockwave to push nearby object.
+  buffs:
+  - attribute: 3
+    bulletPrefab: {fileID: 0}
+    affectorObject: {fileID: 139366, guid: b185c1a9cf067374586d095111b15bd1, type: 3}
+    value: 10
+    radius: 2
+    bulletOffset: 0
+    time: 0

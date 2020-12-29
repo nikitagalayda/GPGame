@@ -27,8 +27,8 @@ MonoBehaviour:
     AuthMode: 0
     EnableLobbyStatistics: 0
     NetworkLogging: 1
-  DevRegion: 
-  PunLogging: 2
+  DevRegion: in
+  PunLogging: 0
   EnableSupportLogger: 0
   RunInBackground: 1
   StartInOfflineMode: 0
@@ -38,6 +38,15 @@ MonoBehaviour:
   - DestroySpaceship
   - Fire
   - RespawnSpaceship
+  - bePushedByforce
+  - MoveLine
+  - TransitionToPosition
+  - TransitionToPosition3
+  - SetStatusEffect
+  - generateEnergy
+  - SetDest
+  - ModifyEnergy
+  - ItemTransitionToPosition
   DisableAutoOpenWizard: 1
   ShowSettings: 0
-  DevRegionSetOnce: 0
+  DevRegionSetOnce: 1

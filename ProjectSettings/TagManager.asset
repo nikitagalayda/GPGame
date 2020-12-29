@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Item
   - Bullet
+  - player
+  - rank
+  - floor
   - EnvironmentObject
   layers:
   - Default
@@ -16,9 +19,9 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
+  - LiquidEffectLayer
+  - item
+  - floor
   - 
   - 
   - 

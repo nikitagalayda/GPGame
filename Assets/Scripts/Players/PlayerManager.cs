@@ -1,38 +1,33 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Pun.Demo.PunBasics;
 
-public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
+public class PlayerManager : MonoBehaviourPunCallbacks
 {
+    public InventoryObject inventory;
+    public GameObject energyBar;
     public float movePower = 10f;
     public float jumpPower = 15f; //Set Gravity Scale in Rigidbody2D Component to 5
-
+    public float bulletSpawnOffset = 0f;
+    public float maxEnergy = 100;
+    public float energy = 100;
+    public float energyNaturalRecoveryRate = 10;
+    public float energyNaturalLostRate = 0;
+    public float energyModifyRate = 0;
+    public float defaultShootingEnergyConsuming = 20;
     private Rigidbody2D rb;
-    private Animator anim;
+    //private Animator anim;
     Vector3 movement;
     private int direction=1;
     bool isJumping = false;
     bool isInAir = false;
 
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        if (stream.IsWriting)
-        {
-            // 為玩家本人的狀態, 將 IsFiring 的狀態更新給其他玩家
-            //stream.SendNext(IsFiring);
-        }
-        else
-        {
-            // 非為玩家本人的狀態, 單純接收更新的資料
-            //this.IsFiring = (bool)stream.ReceiveNext();
-        }
-    }
-
     // Start is called before the first frame update
     void Start()
     {
+        /*
         CameraWork2D _cameraWork2d = this.gameObject.GetComponent<CameraWork2D>();
     
         if (_cameraWork2d != null)
@@ -47,6 +42,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
             Debug.LogError("playerPrefab- CameraWork component 遺失", 
                 this); 
         }
+        */
         
         if (photonView.IsMine == false && PhotonNetwork.IsConnected == true)
         {
@@ -54,35 +50,72 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
         }
         
         rb=GetComponent<Rigidbody2D>();
-        anim=GetComponent<Animator>();
+        //anim=GetComponent<Animator>();
 
     }
-
+    
     private void FixedUpdate() {
         if (photonView.IsMine == false && PhotonNetwork.IsConnected == true)
         {
             return;
         }
-        Jump();
+        //Jump();
         Run();
+
     }
-    private void OnTriggerEnter2D(Collider2D other) {
+    private void Update(){
+        if (photonView.IsMine == false && PhotonNetwork.IsConnected == true)
+        {
+            return;
+        }
+        UseTheFirstItem();
+        EnergyDefaultModify();
+    }
+
+    public void EnergyDefaultModify(){
+        energy = energy + (energyNaturalRecoveryRate-energyNaturalLostRate+energyModifyRate) * Time.deltaTime;
+        if(energy >= maxEnergy){
+            energy = maxEnergy;
+        }
+        if(energy <= 0){
+            energy = 0;
+        }
+    }
+
+    /*
+    public void OnTriggerFloorDetector(Collider2D other){
         anim.SetBool("isJumping",false); 
         isJumping = false;
     }
 
-    private void OnTriggerStay2D(Collider2D other) {
+
+    public void OnTriggerStayFloorDetector(Collider2D other) {
         isInAir = false;
     }
 
-    private void OnTriggerExit2D(Collider2D other) {
+    public void OnTriggerExitFloorDetector(Collider2D other) {
         isInAir = true;
     }
+    */
 
+    public void OnTriggerEnterItemObjectDetector(Collider2D other) {
+        Debug.Log(this.name+" touch: " + other.name);
+        var item = other.GetComponent<GroundItem>();
+        //Debug.Log(item);
+        if(item){
+            inventory.clearItems();
+            inventory.AddItem(new Item(item.item), 1);
+            Destroy(other.gameObject);
+        }
+    }
+
+    private void OnApplicationQuit(){
+        inventory.Container.Items.Clear();
+    }
 
     void Run(){
         Vector3 moveVelocity= Vector3.zero;
-            anim.SetBool("isRunning",false);
+        //anim.SetBool("isRunning",false);
 
 
         if( Input.GetAxisRaw("Horizontal")<0){
@@ -90,19 +123,32 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
             moveVelocity = Vector3.left;
 
             transform.localScale = new Vector3(direction,1,1);
-            anim.SetBool("isRunning",true);
+            //anim.SetBool("isRunning",true);
 
         }
         if( Input.GetAxisRaw("Horizontal")>0){
             direction= 1;
             moveVelocity = Vector3.right;
-
             transform.localScale = new Vector3(direction,1,1);
-            anim.SetBool("isRunning",true);
+            //anim.SetBool("isRunning",true);
+        }
+        if( Input.GetAxisRaw("Vertical")<0){
+            direction= -1;
+            moveVelocity = Vector3.down;
+            transform.localScale = new Vector3(direction,1,1);
+            //anim.SetBool("isRunning",true);
 
         }
+        if( Input.GetAxisRaw("Vertical")>0){
+            direction= 1;
+            moveVelocity = Vector3.up;
+            transform.localScale = new Vector3(direction,1,1);
+            //anim.SetBool("isRunning",true);
+        }
+
         transform.position+=moveVelocity*movePower*Time.deltaTime;
     }
+    /*
     void Jump(){
         if( ( Input.GetButtonDown("Jump") || Input.GetAxisRaw("Vertical")>0 )
         &&!anim.GetBool("isJumping")){
@@ -125,5 +171,29 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
 
         isJumping=false;
     }
+    */
+    void UseTheFirstItem(){
+        if(Input.GetMouseButtonDown(1)){
+            //Debug.Log("GetButtonDown: time = " + Time.time);
+            var item = inventory.GetItemByIndex(0);
+            if(item != null){
+                //Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                inventory.RemoveItem(item,1);                
+                //item.ExecuteAllItemBuff(this.gameObject,mousePosition);
+                item.ExecuteAllItemBuff(this.gameObject);
+            }
+        }
+    }
 
+
+
+    [PunRPC]
+    public void SetStatusEffect(int id, float t){
+        this.GetComponent<PlayerStatus>().StartAndAddEffect(id,t);
+    }
+
+    [PunRPC]
+    public void ModifyEnergy(float modifyEnergy){
+        this.energy += modifyEnergy;
+    }
 }

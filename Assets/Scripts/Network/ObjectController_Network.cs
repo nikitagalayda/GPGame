@@ -61,10 +61,10 @@ public class ObjectController_Network : MonoBehaviourPunCallbacks
 
 
     [PunRPC]
-    public void TransitionToPosition(Vector3 targetPosition)
+    public void ItemTransitionToPosition(Vector3 targetPosition)
     {
-
-        transform.position = targetPosition;
+        Debug.Log("doing asdasdasd");
+        this.transform.position = targetPosition;
             //Debug.Log(transitionTarget);
             //inTransition = true;
         

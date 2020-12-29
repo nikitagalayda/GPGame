@@ -176,7 +176,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d97ddd9ba5d6a2b44a7f16f9371b947b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectileSpeed: 1
+  projectileSpeed: 3
   parentObject: {fileID: 0}
   initialPos: {x: 0, y: 0, z: 0}
   bulletSrpites:

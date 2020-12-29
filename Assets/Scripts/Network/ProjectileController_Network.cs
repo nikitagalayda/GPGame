@@ -74,16 +74,17 @@ public class ProjectileController_Network : MonoBehaviourPunCallbacks, IPunInsta
         {  
 
             Debug.Log("COLLISION WITH " + other.gameObject.name);
-            if(photonView.IsMine && other.gameObject.name == "Drop(Clone)"){
+            if(photonView.IsMine && other.gameObject.name == "meteorite(Clone)"){
                 PhotonView photonViewParent = PhotonView.Get(parentObject.gameObject);
                 photonViewParent.RPC("MoveLine", RpcTarget.All,other.transform.position);
 
                 Debug.Log("-----------------ismine" + other.gameObject.name);
                 Vector2 temp = other.transform.position;
+                Vector3 temp2 = parentObject.transform.position;
                 //other.transform.position = parentObject.transform.position;
                 PhotonView photonViewOther = PhotonView.Get(other.gameObject);
-                photonViewOther.RPC("TransitionToPosition", RpcTarget.All, parentObject.transform.position);
-                parentObject.transform.position = temp;
+                photonViewOther.RPC("ItemTransitionToPosition", RpcTarget.All, temp2);
+                parentObject.transform.position = new Vector3(temp.x, temp.y, temp2.z);
                 //parentObject.GetComponent<SimpleTeleport_NetworkVersion>().TransitionToPosition(temp);
                 PhotonNetwork.Destroy(this.gameObject);
                 

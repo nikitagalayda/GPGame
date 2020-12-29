@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: -5432856855498517880}
   - component: {fileID: 7928996640597284876}
   - component: {fileID: 3621064290144411756}
+  - component: {fileID: 3929835398439036126}
   m_Layer: 0
   m_Name: meteorite
   m_TagString: EnvironmentObject
@@ -113,6 +114,20 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.4, y: 0.4}
   m_EdgeRadius: 0
+--- !u!114 &3929835398439036126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 951530413639563090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c54ff0da3c7dd0246bec0e2d777cbba3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothTime: 0.05
+  distanceThreshold: 0.01
 --- !u!1001 &2486728586589785813
 PrefabInstance:
   m_ObjectHideFlags: 0
